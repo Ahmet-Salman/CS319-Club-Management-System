@@ -14,7 +14,7 @@ This system allows the user to:
 
 This Web App is developed using:
   - Python Django Framework (Back-end)
-  - React Native Framework (Front-end)
+  - Vue.js Framework (Front-end)
   - SQlite3 (Database Integration) 
 
 ----------------------------------------------------
