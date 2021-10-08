@@ -10,7 +10,7 @@ This system allows the user to:
   - Send and recieve a message to/from the manager of the club
   - Create event notifications
   - Comment on a club
-  - give titles to members of a club based on their role
+  - Give titles to members of a club based on their role
 
 This Web App is developed using:
   - Python Django Framework (Back-end)
