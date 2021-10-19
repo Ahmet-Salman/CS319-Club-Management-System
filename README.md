@@ -7,6 +7,7 @@ User Types:
   - Registered User (Member)
   - Club Manager
   - Admin/Moderator
+
 This system allows the user to:
 
   + _Unregistered User:_
@@ -15,7 +16,7 @@ This system allows the user to:
   + _Registered User (Member)_:   
     - **Login**: By entering valid credentials, a user will access their own specialized account
     - **Create a club**: A user will fill a club creation form stating the name and other details
-    - **Join a club**: The user will send a join request ot a club manager
+    - **Join a club**: The user will send a join request to a club manager
     - **Leave a club**: the user will exit from a club
     - **Send a message to the manager of the club**: A user can fill in a message form and send it to a club manager
     - **Comment on a club**: A user will fill a comment form which will be displayed to all users (members and non-members)
