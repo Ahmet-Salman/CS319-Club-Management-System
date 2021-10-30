@@ -1,12 +1,28 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link> | 
-    <router-link to="/login">Log In</router-link> | 
-    <router-link to="/signup">Sign Up</router-link>
-    <router-view/>
+  <div>
+    <nav class="navbar navbar-dark bg-primary">
+      <div class="container-fluid">
+        <router-link to="/" class="navbar-brand">Home</router-link>
+        <div
+          class="btn-group"
+          role="group"
+          aria-label="Basic mixed styles example"
+        >
+          <router-link to="/login" type="button" class="btn btn-info mx-3 px-2" style="width: 100px"
+            >Login</router-link
+          >
+          <router-link to="/signup" type="button" class="mx-auto btn btn-success px-2" style="width: 100px"
+            >Register</router-link
+          >
+        </div>
+      </div>
+      <div>
+        <button @click="$store.dispatch('getAuthQuote')">Get Auth Quote</button>
+        <button @click="$store.commit('logout')">Logout</button>
+      </div>
+    </nav>
+    <router-view></router-view>
   </div>
-  
 </template>
 
 <style>

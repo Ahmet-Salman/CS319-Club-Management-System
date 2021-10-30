@@ -48,13 +48,6 @@
               >
                 Log in
               </button>
-              <!-- <button @click="$store.dispatch('changeUser')">
-                change user
-              </button>
-              <button @click="$store.dispatch('changePassword')">
-                change password
-              </button>
-              {{ $store.state.student_id }} --- {{ $store.state.password }} -->
             </div>
             <div></div>
             <div class="clearfix">
@@ -65,7 +58,6 @@
             </div>
           </form>
           <p class="text-center"><router-link to="/signup">Create An Account</router-link></p>
-          <!-- <p class="text-center"><a href="#">Create an Account</a></p> -->
         </div>
       </body>
     </html>

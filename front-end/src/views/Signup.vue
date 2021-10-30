@@ -21,9 +21,9 @@
       <body>
         <div class="login-form">
           <form>
-            <h2 class="text-center">Sign up</h2>
+            <h2 class="text-center">Register</h2>
             <div class="form-group">
-              <label for="name" class="badge col-sm-4">Name:</label>
+              <label for="name" class="badge col-lg-4">Name:</label>
               <input
               id="name"
                 type="text"
@@ -33,7 +33,7 @@
               />
             </div>
             <div class="form-group">
-              <label for="surname" class="badge col-sm-4">Surname:</label>
+              <label for="surname" class="badge col-lg-4">Surname:</label>
               <input
               id="surname"
                 type="text"
@@ -53,7 +53,7 @@
               />
             </div>
             <div class="form-group">
-              <label for="password" class="badge col-sm-4">Password:</label>
+              <label for="password" class="badge col-lg-4">Password:</label>
               <input
               id="password"
                 type="password"
@@ -79,13 +79,6 @@
               >
                 Signup
               </button>
-              <!-- <button @click="$store.dispatch('changeUser')">
-                change user
-              </button>
-              <button @click="$store.dispatch('changePassword')">
-                change password
-              </button>
-              {{ $store.state.student_id }} --- {{ $store.state.password }} -->
             </div>
             <div></div>
             <div class="clearfix">

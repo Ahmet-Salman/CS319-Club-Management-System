@@ -1,6 +1,7 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
 import swal from 'sweetalert';
+import router from '../../router';
 
 export default {
     namespaced: true,
@@ -13,9 +14,7 @@ export default {
     },
     mutations: {
         handleSubmit(state, response) {
-            // console.log('name: ', state.name, 'surname: ', state.surname, 'student id: ', state.student_id, 'password: ', state.password, "confirm pass: ", state.confirmPass);
             console.log(response)
-
         },
         setName(state, newVal) {
             state.name = newVal
@@ -34,27 +33,32 @@ export default {
         }
     },
     actions: {
-        handleSubmit({ commit, state }) {
+        async handleSubmit({ commit, state }) {
             if (state.name === "" || state.surname === "" || state.password === "" || state.student_id === "") {
-                // alert('Please Fill All Fields')
                 swal("Input Error", "Please Fill All Fields", "error");
             } else {
                 if (state.password.length >= 8) {
                     if (!isNaN(state.student_id)) {
                         if (state.password === state.confirmPass) {
-                            // axios('https://reqres.in/api/users?page=2').then(res => {
-                            //         console.log(res)
-                            //     }).catch(err => {
-                            //         console.log('error')
-                            //     })
-                            axios.post('https://reqres.in/api/register', {
-                                email: state.name, //+ '.' + state.surname + '@' + state.student_id + '.com',
-                                password: state.password
-                            }).then(res => {
-                                commit('handleSubmit', res)
-                            }).catch(err => {
-                                swal("Internal Error", "Something Wrong Happened, Please Retry Again", "error")
-                            })
+                            await axios.post('http://localhost:3001/users', {
+                                    username: state.student_id,
+                                    password: state.password
+                                }).then(res => {
+                                    console.log(res)
+                                    swal('Success', 'Registration Successful', 'success')
+                                    router.push('/login')
+                                }).catch(err => {
+                                    console.log(err)
+                                    swal('Internal Error', 'Registration Unuccessful', 'error')
+                                })
+                                // axios.post('https://reqres.in/api/register', {
+                                //     email: state.name, //+ '.' + state.surname + '@' + state.student_id + '.com',
+                                //     password: state.password
+                                // }).then(res => {
+                                //     commit('handleSubmit', res)
+                                // }).catch(err => {
+                                //     swal("Internal Error", "Something Wrong Happened, Please Retry Again", "error")
+                                // })
                         } else {
                             swal("Input Warning", 'Password Do Not Match, Please Enter Password Again', "warning")
                         }
@@ -66,16 +70,6 @@ export default {
                 }
             }
         },
-        changeUser({ commit }) {
-            axios('https://random-data-api.com/api/id_number/random_id_number').then(res => {
-                commit('setStudent_id', res.data.id)
-            })
-        },
-        changePassword({ commit }) {
-            axios('https://random-data-api.com/api/users/random_user').then(res => {
-                commit('setPassword', res.data.password)
-            })
-        }
     },
     getters: {},
     modules: {}
