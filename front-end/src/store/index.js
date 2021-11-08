@@ -3,6 +3,7 @@ import axios from 'axios'
 import Signin from './modules/Signin'
 import Signup from './modules/Signup'
 import AllClubs from './modules/AllClubs'
+import ManageClubs from './modules/ManageClubs'
 import router from '../router/index'
 import swal from 'sweetalert'
 
@@ -52,5 +53,6 @@ export default createStore({
         Signin,
         Signup,
         AllClubs,
+        ManageClubs
     }
 })

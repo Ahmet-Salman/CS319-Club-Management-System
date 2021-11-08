@@ -5,6 +5,7 @@ import Signup from '../views/Signup.vue'
 import Home from '../views/Home.vue'
 import AllClubs from '../views/AllClubs.vue'
 import PageNotFound from '../views/PageNotFound.vue'
+import ManageClub from '../views/ManageClub.vue'
 import store from '../store/index'
 
 
@@ -45,10 +46,24 @@ const routes = [{
         meta: { auth: true }
     },
     {
+        path: '/clubs/:clubID',
+        name: 'ClubDetails',
+        component: PageNotFound,
+        meta: { auth: true },
+        props: true
+    },
+    {
+        path: '/manage/:clubID',
+        name: 'Manage',
+        component: ManageClub,
+        meta: { auth: true },
+        props: true
+    },
+    {
         path: "/:catchAll(.*)",
         name: "NotFound",
         component: PageNotFound,
-    }
+    },
 ]
 
 const router = createRouter({
