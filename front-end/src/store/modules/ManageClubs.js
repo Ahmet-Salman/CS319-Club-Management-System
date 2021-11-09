@@ -16,8 +16,21 @@ export default {
         eventName: "",
         eventDate: "",
         eventLocation: "",
+        announcementMsg: "",
     },
     mutations: {
+        setEventName(state, val) {
+            state.eventName = val
+        },
+        setEventLocation(state, val) {
+            state.eventLocation = val
+        },
+        setEventDate(state, val) {
+            state.eventDate = val
+        },
+        setEventDescription(state, val) {
+            state.eventDescription = val
+        },
         testAccept(state, id) {
             console.log("Member with id: ", id, "has been accepted")
         },
@@ -29,6 +42,15 @@ export default {
         }
     },
     actions: {
+        CreateEvent({ commit, state }) {
+            var today = new Date(new Date().toString().split('GMT')[0] + ' UTC').toISOString()
+            if (today > state.eventDate) {
+                swal('Input Error', 'Time Chosen Cannot Be In The Past', 'error')
+            } else {
+                console.log('Event ', state.eventName, ' is taking place in ', state.eventLocation, ' at time: ', state.eventDate, ' and its description is ', state.eventDescription)
+            }
+
+        },
         testAccept({ commit }, id) {
             commit('testAccept', id)
         },
@@ -38,9 +60,6 @@ export default {
         testCancelEvent({ commit }, id) {
             commit('testCancelEvent', id)
         },
-        createEvent() {
-
-        }
     },
     getters: {},
     modules: {},
