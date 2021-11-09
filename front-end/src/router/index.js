@@ -6,6 +6,8 @@ import Home from '../views/Home.vue'
 import AllClubs from '../views/AllClubs.vue'
 import PageNotFound from '../views/PageNotFound.vue'
 import ManageClub from '../views/ManageClub.vue'
+import CreateEvent from '../views/CreateEvent.vue'
+import CreateAnnouncement from '../views/CreateAnnouncement.vue'
 import store from '../store/index'
 
 
@@ -56,6 +58,20 @@ const routes = [{
         path: '/manage/:clubID',
         name: 'Manage',
         component: ManageClub,
+        meta: { auth: true },
+        props: true
+    },
+    {
+        path: '/createEvent/:clubID',
+        name: 'CreateEvent',
+        component: CreateEvent,
+        meta: { auth: true },
+        props: true
+    },
+    {
+        path: '/createAnnouncement/:clubID',
+        name: 'CreateAnnouncement',
+        component: CreateAnnouncement,
         meta: { auth: true },
         props: true
     },

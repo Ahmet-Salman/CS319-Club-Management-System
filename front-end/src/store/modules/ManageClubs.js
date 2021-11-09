@@ -11,7 +11,11 @@ export default {
         JoinRequests: [],
         currentEvents: [],
         numberOfMembers: 0,
-        creatdAt: "13/2/2021"
+        creatdAt: "13/2/2021",
+        eventDescription: "",
+        eventName: "",
+        eventDate: "",
+        eventLocation: "",
     },
     mutations: {
         testAccept(state, id) {
@@ -33,6 +37,9 @@ export default {
         },
         testCancelEvent({ commit }, id) {
             commit('testCancelEvent', id)
+        },
+        createEvent() {
+
         }
     },
     getters: {},

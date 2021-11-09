@@ -15,12 +15,12 @@ at the top there is a delete button for the club
               <div class="card-body">
                 <div class="d-flex flex-column align-items-center text-center">
                   <div class="mt-3">
-                    <button class="btn btn-outline-dark mx-1">
+                    <router-link :to="{name: 'CreateEvent', params: {clubID: $route.params.clubID}}"><button class="btn btn-outline-dark mx-1">
                       Create Event
-                    </button>
-                    <button class="btn btn btn-outline-info mx-1">
+                    </button> </router-link>
+                    <router-link :to="{name: 'CreateAnnouncement', params: {clubID: $route.params.clubID}}"><button class="btn btn btn-outline-info mx-1">
                       Send Announcment
-                    </button>
+                    </button></router-link>
                   </div>
                 </div>
                 <hr class="my-4" />
@@ -201,6 +201,7 @@ export default {
   name: "ManageClubs",
   data(){
     return {
+      club_id: this.$route.params.clubID,
       JoinRequests: [
             { id: 1, name: 'Member 1' },
             { id: 2, name: 'Member 2' },
@@ -212,7 +213,7 @@ export default {
             { id: 3, name: 'Event 3', time: '12:00 ', location: 'B building' },
             { id: 6, name: 'Event 6', time: '13:00', location: 'SA building' },
             { id: 8, name: 'Event 8', time: '14:00', location: 'EE building' },
-        ],
+        ],        
     }
   },
   methods: {
