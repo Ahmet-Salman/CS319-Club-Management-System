@@ -31,6 +31,9 @@ export default {
         setEventDescription(state, val) {
             state.eventDescription = val
         },
+        setAnnouncement(state, val) {
+            state.announcementMsg = val
+        },
         testAccept(state, id) {
             console.log("Member with id: ", id, "has been accepted")
         },
@@ -48,6 +51,14 @@ export default {
                 swal('Input Error', 'Time Chosen Cannot Be In The Past', 'error')
             } else {
                 console.log('Event ', state.eventName, ' is taking place in ', state.eventLocation, ' at time: ', state.eventDate, ' and its description is ', state.eventDescription)
+            }
+
+        },
+        CreateAnnouncement({ commit, state }) {
+            if (state.announcementMsg !== "") {
+                console.log('Announcement: ', state.announcementMsg)
+            } else {
+                swal('Input Error', 'Announcement Cannot Be Empty', 'error')
             }
 
         },

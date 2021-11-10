@@ -55,7 +55,7 @@
                         <textarea
                           name="message"
                           class="form-control"
-                          placeholder="Write your message here."
+                          placeholder="Write Your Description Here ..."
                           rows="4"
                           required="required"
                           v-model="description"
@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import swal from 'sweetalert';
+// We need a button to go back to the manage page
 export default {
     computed: {
         name: {
