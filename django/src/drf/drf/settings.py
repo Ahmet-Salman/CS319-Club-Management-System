@@ -40,8 +40,10 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'accounts',
     'clubs',
+    'events',
     'announcements',
-    'requests'
+    'requests',
+    'comments'
 ]
 
 MIDDLEWARE = [
