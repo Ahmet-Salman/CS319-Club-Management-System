@@ -2,12 +2,12 @@
   <div>
     <nav class="navbar navbar-dark bg-primary">
       <div class="container-fluid">
-        <router-link to="/" class="navbar-brand">Home</router-link>
-        <div>
+        <router-link to="/home" class="navbar-brand">Home</router-link>
+        <!-- <div>
           <button @click="$store.dispatch('getAuthQuote')">
             Get Auth Quote
           </button>
-        </div>
+        </div> -->
 
         <div
           class="btn-group"

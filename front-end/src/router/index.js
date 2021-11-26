@@ -33,6 +33,13 @@ const routes = [{
         path: '/login',
         name: 'Login',
         component: Login,
+        beforeEnter: (to, from, next) => {
+            if (store.state.token == null) {
+                next();
+            } else {
+                next("/home");
+            }
+        }
     },
     {
         path: '/about',
