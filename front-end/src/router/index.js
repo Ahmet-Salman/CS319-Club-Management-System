@@ -8,22 +8,31 @@ import PageNotFound from '../views/PageNotFound.vue'
 import ManageClub from '../views/ManageClub.vue'
 import CreateEvent from '../views/CreateEvent.vue'
 import CreateAnnouncement from '../views/CreateAnnouncement.vue'
-import store from '../store/index'
-
-
-
+import store from '@/store/index'
 
 const routes = [{
         path: '/',
+        redirect: {
+            name: "Login"
+        },
+        component: Home,
+    },
+    {
+        path: '/home',
         name: 'home',
         component: Home,
-        meta: { auth: false }
+        beforeEnter: (to, from, next) => {
+            if (store.state.token == null) {
+                next("/login");
+            } else {
+                next();
+            }
+        }
     },
     {
         path: '/login',
-        name: 'login',
+        name: 'Login',
         component: Login,
-        meta: { auth: false }
     },
     {
         path: '/about',
@@ -33,52 +42,81 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "about" */ '../views/About.vue'),
-        meta: { auth: false }
     },
     {
         path: '/signup',
         name: 'Signup',
         component: Signup,
-        meta: { auth: false }
     },
     {
         path: '/clubs',
         name: 'Clubs',
         component: AllClubs,
-        meta: { auth: true }
+        beforeEnter: (to, from, next) => {
+            if (store.state.token == null) {
+                next("/login");
+            } else {
+                next();
+            }
+        }
+
     },
     {
         path: '/clubs/:clubID',
         name: 'ClubDetails',
         component: PageNotFound,
-        meta: { auth: true },
-        props: true
+        props: true,
+        beforeEnter: (to, from, next) => {
+            if (store.state.token == null) {
+                next("/login");
+            } else {
+                next();
+            }
+        }
     },
     {
         path: '/manage/:clubID',
         name: 'Manage',
         component: ManageClub,
-        meta: { auth: true },
-        props: true
+        props: true,
+        beforeEnter: (to, from, next) => {
+            if (store.state.token == null) {
+                next("/login");
+            } else {
+                next();
+            }
+        }
     },
     {
         path: '/createEvent/:clubID',
         name: 'CreateEvent',
         component: CreateEvent,
-        meta: { auth: true },
-        props: true
+        props: true,
+        beforeEnter: (to, from, next) => {
+            if (store.state.token == null) {
+                next("/login");
+            } else {
+                next();
+            }
+        }
     },
     {
         path: '/createAnnouncement/:clubID',
         name: 'CreateAnnouncement',
         component: CreateAnnouncement,
-        meta: { auth: true },
-        props: true
+        props: true,
+        beforeEnter: (to, from, next) => {
+            if (store.state.token == null) {
+                next("/login");
+            } else {
+                next();
+            }
+        }
     },
     {
         path: "/:catchAll(.*)",
         name: "NotFound",
-        component: PageNotFound,
+        component: PageNotFound
     },
 ]
 

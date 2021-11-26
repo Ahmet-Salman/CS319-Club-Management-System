@@ -7,7 +7,6 @@
           <button @click="$store.dispatch('getAuthQuote')">
             Get Auth Quote
           </button>
-          <button @click="$store.commit('logout')">Logout</button>
         </div>
 
         <div
@@ -15,7 +14,7 @@
           role="group"
           aria-label="Basic mixed styles example"
         >
-          <button type="button" class="btn btn-danger">
+          <button type="button" class="btn btn-danger" v-if="token">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -33,23 +32,27 @@
           <router-link
             to="/clubs"
             type="button"
-            class="btn btn-warning ml-3 px-2"
+            class="btn btn-warning mx-3 px-2"
             style="width: 100px"
+            v-if="token"
             >All Clubs</router-link
+          >
+          <button
+            to="/signup"
+            type="button"
+            class="mx-auto btn btn-success mx-3 px-3"
+            style="width: 100px"
+            @click="$store.dispatch('logout')"
+            v-if="token"
+            >Logout</button
           >
           <router-link
             to="/login"
             type="button"
             class="btn btn-info mx-3 px-2"
             style="width: 100px"
+            v-show="!token"
             >Login</router-link
-          >
-          <router-link
-            to="/signup"
-            type="button"
-            class="mx-auto btn btn-success px-2"
-            style="width: 100px"
-            >Register</router-link
           >
         </div>
       </div>
@@ -58,6 +61,27 @@
     <router-view></router-view>
   </div>
 </template>
+
+<script>
+import { mapState, mapActions } from 'vuex'
+
+export default {
+    computed: {
+        ...mapState({
+            token: state => state.token,
+        })
+    },
+    // created () {
+    //     this.getAllUsers();
+    // },
+    // methods: {
+    //     ...mapActions('users', {
+    //         getAllUsers: 'getAll',
+    //         deleteUser: 'delete'
+    //     })
+    // }
+};
+</script>
 
 <style>
 #app {

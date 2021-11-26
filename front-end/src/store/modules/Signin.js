@@ -11,72 +11,54 @@ export default {
         password: "",
         token: null,
         user: null,
-        isAuthenticated: false
     },
     mutations: {
-        handleSubmit(state, newVal, s, newS) {
-            var responseCode = newVal.status;
-            if (responseCode === 201) {
-                console.log('redirect to somewhere')
-                    // state.forward_url = '/'
-                router.push({ path: '/' })
-            }
-            console.log(newVal)
+        handleSubmit() {
+            router.push({ path: '/home' })
+
         },
         setStudent_id(state, newVal) {
             state.student_id = newVal;
+
         },
         setPassword(state, newVal) {
             state.password = newVal;
         },
         setToken(state, token) {
             state.token = token
+
         },
         setUser(state, userData) {
             state.user = userData
         },
-        // getAuthQuote(state, res) {
-        //     console.log(res)
-        // }
     },
     actions: {
         async handleSubmit({ commit, dispatch, state }) {
             if (state.student_id === "" || state.password === "") {
                 swal("Input Error", "Please Fill All Fields", "error");
             } else {
-                await axios.post('http://localhost:3001/sessions/create', {
-                    username: state.student_id,
+                await axios.post('http://127.0.0.1:8000/api/login', {
+                    student_id: state.student_id,
                     password: state.password
                 }).then(res => {
-                    sessionStorage.setItem('token', res.data.access_token)
-                    console.log(res)
+                    store.commit('setToken', res.data.token)
+                    store.commit('setUserID', res.data.user.student_id)
+                    sessionStorage.setItem('userID', res.data.user.student_id);
+                    sessionStorage.setItem('token', res.data.token);
+                    commit('handleSubmit')
+                        // console.log(store.state.token)
+                        // console.log(store.state.user_id)
+
                 }).catch(err => {
-                    if (err.response.status == 401) {
-                        swal('Input Error', 'Your Credentials Are Invalid, Please Check Your Student ID and Password', "error")
-                    } else {
-                        swal('Input Error', 'An Error Occured,Please Try Again', "error")
-                    }
+                    console.log(err)
+                        // if (err.response.status == 401 || err.response.status == 500) {
+                        //     swal('Input Error', 'Your Credentials Are Invalid, Please Check Your Student ID and Password', "error")
+                        // } else {
+                        //     swal('Internal Error', 'An Error Occured, Please Try Again', "error")
+                        // }
                 })
             }
         },
-        async attemptLogin({ commit }, token) {
-            commit('setToken', token)
-            try {
-                let response = await axios.post('auth/me', {
-                    headers: {
-                        'Authorization': 'Bearer ' + token
-                    }
-                })
-                commit('setUser', response.data)
-            } catch (error) {
-                console.log('failed')
-            }
-        },
-    },
-    getters: {
-        getAuth: state => {
-            return state.isAuthenticated
-        }
     },
     modules: {},
 };
