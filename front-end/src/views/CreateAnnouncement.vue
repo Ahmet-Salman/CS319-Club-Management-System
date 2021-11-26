@@ -30,7 +30,7 @@
                       <input
                         type="submit"
                         @click.prevent="
-                          $store.dispatch('ManageClubs/CreateAnnouncement')
+                          $store.dispatch('ManageClubs/CreateAnnouncement', $route.params.clubID)
                         "
                         class="btn btn-outline-secondary mr-1 btn-block"
                         value="Create Announcement"
@@ -57,6 +57,12 @@ export default {
         this.$store.commit('ManageClubs/setAnnouncement', newVal)
       },
     },
+    c_id: {
+      get() {},
+      set() {
+        this.$store.commit('ManageClubs/setClubID', $route.params.clubID)
+      }
+    }
   },
 };
 </script>

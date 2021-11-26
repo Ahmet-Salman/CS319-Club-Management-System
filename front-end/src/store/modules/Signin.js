@@ -15,7 +15,6 @@ export default {
     mutations: {
         handleSubmit() {
             router.push({ path: '/home' })
-
         },
         setStudent_id(state, newVal) {
             state.student_id = newVal;
@@ -33,7 +32,7 @@ export default {
         },
     },
     actions: {
-        async handleSubmit({ commit, dispatch, state }) {
+        async handleSubmit({ commit, state }) {
             if (state.student_id === "" || state.password === "") {
                 swal("Input Error", "Please Fill All Fields", "error");
             } else {
@@ -46,9 +45,6 @@ export default {
                     sessionStorage.setItem('userID', res.data.user.student_id);
                     sessionStorage.setItem('token', res.data.token);
                     commit('handleSubmit')
-                        // console.log(store.state.token)
-                        // console.log(store.state.user_id)
-
                 }).catch(err => {
                     console.log(err)
                         // if (err.response.status == 401 || err.response.status == 500) {

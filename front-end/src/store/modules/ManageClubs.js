@@ -2,6 +2,7 @@ import { createStore } from 'vuex'
 import axios from 'axios'
 import swal from 'sweetalert';
 import router from '../../router';
+import store from '@/store/index'
 
 
 
@@ -17,6 +18,7 @@ export default {
         eventDate: "",
         eventLocation: "",
         announcementMsg: "",
+        club: "",
     },
     mutations: {
         setEventName(state, val) {
@@ -42,6 +44,9 @@ export default {
         },
         testCancelEvent(state, id) {
             console.log("event with id: ", id, "has been cancelled")
+        },
+        setClubID(state, newVal) {
+            state.club = newVal
         }
     },
     actions: {
@@ -54,9 +59,24 @@ export default {
             }
 
         },
-        CreateAnnouncement({ commit, state }) {
+        async CreateAnnouncement({ commit, state }, club) {
+            // console.log("content: ", state.announcementMsg)
+            // console.log("club: ", club)
+            // console.log("Authorization: Token ", store.getters.getToken)
+            const objHeaders = {
+                "Authorization": `Token ${store.getters.getToken}`
+            }
             if (state.announcementMsg !== "") {
-                console.log('Announcement: ', state.announcementMsg)
+                await axios.post('http://127.0.0.1:8000/api/announcements', {
+                    content: state.announcementMsg,
+                    club: club
+                }, {
+                    headers: objHeaders
+                }).then(res => {
+                    console.log(res)
+                }).catch(err => {
+                    console.log(err)
+                })
             } else {
                 swal('Input Error', 'Announcement Cannot Be Empty', 'error')
             }

@@ -33,21 +33,21 @@ export default createStore({
     },
     actions: {
         async getAuthQuote({ commit, state }) {
-            // console.log(state.token)
-            // console.log(state.user_id)
-            // console.log(sessionStorage.getItem('token'))
-            // commit('setToken', sessionStorage.getItem('token'))
-            // await axios.get('http://localhost:3001/api/protected/random-quote', {
-            //     headers: { "Authorization": `Bearer ${state.token}` }
-            // }).then(res => {
-            //     commit('printQuote', res)
-            // }).catch(err => {
-            //     if (err.response.status == 401) {
-            //         swal('Input Error', 'You Are Not Authenticated', 'error')
-            //     } else {
-            //         swal('Input Error', 'An Error Occured', 'error')
-            //     }
-            // })
+            console.log(state.token)
+            console.log(state.user_id)
+                // console.log(sessionStorage.getItem('token'))
+                // commit('setToken', sessionStorage.getItem('token'))
+                // await axios.get('http://localhost:3001/api/protected/random-quote', {
+                //     headers: { "Authorization": `Bearer ${state.token}` }
+                // }).then(res => {
+                //     commit('printQuote', res)
+                // }).catch(err => {
+                //     if (err.response.status == 401) {
+                //         swal('Input Error', 'You Are Not Authenticated', 'error')
+                //     } else {
+                //         swal('Input Error', 'An Error Occured', 'error')
+                //     }
+                // })
         },
 
         async logout({ commit, state }) {
@@ -62,7 +62,14 @@ export default createStore({
             })
         }
     },
-    getters: {},
+    getters: {
+        getToken: (state) => {
+            return state.token
+        },
+        getUserID: (state) => {
+            return state.user_id
+        }
+    },
 
     // modules
     modules: {
