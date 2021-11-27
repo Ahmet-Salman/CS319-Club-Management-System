@@ -1,0 +1,156 @@
+<template>
+      <div>
+    <h1>Hello Manager of club {{ club_id }}</h1>
+    <div class="container">
+      <div class="main-body">
+        <div class="row">
+          <div class="col-lg-2">
+          </div>
+          <div class="col-lg-8">
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="d-flex align-items-center mb-3">
+                      All Events
+                    </h5>
+                    <ul class="list-group list-group-flush">
+                      <li v-for="req in JoinRequests" :key="req.id"
+                        class="
+                          list-group-item
+                          d-flex
+                          justify-content-between
+                          align-items-center
+                          flex-wrap
+                        "
+                      >
+                        <h6 class="mb-0">{{req.name}}</h6>
+                        <span
+                          ><button class="btn btn-outline-secondary mx-2" @click="$store.dispatch('ManageClubs/testAccept', req.id)">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              fill="currentColor"
+                              class="bi bi-person-check-fill"
+                              viewBox="0 0 16 16"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"
+                              />
+                              <path
+                                d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
+                              />
+                            </svg>
+                          </button>
+                          <button class="btn btn-outline-primary mx-2" @click="$store.dispatch('ManageClubs/testReject', req.id)">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              fill="currentColor"
+                              class="bi bi-person-x-fill"
+                              viewBox="0 0 16 16"
+                            >
+                              <path
+                                fill-rule="evenodd"
+                                d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6.146-2.854a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z"
+                              />
+                            </svg></button
+                        ></span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="d-flex align-items-center mb-3">
+                      All Announcements
+                    </h5>
+                    <ul class="list-group list-group-flush">
+                      <li v-for="ann in announcements" :key="ann.id" 
+                        class="
+                          list-group-item
+                          d-flex
+                          justify-content-between
+                          align-items-center
+                          flex-wrap
+                        "
+                      >
+                        <h6 class="badge badge-primary even-larger-badge mb-0">ID: {{ann.id}}</h6>
+                        <h6 class="badge badge-info even-larger-badge mb-0">Content: {{ann.content}} </h6>
+                        <!-- <h6 class="badge badge-info even-larger-badge mb-0">Location: {{ann.date}} </h6> -->
+                        <span
+                          ></span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "ClubDetails",
+  data(){
+    return {
+      club_id: this.$route.params.clubID,
+      JoinRequests: [
+            { id: 1, name: 'Member 1' },
+            { id: 2, name: 'Member 2' },
+            { id: 5, name: 'Member 5' },
+            { id: 7, name: 'Member 7' },
+            { id: 9, name: 'Member 9' },
+        ],
+        announcements: []
+    }
+  },
+  methods: {
+  },
+  async mounted() {
+      await this.$store.dispatch('ClubDetails/getAnnouncements', this.club_id)
+      console.log("After dispatch function")
+      this.announcements = this.$store.state.ClubDetails.announcements
+  },
+  computed: {
+  }
+};
+</script>
+
+<style>
+body {
+  background: #f7f7ff;
+  margin-top: 20px;
+}
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 0 solid transparent;
+  border-radius: 0.25rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%),
+    0 2px 6px 0 rgb(206 206 238 / 54%);
+}
+.me-2 {
+  margin-right: 0.5rem !important;
+}
+.badge.even-larger-badge {
+  font-size: 0.9em;
+}
+</style>

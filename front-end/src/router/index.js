@@ -8,6 +8,7 @@ import PageNotFound from '../views/PageNotFound.vue'
 import ManageClub from '../views/ManageClub.vue'
 import CreateEvent from '../views/CreateEvent.vue'
 import CreateAnnouncement from '../views/CreateAnnouncement.vue'
+import clubDetails from '../views/ClubDetails.vue'
 import store from '@/store/index'
 
 const routes = [{
@@ -111,6 +112,19 @@ const routes = [{
         path: '/createAnnouncement/:clubID',
         name: 'CreateAnnouncement',
         component: CreateAnnouncement,
+        props: true,
+        beforeEnter: (to, from, next) => {
+            if (store.state.token == null) {
+                next("/login");
+            } else {
+                next();
+            }
+        }
+    },
+    {
+        path: '/clubDetails/:clubID',
+        name: 'ClubDetails',
+        component: clubDetails,
         props: true,
         beforeEnter: (to, from, next) => {
             if (store.state.token == null) {

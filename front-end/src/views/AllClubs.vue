@@ -49,7 +49,7 @@
             </svg>
             Manage
           </router-link>
-          <button type="button" class="btn btn-outline-dark mr-1">
+          <router-link :to="{name: 'ClubDetails', params: {clubID: clubs.id}}" type="button" class="btn btn-outline-dark mr-1">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -66,7 +66,7 @@
               />
             </svg>
             Details
-          </button>
+          </router-link>
 
           <button type="button" class="btn btn-outline-primary mr-1">
             <svg

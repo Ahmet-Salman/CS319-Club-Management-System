@@ -46,12 +46,12 @@ export default {
                     sessionStorage.setItem('token', res.data.token);
                     commit('handleSubmit')
                 }).catch(err => {
-                    console.log(err)
-                        // if (err.response.status == 401 || err.response.status == 500) {
-                        //     swal('Input Error', 'Your Credentials Are Invalid, Please Check Your Student ID and Password', "error")
-                        // } else {
-                        //     swal('Internal Error', 'An Error Occured, Please Try Again', "error")
-                        // }
+                    // console.log(err)
+                    if (err.response.status == 401 || err.response.status == 500) {
+                        swal('Input Error', 'Your Credentials Are Invalid, Please Check Your Student ID and Password', "error")
+                    } else {
+                        swal('Internal Error', 'An Error Occured, Please Try Again', "error")
+                    }
                 })
             }
         },
