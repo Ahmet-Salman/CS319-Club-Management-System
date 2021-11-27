@@ -2,6 +2,9 @@
       <div>
     <h1>Hello Manager of club {{ club_id }}</h1>
     <div class="container">
+      <router-link :to="{name: 'Manage', params: {clubID: $route.params.clubID}}"><button class="btn btn btn-outline-success mx-1">
+                      Go To Club Management
+            </button></router-link>
       <div class="main-body">
         <div class="row">
           <div class="col-lg-2">
@@ -72,7 +75,7 @@
                     <h5 class="d-flex align-items-center mb-3">
                       All Announcements
                     </h5>
-                    <ul class="list-group list-group-flush">
+                    <ul v-if="announcements.length" class="list-group list-group-flush">
                       <li v-for="ann in announcements" :key="ann.id" 
                         class="
                           list-group-item
@@ -85,10 +88,26 @@
                         <h6 class="badge badge-primary even-larger-badge mb-0">ID: {{ann.id}}</h6>
                         <h6 class="badge badge-info even-larger-badge mb-0">Content: {{ann.content}} </h6>
                         <!-- <h6 class="badge badge-info even-larger-badge mb-0">Location: {{ann.date}} </h6> -->
-                        <span
-                          ></span>
+                        <span><button class="btn btn-outline-info mx-2" @click="$store.dispatch('ClubDetails/deleteAnnouncement', { club_id: club_id, annId: ann.id })">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              fill="currentColor"
+                              class="bi bi-x-square"
+                              viewBox="0 0 16 16"
+                            >
+                              <path
+                                d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"
+                              />
+                              <path
+                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
+                              />
+                            </svg> Delete
+                          </button></span>
                       </li>
                     </ul>
+                    <h4 v-if="!announcements.length">There are No Announcements</h4>
                   </div>
                 </div>
               </div>
@@ -113,7 +132,9 @@ export default {
             { id: 7, name: 'Member 7' },
             { id: 9, name: 'Member 9' },
         ],
-        announcements: []
+        announcements: [],
+        userID: sessionStorage.getItem('userID')
+        
     }
   },
   methods: {

@@ -84,7 +84,11 @@ at the top there is a delete button for the club
                   </li>
                 </ul>
               </div>
+              
             </div>
+            <router-link :to="{name: 'ClubDetails', params: {clubID: $route.params.clubID}}"><button class="btn btn btn-outline-success mx-1">
+                      Go To Club Details
+            </button></router-link>
           </div>
           <div class="col-lg-8">
             <div class="row">

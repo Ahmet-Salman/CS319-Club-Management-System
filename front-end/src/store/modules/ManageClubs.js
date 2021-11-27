@@ -74,6 +74,9 @@ export default {
                     headers: objHeaders
                 }).then(res => {
                     console.log(res)
+                    swal("Success", "Announcement Has Been Created Successfully", "success");
+                    router.push({ path: `/manage/${club}` })
+
                 }).catch(err => {
                     console.log(err)
                 })

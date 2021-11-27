@@ -13,26 +13,39 @@ export default {
     mutations: {
         setAnnouncements(state, newArr) {
             state.announcements = newArr
-            console.log("Inside Mutation")
         },
     },
     actions: {
         async getAnnouncements({ commit, state }, club) {
-            // console.log("getting the announcements for club: ", club)
             const params = new URLSearchParams([
                 ['clubId', club]
             ]);
-            // const objHeaders = {
-            //         "Authorization": `Token ${store.getters.getToken}`
-            //     }
-            await axios.get("http://127.0.0.1:8000/api/announcements", { params }).then(res => {
-                console.log("inside dispatch function")
-                commit('setAnnouncements', res.data)
 
+            await axios.get("http://127.0.0.1:8000/api/announcements", {
+                params
+            }).then(res => {
+                commit('setAnnouncements', res.data)
             }).catch(err => {
-                console.log(err)
+                swal('Errpr', 'An error Occured, Please Try Again', 'error')
             })
         },
+
+        async deleteAnnouncement({ commit }, payload) {
+            // console.log(payload.club_id)
+            // console.log(payload.annId)
+            var annId = payload.annId
+            const objHeaders = {
+                "Authorization": `Token ${store.getters.getToken}`
+            }
+
+            await axios.delete(`http://127.0.0.1:8000/api/announcement/${annId}`, {
+                headers: objHeaders
+            }).then(res => {
+                location.reload();
+            }).catch(err => {
+                swal('Errpr', 'An error Occured, Please Try Again', 'error')
+            })
+        }
     },
     getters: {
         getAllAnnouncements(state) {
