@@ -30,7 +30,9 @@ export default {
             { id: 14, name: 'Club14', catagory: 'catagory14', manager: 'Person14' },
             { id: 15, name: 'Club15', catagory: 'catagory15', manager: 'Person15' },
             { id: 16, name: 'Club16', catagory: 'catagory16', manager: 'Person16' },
-        ]
+        ],
+        testAllClubs: [],
+        testAllManagerClub: []
 
     },
     mutations: {
@@ -38,8 +40,9 @@ export default {
             // router.go()
         },
         setAllClubs(state, res) {
-            // parse the recieved JSON response and convert it to an array
-            // Then set the resulting array to its respective array
+            state.testAllClubs = res
+                // parse the recieved JSON response and convert it to an array
+                // Then set the resulting array to its respective array
         },
 
         setAllMemberClubs(state, res) {
@@ -47,9 +50,13 @@ export default {
             // Then set the resulting array to its respective array
         },
 
-        setAllManagerClubs(state, res) {
-            // parse the recieved JSON response and convert it to an array
-            // Then set the resulting array to its respective array
+        setAllManagerClubs(state) {
+            var managerArray = state.testAllClubs.filter((value) => {
+                    return value.owner == 5 || value.owner == 6 || value.owner == 2
+                })
+                // console.log(managerArray)
+                // parse the recieved JSON response and convert it to an array
+                // Then set the resulting array to its respective array
         },
 
         setPendingRequests(state, res) {
@@ -67,8 +74,9 @@ export default {
         }
     },
     actions: {
-        async setAllClubs({ commit }) {
-            await axios.get('http://localhost:3000/clubs')
+        async setAllClubs({ commit, state }) {
+            // console.log("update all clubs")
+            await axios.get('http://127.0.0.1:8000/api/clubs')
                 .then(res => {
                     commit('setAllClubs', res.data) // returns the array of data
                 }).catch(err => {
@@ -86,12 +94,13 @@ export default {
         },
 
         async setAllManagerClubs({ commit }) {
-            await axios.get('http://localhost:3000/:user_id/clubsManager')
-                .then(res => {
-                    commit('setAllManagerClubs', res.data)
-                }).catch(err => {
-                    console.log(err)
-                })
+            commit('setAllManagerClubs')
+                // await axios.get('http://localhost:3000/:user_id/clubsManager')
+                //     .then(res => {
+                //         commit('setAllManagerClubs', res.data)
+                //     }).catch(err => {
+                //         console.log(err)
+                //     })
         },
 
         async setPendingRequests({ commit }) {

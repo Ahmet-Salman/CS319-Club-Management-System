@@ -1,15 +1,28 @@
 <template>
       <div>
-    <h1>Hello Manager of club {{ club_id }}</h1>
+    <h1>Hello Manager of club {{ club_id }} called {{clubName}}</h1>
     <div class="container">
-      <router-link :to="{name: 'Manage', params: {clubID: $route.params.clubID}}"><button class="btn btn btn-outline-success mx-1">
-                      Go To Club Management
-            </button></router-link>
+      
       <div class="main-body">
         <div class="row">
-          <div class="col-lg-2">
+          <div class="col-lg-4">
+            <div class="card">
+              <div class="card-body">
+                <div class="d-flex flex-column align-items-center text-center">
+                  <div class="mt-3" style="word-wrap: break-word; width: 300px;">
+                    <h3>Club Description</h3>
+                    <hr>
+                    <h5>{{clubDescription}}</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <router-link :to="{name: 'Manage', params: {clubID: $route.params.clubID}}"><button class="btn btn btn-outline-success mx-1">
+            Go To Club Management
+            </button></router-link>
           </div>
           <div class="col-lg-8">
+            
             <div class="row">
               <div class="col-sm-12">
                 <div class="card">
@@ -133,7 +146,9 @@ export default {
             { id: 9, name: 'Member 9' },
         ],
         announcements: [],
-        userID: sessionStorage.getItem('userID')
+        userID: sessionStorage.getItem('userID'),
+        clubDescription: "",
+        clubName: ""
         
     }
   },
@@ -141,8 +156,11 @@ export default {
   },
   async mounted() {
       await this.$store.dispatch('ClubDetails/getAnnouncements', this.club_id)
-      console.log("After dispatch function")
       this.announcements = this.$store.state.ClubDetails.announcements
+      await this.$store.dispatch('ClubDetails/getClubDescription', this.club_id)
+      this.clubDescription = this.$store.state.ClubDetails.clubDescription
+      this.clubName = this.$store.state.ClubDetails.clubName
+      // console.log("Club Desc: ", this.clubDescription, ", club name: ", this.clubName)
   },
   computed: {
   }

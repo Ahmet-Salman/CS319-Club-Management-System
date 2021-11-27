@@ -65,7 +65,7 @@
                     <div class="col-md-12">
                       <input
                         type="submit"
-                        @click.prevent="$store.dispatch('ManageClubs/CreateEvent')"
+                        @click.prevent="$store.dispatch('ManageClubs/CreateEvent', $route.params.clubID)"
                         class="btn btn-outline-secondary mr-1 btn-block"
                         value="Create Event"
                       />

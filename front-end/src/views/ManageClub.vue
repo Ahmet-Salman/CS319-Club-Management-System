@@ -201,6 +201,7 @@ at the top there is a delete button for the club
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: "ManageClubs",
   data(){
@@ -221,6 +222,17 @@ export default {
     }
   },
   methods: {
+    getdateCreated() {
+      axios.get(`http://127.0.0.1:8000/api/club/${this.club_id}`).then(res => {
+        console.log(res)
+      }).catch(err => {
+        console.log(err)
+      })
+      // console.log("Get Name")
+    }
+  },
+  mounted() {
+    this.getdateCreated()
   },
 };
 </script>

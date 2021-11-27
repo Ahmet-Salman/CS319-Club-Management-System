@@ -9,11 +9,18 @@ export default {
     namespaced: true,
     state: {
         announcements: [],
+        clubDescription: "",
+        clubName: "",
     },
     mutations: {
         setAnnouncements(state, newArr) {
             state.announcements = newArr
         },
+        setClubDetails(state, payload) {
+            state.clubDescription = payload.desc
+            state.clubName = payload.name
+                // console.log("Club Desc: ", state.clubDescription, ", club name: ", state.clubName)
+        }
     },
     actions: {
         async getAnnouncements({ commit, state }, club) {
@@ -45,7 +52,20 @@ export default {
             }).catch(err => {
                 swal('Errpr', 'An error Occured, Please Try Again', 'error')
             })
-        }
+        },
+
+        async getClubDescription({ commit }, clubId) {
+            await axios.get(`http://127.0.0.1:8000/api/club/${clubId}`).then(res => {
+                // console.log(res.data.name)
+                // console.log(res.data.description)
+                commit('setClubDetails', {
+                    desc: res.data.description,
+                    name: res.data.name
+                })
+            }).catch(err => {
+                console.log(err)
+            })
+        },
     },
     getters: {
         getAllAnnouncements(state) {

@@ -50,12 +50,33 @@ export default {
         }
     },
     actions: {
-        CreateEvent({ commit, state }) {
+        async CreateEvent({ commit, state }, clubID) {
             var today = new Date(new Date().toString().split('GMT')[0] + ' UTC').toISOString()
-            if (today > state.eventDate) {
-                swal('Input Error', 'Time Chosen Cannot Be In The Past', 'error')
+            if (state.eventDescription == "" || state.eventLocation == "" || state.eventName == "" || state.eventDate == "") {
+                swal('Input Error', 'All Fields Must Be Entered', 'error')
             } else {
-                console.log('Event ', state.eventName, ' is taking place in ', state.eventLocation, ' at time: ', state.eventDate, ' and its description is ', state.eventDescription)
+                if (today > state.eventDate) {
+                    swal('Input Error', 'Time Chosen Cannot Be In The Past', 'error')
+                } else {
+                    const objHeaders = {
+                        "Authorization": `Token ${store.getters.getToken}`
+                    }
+                    await axios.post("http://127.0.0.1:8000/api/events", {
+                            title: state.eventName,
+                            description: state.eventDescription,
+                            location: state.eventLocation,
+                            club: clubID
+                        }, {
+                            headers: objHeaders
+                        }).then(res => {
+                            swal("Success", "Event Has Been Created Successfully", "success");
+                            router.push({ path: `/manage/${clubID}` })
+                        }).catch(err => {
+                            console.log(err)
+                        })
+                        // console.log('Event ', state.eventName, ' is taking place in ', state.eventLocation, ' at time: ', state.eventDate, ' and its description is ', state.eventDescription)
+                }
+
             }
 
         },
