@@ -37,6 +37,7 @@ export default {
             state.announcementMsg = val
         },
         testAccept(state, id) {
+            swal("Success", `You have Accepted Memeber ${id}, "success`)
             console.log("Member with id: ", id, "has been accepted")
         },
         testReject(state, id) {
@@ -65,6 +66,7 @@ export default {
                             title: state.eventName,
                             description: state.eventDescription,
                             location: state.eventLocation,
+                            date: state.eventDate,
                             club: clubID
                         }, {
                             headers: objHeaders

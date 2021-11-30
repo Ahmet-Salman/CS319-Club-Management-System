@@ -2,6 +2,7 @@ import { createStore } from 'vuex'
 import axios from 'axios'
 import swal from 'sweetalert';
 import router from '../../router';
+import store from '@/store/index'
 
 
 
@@ -125,7 +126,36 @@ export default {
             }).catch(err => {
                 console.log(err)
             })
-        }
+        },
+
+        async deleteClub({ commit }, clubID) {
+            var isConfirmed = null
+
+            await swal("Are You Sure You Want To Delete Your Club?", {
+                dangerMode: true,
+                buttons: true,
+            }).then(res => {
+                isConfirmed = res
+            })
+
+            if (isConfirmed == true) {
+                const objHeaders = {
+                    "Authorization": `Token ${store.getters.getToken}`
+                }
+
+                await axios.delete(`http://127.0.0.1:8000/api/club/${clubID}`, {
+                    headers: objHeaders
+                }).then(res => {
+                    location.reload();
+                }).catch(err => {
+                    swal('Error', 'An error Occured, Please Try Again', 'error')
+                })
+            }
+
+
+
+
+        },
     },
     getters: {
         getAllClubs(state) {

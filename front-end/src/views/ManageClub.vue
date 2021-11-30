@@ -9,21 +9,49 @@ at the top there is a delete button for the club
     <h1>Hello Manager of club {{ club_id }}</h1>
     <div class="container">
       <div class="main-body">
+        
         <div class="row">
+          
           <div class="col-lg-4">
+            
             <div class="card">
+              
               <div class="card-body">
                 <div class="d-flex flex-column align-items-center text-center">
                   <div class="mt-3">
-                    <router-link :to="{name: 'CreateEvent', params: {clubID: $route.params.clubID}}"><button class="btn btn-outline-dark mx-1">
-                      Create Event
-                    </button> </router-link>
-                    <router-link :to="{name: 'CreateAnnouncement', params: {clubID: $route.params.clubID}}"><button class="btn btn btn-outline-info mx-1">
-                      Send Announcment
-                    </button></router-link>
+                    <router-link
+                      :to="{
+                        name: 'CreateEvent',
+                        params: { clubID: $route.params.clubID },
+                      }"
+                      ><button class="btn btn-outline-dark mx-1">
+                        Create Event
+                      </button>
+                    </router-link>
+                    <router-link
+                      :to="{
+                        name: 'CreateAnnouncement',
+                        params: { clubID: $route.params.clubID },
+                      }"
+                      ><button class="btn btn btn-outline-info mx-1">
+                        Send Announcment
+                      </button></router-link
+                    >
                   </div>
+                  
                 </div>
                 <hr class="my-4" />
+                <router-link
+              :to="{
+                name: 'Members',
+                params: { clubID: $route.params.clubID },
+              }"
+              ><button class="btn btn btn-outline-success mx-1">
+                Go To Members List (To Be Implemented)
+              </button></router-link
+            >
+                <hr class="my-4" />
+                
                 <ul class="list-group list-group-flush">
                   <li
                     class="
@@ -80,15 +108,20 @@ at the top there is a delete button for the club
                       </svg>
                       Created:
                     </h6>
-                    <span class="text-secondary">13/02/2021</span>
+                    <span class="text-secondary">{{ date }}</span>
                   </li>
                 </ul>
               </div>
-              
             </div>
-            <router-link :to="{name: 'ClubDetails', params: {clubID: $route.params.clubID}}"><button class="btn btn btn-outline-success mx-1">
-                      Go To Club Details
-            </button></router-link>
+            <router-link
+              :to="{
+                name: 'ClubDetails',
+                params: { clubID: $route.params.clubID },
+              }"
+              ><button class="btn btn btn-outline-success mx-1">
+                Go To Club Details
+              </button></router-link
+            >
           </div>
           <div class="col-lg-8">
             <div class="row">
@@ -99,7 +132,9 @@ at the top there is a delete button for the club
                       Join Requests
                     </h5>
                     <ul class="list-group list-group-flush">
-                      <li v-for="req in JoinRequests" :key="req.id"
+                      <li
+                        v-for="req in JoinRequests"
+                        :key="req.id"
                         class="
                           list-group-item
                           d-flex
@@ -108,9 +143,14 @@ at the top there is a delete button for the club
                           flex-wrap
                         "
                       >
-                        <h6 class="mb-0">{{req.name}}</h6>
+                        <h6 class="mb-0">{{ req.name }}</h6>
                         <span
-                          ><button class="btn btn-outline-secondary mx-2" @click="$store.dispatch('ManageClubs/testAccept', req.id)">
+                          ><button
+                            class="btn btn-outline-secondary mx-2"
+                            @click="
+                              $store.dispatch('ManageClubs/testAccept', req.id)
+                            "
+                          >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="16"
@@ -128,7 +168,12 @@ at the top there is a delete button for the club
                               />
                             </svg>
                           </button>
-                          <button class="btn btn-outline-primary mx-2" @click="$store.dispatch('ManageClubs/testReject', req.id)">
+                          <button
+                            class="btn btn-outline-primary mx-2"
+                            @click="
+                              $store.dispatch('ManageClubs/testReject', req.id)
+                            "
+                          >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="16"
@@ -157,7 +202,9 @@ at the top there is a delete button for the club
                       Current Events
                     </h5>
                     <ul class="list-group list-group-flush">
-                      <li v-for="event in CurrentEvents" :key="event.id" 
+                      <li
+                        v-for="req in events"
+                        :key="req.id"
                         class="
                           list-group-item
                           d-flex
@@ -166,11 +213,44 @@ at the top there is a delete button for the club
                           flex-wrap
                         "
                       >
-                        <h6 class="badge badge-primary even-larger-badge mb-0">{{event.name}}</h6>
-                        <h6 class="badge badge-info even-larger-badge mb-0">Time: {{event.time}} </h6>
-                        <h6 class="badge badge-info even-larger-badge mb-0">Location: {{event.location}} </h6>
-                        <span
-                          ><button class="btn btn-outline-info mx-2" @click="$store.dispatch('ManageClubs/testCancelEvent', event.id)">
+                        <h6 class="badge badge-primary even-larger-badge mb-0">
+                          Title: {{ req.title }}
+                        </h6>
+                        <span>
+                          <button
+                            class="btn btn-outline-dark mr-1"
+                            @click="
+                              openModal({
+                                title: req.title,
+                                loc: req.location,
+                                time: req.date,
+                                desc: req.description,
+                              })
+                            "
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              fill="currentColor"
+                              class="bi bi-info-circle"
+                              viewBox="0 0 16 16"
+                            >
+                              <path
+                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                              />
+                              <path
+                                d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
+                              />
+                            </svg>
+                            Details
+                          </button>
+                          <button
+                            class="btn btn-outline-info mx-2"
+                            @click="
+                              $store.dispatch('ClubDetails/deleteEvent', req.id)
+                            "
+                          >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="16"
@@ -185,8 +265,10 @@ at the top there is a delete button for the club
                               <path
                                 d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
                               />
-                            </svg> Cancel Event
-                          </button></span>
+                            </svg>
+                            Cancel Event
+                          </button></span
+                        >
                       </li>
                     </ul>
                   </div>
@@ -201,38 +283,55 @@ at the top there is a delete button for the club
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 export default {
   name: "ManageClubs",
-  data(){
+  data() {
     return {
       club_id: this.$route.params.clubID,
+      dateOfCreation: "",
       JoinRequests: [
-            { id: 1, name: 'Member 1' },
-            { id: 2, name: 'Member 2' },
-            { id: 5, name: 'Member 5' },
-            { id: 7, name: 'Member 7' },
-            { id: 9, name: 'Member 9' },
-        ],
-        CurrentEvents: [
-            { id: 3, name: 'Event 3', time: '12:00 ', location: 'B building' },
-            { id: 6, name: 'Event 6', time: '13:00', location: 'SA building' },
-            { id: 8, name: 'Event 8', time: '14:00', location: 'EE building' },
-        ],        
-    }
+        { id: 1, name: "Member 1" },
+        { id: 2, name: "Member 2" },
+        { id: 5, name: "Member 5" },
+        { id: 7, name: "Member 7" },
+        { id: 9, name: "Member 9" },
+      ],
+      events: [],
+    };
   },
   methods: {
     getDateCreated() {
-      axios.get(`http://127.0.0.1:8000/api/club/${this.club_id}`).then(res => {
-        console.log(res)
-      }).catch(err => {
-        console.log(err)
-      })
-      // console.log(this.club_id)
-    }
+      axios
+        .get(`http://127.0.0.1:8000/api/club/${this.club_id}`)
+        .then((res) => {
+          var DOC = new Date(res.data.date);
+          this.date = `${DOC.getDate()}/${DOC.getMonth() + 1}/${DOC.getFullYear()}`;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
+    openModal(data) {
+      var title = data.title;
+      var location = data.loc;
+      var time = new Date(data.time);
+      var description = data.desc;
+
+      swal({
+        title: `Event Title: ${title}`,
+        text: `Event Location: ${location}\n\n Event Date: ${time.getDate()}/${time.getMonth()}/${time.getFullYear()}\n\n Event Time: ${time.getHours()}:${time.getMinutes()} \n\n Event Description: ${description}`,
+        icon: "info",
+        button: "Close",
+      });
+    },
   },
-  mounted() {
-    this.getDateCreated()
+  async mounted() {
+    this.getDateCreated();
+
+    await this.$store.dispatch("ClubDetails/getEvents", this.club_id);
+    this.events = this.$store.state.ClubDetails.events;
   },
 };
 </script>

@@ -99,6 +99,8 @@ export default {
                 swal('Error', 'An error Occured, Please Try Again', 'error')
             })
         },
+
+
     },
     getters: {
         getAllAnnouncements(state) {

@@ -9,6 +9,8 @@ import ManageClub from '../views/ManageClub.vue'
 import CreateEvent from '../views/CreateEvent.vue'
 import CreateAnnouncement from '../views/CreateAnnouncement.vue'
 import clubDetails from '../views/ClubDetails.vue'
+import Profile from '../views/Profile.vue'
+import members from '../views/MembersList.vue'
 import store from '@/store/index'
 
 const routes = [{
@@ -125,6 +127,32 @@ const routes = [{
         path: '/clubDetails/:clubID',
         name: 'ClubDetails',
         component: clubDetails,
+        props: true,
+        beforeEnter: (to, from, next) => {
+            if (store.state.token == null) {
+                next("/login");
+            } else {
+                next();
+            }
+        }
+    },
+    {
+        path: '/profile',
+        name: 'Profile',
+        component: Profile,
+        props: true,
+        beforeEnter: (to, from, next) => {
+            if (store.state.token == null) {
+                next("/login");
+            } else {
+                next();
+            }
+        }
+    },
+    {
+        path: '/members/:clubID',
+        name: 'Members',
+        component: members,
         props: true,
         beforeEnter: (to, from, next) => {
             if (store.state.token == null) {

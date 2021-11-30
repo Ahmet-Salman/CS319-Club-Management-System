@@ -13,7 +13,7 @@
     <thead>
       <tr class="bg-info">
         <th>Club Name</th>
-        <th>Catagory</th>
+        <!-- <th>Catagory</th> -->
         <th>Manager</th>
         <th>Status</th>
         <th>Options</th>
@@ -23,7 +23,7 @@
       <!-- We loop over the AllManagerClub Array here -->
   <tr v-for="clubs in AllManagerClub" :key="clubs.id" class="table-info">
         <td>{{clubs.name}}</td>
-        <td>{{clubs.description}}</td>
+        <!-- <td>{{clubs.description}}</td> -->
         <td>{{clubs.owner}}</td>
         <td style="color: white" class="bg-danger">Manager</td>
         <td>
@@ -68,7 +68,7 @@
             Details
           </router-link>
 
-          <button type="button" class="btn btn-outline-primary mr-1">
+          <button type="button" class="btn btn-outline-primary mr-1" @click="$store.dispatch('AllClubs/deleteClub', clubs.id)">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -89,7 +89,7 @@
       <!-- We loop over AllClubMember Array here -->
         <tr v-for="clubs in AllMemberClub" :key="clubs.id" class="table-info">
         <td>{{clubs.name}}</td>
-        <td>{{clubs.catagory}}</td>
+        <!-- <td>{{clubs.catagory}}</td> -->
         <td>{{clubs.manager}}</td>
         <td style="color: white" class="bg-success">Member</td>
         <td>
@@ -138,7 +138,7 @@
       <!-- We will loop over pendingRequests here -->
       <tr v-for="clubs in pendingRequests" :key="clubs.id" class="table-info">
         <td>{{clubs.name}}</td>
-        <td>{{clubs.catagory}}</td>
+        <!-- <td>{{clubs.catagory}}</td> -->
         <td>{{clubs.manager}}</td>
         <td style="color: white; background-color: #C632F5 ">Waiting For Response</td>
         <td>
@@ -188,7 +188,7 @@
       <!-- we loop over AllClubs array here -->
       <tr v-for="clubs in AllClubs" :key="clubs.id" class="table-info">
         <td>{{clubs.name}}</td>
-        <td>{{clubs.catagory}}</td>
+        <!-- <td>{{clubs.catagory}}</td> -->
         <td>{{clubs.manager}}</td>
         <td style="color: white" class="bg-info">Unaffiliated</td>
         <td>
@@ -242,7 +242,7 @@
       <br>
       <tr v-for="clubs in testAllManagerClub" :key="clubs.id" class="table-info">
         <td>{{clubs.name}}</td>
-        <td>{{clubs.description}}</td>
+        <!-- <td>{{clubs.description}}</td> -->
         <td>{{clubs.owner}}</td>
         <td style="color: white" class="bg-info">testing</td>
         <td>

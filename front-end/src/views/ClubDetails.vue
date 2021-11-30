@@ -28,7 +28,7 @@
             <div class="row">
               <div class="col-sm-12">
                 <div class="card">
-                  <div class="card-body">
+                  <!-- <div class="card-body">
                     <h5 class="d-flex align-items-center mb-3">All Events</h5>
                     <ul class="list-group list-group-flush">
                       <li
@@ -46,7 +46,7 @@
                           Title: {{ req.title }}
                         </h6>
                         <span>
-                          <button class="btn btn-outline-dark mr-1" @click="openModal({title: req.title, loc: req.location, time: 'to Be implemented', desc: req.description })">
+                          <button class="btn btn-outline-dark mr-1" @click="openModal({title: req.title, loc: req.location, time: req.date, desc: req.description })">
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="16"
@@ -93,7 +93,7 @@
                         >
                       </li>
                     </ul>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -203,12 +203,15 @@ export default {
     openModal(data) {
       var title = data.title
       var location = data.loc
-      var time = data.time
+      var time = new Date(data.time)
+
+    // var dateAndTime = new Date(time)
+
       var description = data.desc
 
       swal({
   title: `Event Title: ${title}`,
-  text: `Event Location: ${location}\n\n Event Time: ${time}\n\n Event Description: ${description}`,
+  text: `Event Location: ${location}\n\n Event Date: ${time.getDate()}/${time.getMonth()}/${time.getFullYear()}\n\n Event Time: ${time.getHours()}:${time.getMinutes()} \n\n Event Description: ${description}`,
   icon: "info",
   button: "Close",
 });

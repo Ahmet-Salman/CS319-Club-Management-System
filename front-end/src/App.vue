@@ -37,6 +37,14 @@
             v-if="token"
             >All Clubs</router-link
           >
+          <router-link
+            to="/profile"
+            type="button"
+            class="btn btn-info mr-3 px-1"
+            style="width: 100px"
+            v-if="token"
+            >Profile</router-link
+          >
           <button
             to="/signup"
             type="button"
@@ -105,3 +113,4 @@ export default {
   color: #42b983;
 }
 </style>
+
