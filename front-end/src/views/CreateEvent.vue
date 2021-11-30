@@ -82,7 +82,6 @@
 </template>
 
 <script>
-// We need a button to go back to the manage page
 export default {
     computed: {
         name: {

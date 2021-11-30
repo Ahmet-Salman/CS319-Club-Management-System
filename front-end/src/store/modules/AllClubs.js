@@ -21,10 +21,7 @@ export default {
             { id: 6, name: 'Club6', catagory: 'catagory6', manager: 'Person6' },
             { id: 12, name: 'Club12', catagory: 'catagory12', manager: 'Person12' },
         ],
-        AllManagerClub: [
-            { id: 4, name: 'Club4', catagory: 'catagory4', manager: 'Person4' },
-            { id: 8, name: 'Club8', catagory: 'catagory8', manager: 'Person8' },
-        ],
+        AllManagerClub: [],
         pendingRequests: [
             { id: 13, name: 'Club13', catagory: 'catagory13', manager: 'Person13' },
             { id: 14, name: 'Club14', catagory: 'catagory14', manager: 'Person14' },
@@ -51,10 +48,15 @@ export default {
         },
 
         setAllManagerClubs(state) {
+            var userID = sessionStorage.getItem('userID')
+                // console.log(userID)
             var managerArray = state.testAllClubs.filter((value) => {
-                    return value.owner == 5 || value.owner == 6 || value.owner == 2
-                })
+                return value.owner == userID
+            })
+
+            state.AllManagerClub = managerArray
                 // console.log(managerArray)
+                // state.testAllManagerClub = managerArray
                 // parse the recieved JSON response and convert it to an array
                 // Then set the resulting array to its respective array
         },

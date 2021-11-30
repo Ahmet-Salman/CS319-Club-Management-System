@@ -40,9 +40,10 @@ export default {
                     student_id: state.student_id,
                     password: state.password
                 }).then(res => {
+                    // console.log(res.data.user.id)
                     store.commit('setToken', res.data.token)
-                    store.commit('setUserID', res.data.user.student_id)
-                    sessionStorage.setItem('userID', res.data.user.student_id);
+                    store.commit('setUserID', res.data.user.id)
+                    sessionStorage.setItem('userID', res.data.user.id);
                     sessionStorage.setItem('token', res.data.token);
                     commit('handleSubmit')
                 }).catch(err => {

@@ -9,12 +9,16 @@ export default {
     namespaced: true,
     state: {
         announcements: [],
+        events: [],
         clubDescription: "",
         clubName: "",
     },
     mutations: {
-        setAnnouncements(state, newArr) {
-            state.announcements = newArr
+        setAnnouncements(state, annArr) {
+            state.announcements = annArr
+        },
+        setEvents(state, eventArr) {
+            state.events = eventArr
         },
         setClubDetails(state, payload) {
             state.clubDescription = payload.desc
@@ -64,6 +68,35 @@ export default {
                 })
             }).catch(err => {
                 console.log(err)
+            })
+        },
+
+        async getEvents({ commit }, club) {
+            const params = new URLSearchParams([
+                ['clubId', club]
+            ]);
+            await axios.get("http://127.0.0.1:8000/api/events", {
+                params
+            }).then(res => {
+                commit('setEvents', res.data)
+            }).catch(err => {
+                swal('Error', 'An error Occured, Please Try Again', 'error')
+            })
+        },
+
+        async deleteEvent({ commit }, eventID) {
+            const objHeaders = {
+                "Authorization": `Token ${store.getters.getToken}`
+            }
+
+            await axios.delete(`http://127.0.0.1:8000/api/event/${eventID}`, {
+                headers: objHeaders
+            }).then(res => {
+                location.reload();
+                // swal("Success", "Event Has Been Successfully Deleted", "success");
+
+            }).catch(err => {
+                swal('Error', 'An error Occured, Please Try Again', 'error')
             })
         },
     },

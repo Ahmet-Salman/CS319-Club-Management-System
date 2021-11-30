@@ -222,17 +222,17 @@ export default {
     }
   },
   methods: {
-    getdateCreated() {
+    getDateCreated() {
       axios.get(`http://127.0.0.1:8000/api/club/${this.club_id}`).then(res => {
         console.log(res)
       }).catch(err => {
         console.log(err)
       })
-      // console.log("Get Name")
+      // console.log(this.club_id)
     }
   },
   mounted() {
-    this.getdateCreated()
+    this.getDateCreated()
   },
 };
 </script>

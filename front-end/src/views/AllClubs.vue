@@ -23,8 +23,8 @@
       <!-- We loop over the AllManagerClub Array here -->
   <tr v-for="clubs in AllManagerClub" :key="clubs.id" class="table-info">
         <td>{{clubs.name}}</td>
-        <td>{{clubs.catagory}}</td>
-        <td>{{clubs.manager}}</td>
+        <td>{{clubs.description}}</td>
+        <td>{{clubs.owner}}</td>
         <td style="color: white" class="bg-danger">Manager</td>
         <td>
           <router-link :to="{name: 'Manage', params: {clubID: clubs.id}}" type="button" class="btn btn-outline-secondary mr-1">
@@ -240,7 +240,7 @@
         </td>
       </tr>
       <br>
-      <tr v-for="clubs in testAllClubs" :key="clubs.id" class="table-info">
+      <tr v-for="clubs in testAllManagerClub" :key="clubs.id" class="table-info">
         <td>{{clubs.name}}</td>
         <td>{{clubs.description}}</td>
         <td>{{clubs.owner}}</td>
@@ -295,7 +295,6 @@
       </tr>
       <br>
       
-      
     </tbody>
   </table>
   </div>
@@ -321,10 +320,7 @@ export default {
             { id: 6, name: 'Club6', catagory: 'catagory6', manager: 'Person6' },
             { id: 12, name: 'Club12', catagory: 'catagory12', manager: 'Person12' },
         ],
-        AllManagerClub: [
-            { id: 4, name: 'Club4', catagory: 'catagory4', manager: 'Person4' },
-            { id: 8, name: 'Club8', catagory: 'catagory8', manager: 'Person4' },
-        ],
+        AllManagerClub: [],
         pendingRequests: [
             { id: 13, name: 'Club13', catagory: 'catagory13', manager: 'Person13' },
             { id: 14, name: 'Club14', catagory: 'catagory14', manager: 'Person14' },
@@ -339,7 +335,8 @@ export default {
     await this.$store.dispatch('AllClubs/setAllClubs')
     this.testAllClubs = this.$store.state.AllClubs.testAllClubs
     await this.$store.dispatch('AllClubs/setAllManagerClubs')
-    // console.log(this.testAllClubs)
+    this.AllManagerClub = this.$store.state.AllClubs.AllManagerClub
+    // console.log(this.testAllManagerClub)
   },
 //   beforeMount() {
 //     dispatch('AllClubs/setAllClubs')
