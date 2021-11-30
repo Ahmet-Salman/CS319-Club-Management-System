@@ -9,6 +9,7 @@ class Club(models.Model):
     description = models.CharField(max_length=1000, default="Awesome club")
     is_active = models.BooleanField(default=True)
     owner = models.OneToOneField(Account, on_delete=models.CASCADE)
+    date = models.DateTimeField(auto_now_add = True)
 
     def __str__(self):
         return str(self.name)
