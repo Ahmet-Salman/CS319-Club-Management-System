@@ -12,6 +12,20 @@ import clubDetails from '../views/ClubDetails.vue'
 import Profile from '../views/Profile.vue'
 import members from '../views/MembersList.vue'
 import store from '@/store/index'
+import axios from 'axios'
+
+// var allClubs = [],
+
+//     async getClubs() {
+//         await axios.get('http://127.0.0.1:8000/api/clubs')
+//             .then(res => {
+//                 commit('setAllClubs', res.data) // returns the array of data
+//             }).catch(err => {
+//                 console.log(err)
+//             })
+//     }
+
+
 
 const routes = [{
         path: '/',
@@ -25,6 +39,7 @@ const routes = [{
         name: 'home',
         component: Home,
         beforeEnter: (to, from, next) => {
+
             if (store.state.token == null) {
                 next("/login");
             } else {
@@ -40,6 +55,7 @@ const routes = [{
             if (store.state.token == null) {
                 next();
             } else {
+
                 next("/home");
             }
         }
@@ -90,12 +106,23 @@ const routes = [{
         component: ManageClub,
         props: true,
         beforeEnter: (to, from, next) => {
+            var ManageID = sessionStorage.getItem('manageID')
+                // console.log(managerClubs[0])
+                // console.log(to.params.clubID)
+                // console.log(managerClubs.owner)
             if (store.state.token == null) {
                 next("/login");
+            } else if (to.params.clubID != ManageID) {
+                next('/notFound')
             } else {
                 next();
             }
-        }
+            // if (store.state.token == null) {
+            //     next("/login");
+            // } else {
+            //     next();
+            // }
+        },
     },
     {
         path: '/createEvent/:clubID',

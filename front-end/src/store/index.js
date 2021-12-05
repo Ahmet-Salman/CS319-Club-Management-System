@@ -12,7 +12,7 @@ import swal from 'sweetalert'
 export default createStore({
     state: {
         token: sessionStorage.getItem('token'),
-        user_id: sessionStorage.getItem('userID')
+        user_id: sessionStorage.getItem('userID'),
     },
     mutations: {
         checkToken(state) {
@@ -36,19 +36,6 @@ export default createStore({
         async getAuthQuote({ commit, state }) {
             console.log(state.token)
             console.log(state.user_id)
-                // console.log(sessionStorage.getItem('token'))
-                // commit('setToken', sessionStorage.getItem('token'))
-                // await axios.get('http://localhost:3001/api/protected/random-quote', {
-                //     headers: { "Authorization": `Bearer ${state.token}` }
-                // }).then(res => {
-                //     commit('printQuote', res)
-                // }).catch(err => {
-                //     if (err.response.status == 401) {
-                //         swal('Input Error', 'You Are Not Authenticated', 'error')
-                //     } else {
-                //         swal('Input Error', 'An Error Occured', 'error')
-                //     }
-                // })
         },
 
         async logout({ commit, state }) {

@@ -11,6 +11,7 @@ export default {
         password: "",
         token: null,
         user: null,
+        clubs: [],
     },
     mutations: {
         handleSubmit() {
@@ -30,9 +31,20 @@ export default {
         setUser(state, userData) {
             state.user = userData
         },
+        setClubs(state, newArr) {
+            state.clubs = newArr
+        },
+        setManageID(state) {
+            var userID = sessionStorage.getItem('userID')
+            var ManagerClubs;
+            ManagerClubs = state.clubs.filter((value) => {
+                return value.owner == userID
+            })
+            sessionStorage.setItem('manageID', ManagerClubs[0].id)
+        }
     },
     actions: {
-        async handleSubmit({ commit, state }) {
+        async handleSubmit({ commit, dispatch, state }) {
             if (state.student_id === "" || state.password === "") {
                 swal("Input Error", "Please Fill All Fields", "error");
             } else {
@@ -45,6 +57,7 @@ export default {
                     store.commit('setUserID', res.data.user.id)
                     sessionStorage.setItem('userID', res.data.user.id);
                     sessionStorage.setItem('token', res.data.token);
+                    dispatch('getClubs') // this.$store.state.Signin.clubs
                     commit('handleSubmit')
                 }).catch(err => {
                     // console.log(err)
@@ -56,6 +69,15 @@ export default {
                 })
             }
         },
+        async getClubs({ commit }) {
+            await axios.get('http://127.0.0.1:8000/api/clubs')
+                .then(res => {
+                    commit('setClubs', res.data)
+                    commit('setManageID')
+                }).catch(err => {
+                    console.log(err)
+                })
+        }
     },
     modules: {},
 };

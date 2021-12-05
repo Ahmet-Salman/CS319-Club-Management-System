@@ -47,11 +47,14 @@ at the top there is a delete button for the club
                 params: { clubID: $route.params.clubID },
               }"
               ><button class="btn btn btn-outline-success mx-1">
-                Go To Members List (To Be Implemented)
+                Go To Members List (TBI )
               </button></router-link
             >
-                <hr class="my-4" />
-                
+            <button class="btn btn btn-outline-success my-3 mx-1">
+                View Messages (TBI )
+              </button>
+              
+                <hr class="my-2" />
                 <ul class="list-group list-group-flush">
                   <li
                     class="
@@ -108,7 +111,7 @@ at the top there is a delete button for the club
                       </svg>
                       Created:
                     </h6>
-                    <span class="text-secondary">{{ date }}</span>
+                    <span class="text-secondary">{{ dateOfCreation }}</span>
                   </li>
                 </ul>
               </div>
@@ -146,6 +149,9 @@ at the top there is a delete button for the club
                         <h6 class="mb-0">{{ req.name }}</h6>
                         <span
                           ><button
+                            class="btn btn-outline-info mx-2"
+                          >View Profile (TBI)</button>
+                          <button
                             class="btn btn-outline-secondary mx-2"
                             @click="
                               $store.dispatch('ManageClubs/testAccept', req.id)
@@ -306,7 +312,7 @@ export default {
         .get(`http://127.0.0.1:8000/api/club/${this.club_id}`)
         .then((res) => {
           var DOC = new Date(res.data.date);
-          this.date = `${DOC.getDate()}/${DOC.getMonth() + 1}/${DOC.getFullYear()}`;
+          this.dateOfCreation = `${DOC.getDate()}/${DOC.getMonth() + 1}/${DOC.getFullYear()}`;
         })
         .catch((err) => {
           console.log(err);

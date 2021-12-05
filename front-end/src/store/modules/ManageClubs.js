@@ -37,10 +37,11 @@ export default {
             state.announcementMsg = val
         },
         testAccept(state, id) {
-            swal("Success", `You have Accepted Memeber ${id}, "success`)
+            swal("Success", `You have Accepted Memeber ${id}`, "success")
             console.log("Member with id: ", id, "has been accepted")
         },
         testReject(state, id) {
+            swal("Success", `You have Rejected Memeber ${id}`, "success")
             console.log("Member with id: ", id, "has been rejected")
         },
         testCancelEvent(state, id) {
