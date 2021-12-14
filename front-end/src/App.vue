@@ -2,13 +2,9 @@
   <div>
     <nav class="navbar navbar-dark bg-primary">
       <div class="container-fluid">
-        <router-link to="/home" class="navbar-brand">Home</router-link>
-        <!-- <div>
-          <button @click="$store.dispatch('getAuthQuote')">
-            Get Auth Quote
-          </button>
-        </div> -->
-
+        <router-link to="/home" class="navbar-brand"
+          >Home</router-link
+        >
         <div
           class="btn-group"
           role="group"
@@ -52,8 +48,9 @@
             style="width: 100px"
             @click="$store.dispatch('logout')"
             v-if="token"
-            >Logout</button
           >
+            Logout
+          </button>
           <router-link
             to="/login"
             type="button"
@@ -71,23 +68,13 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
-
+import { mapState, mapActions } from "vuex";
 export default {
-    computed: {
-        ...mapState({
-            token: state => state.token,
-        })
-    },
-    // created () {
-    //     this.getAllUsers();
-    // },
-    // methods: {
-    //     ...mapActions('users', {
-    //         getAllUsers: 'getAll',
-    //         deleteUser: 'delete'
-    //     })
-    // }
+  computed: {
+    ...mapState({
+      token: (state) => state.token,
+    }),
+  },
 };
 </script>
 

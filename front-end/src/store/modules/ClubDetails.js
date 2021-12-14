@@ -93,7 +93,6 @@ export default {
                 headers: objHeaders
             }).then(res => {
                 location.reload();
-                // swal("Success", "Event Has Been Successfully Deleted", "success");
 
             }).catch(err => {
                 swal('Error', 'An error Occured, Please Try Again', 'error')

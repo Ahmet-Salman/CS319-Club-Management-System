@@ -5,6 +5,7 @@ import Signup from './modules/Signup'
 import AllClubs from './modules/AllClubs'
 import ManageClubs from './modules/ManageClubs'
 import ClubDetails from './modules/ClubDetails'
+import Admin from './modules/Admin'
 import router from '../router/index'
 import swal from 'sweetalert'
 
@@ -13,6 +14,7 @@ export default createStore({
     state: {
         token: sessionStorage.getItem('token'),
         user_id: sessionStorage.getItem('userID'),
+        isSuperUser: sessionStorage.getItem('isAuth'),
     },
     mutations: {
         checkToken(state) {
@@ -22,6 +24,8 @@ export default createStore({
             state.token = null
             sessionStorage.removeItem('token')
             sessionStorage.removeItem('userID')
+            sessionStorage.removeItem('isAuth')
+            sessionStorage.removeItem('manageID')
             router.push('/login')
 
         },
@@ -30,6 +34,9 @@ export default createStore({
         },
         setToken(state, aToken) {
             state.token = aToken
+        },
+        setSuperUser(state, newVal) {
+            state.isSuperUser = newVal
         }
     },
     actions: {
@@ -65,6 +72,7 @@ export default createStore({
         Signup,
         AllClubs,
         ManageClubs,
-        ClubDetails
+        ClubDetails,
+        Admin
     }
 })

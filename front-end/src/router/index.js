@@ -11,6 +11,8 @@ import CreateAnnouncement from '../views/CreateAnnouncement.vue'
 import clubDetails from '../views/ClubDetails.vue'
 import Profile from '../views/Profile.vue'
 import members from '../views/MembersList.vue'
+import createClub from '../views/CreateClub.vue'
+import admin from '../views/Admin.vue'
 import store from '@/store/index'
 import axios from 'axios'
 
@@ -48,6 +50,30 @@ const routes = [{
         }
     },
     {
+        path: '/admin',
+        name: 'Admin',
+        component: admin,
+        beforeEnter: (to, from, next) => {
+            // var isSuper = store.state.isSuperUser
+            // console.log("Value outside is: ", isSuper)
+            // if (store.state.token == null) {
+            //     next("/login");
+            // } else if (isSuper == true) {
+            //     console.log("Value inside if is: ", isSuper)
+            //     next("/admin");
+            // } else {
+            //     console.log("Value inside else is: ", isSuper)
+            //     next("/home");
+            // }
+
+            if (store.state.token == null) {
+                next("/login");
+            } else {
+                next();
+            }
+        }
+    },
+    {
         path: '/login',
         name: 'Login',
         component: Login,
@@ -59,8 +85,7 @@ const routes = [{
                 next("/home");
             }
         }
-    },
-    {
+    }, {
         path: '/about',
         name: 'About',
         // route level code-splitting
@@ -68,13 +93,11 @@ const routes = [{
         // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "about" */ '../views/About.vue'),
-    },
-    {
+    }, {
         path: '/signup',
         name: 'Signup',
         component: Signup,
-    },
-    {
+    }, {
         path: '/clubs',
         name: 'Clubs',
         component: AllClubs,
@@ -86,8 +109,19 @@ const routes = [{
             }
         }
 
-    },
-    {
+    }, {
+        path: '/createClub',
+        name: 'CreateClub',
+        component: createClub,
+        beforeEnter: (to, from, next) => {
+            if (store.state.token == null) {
+                next("/login");
+            } else {
+                next();
+            }
+        }
+
+    }, {
         path: '/clubs/:clubID',
         name: 'ClubDetails',
         component: PageNotFound,
@@ -99,8 +133,7 @@ const routes = [{
                 next();
             }
         }
-    },
-    {
+    }, {
         path: '/manage/:clubID',
         name: 'Manage',
         component: ManageClub,
@@ -123,8 +156,7 @@ const routes = [{
             //     next();
             // }
         },
-    },
-    {
+    }, {
         path: '/createEvent/:clubID',
         name: 'CreateEvent',
         component: CreateEvent,
@@ -136,8 +168,7 @@ const routes = [{
                 next();
             }
         }
-    },
-    {
+    }, {
         path: '/createAnnouncement/:clubID',
         name: 'CreateAnnouncement',
         component: CreateAnnouncement,
@@ -149,8 +180,7 @@ const routes = [{
                 next();
             }
         }
-    },
-    {
+    }, {
         path: '/clubDetails/:clubID',
         name: 'ClubDetails',
         component: clubDetails,
@@ -162,8 +192,7 @@ const routes = [{
                 next();
             }
         }
-    },
-    {
+    }, {
         path: '/profile',
         name: 'Profile',
         component: Profile,
@@ -175,8 +204,7 @@ const routes = [{
                 next();
             }
         }
-    },
-    {
+    }, {
         path: '/members/:clubID',
         name: 'Members',
         component: members,
@@ -188,8 +216,7 @@ const routes = [{
                 next();
             }
         }
-    },
-    {
+    }, {
         path: "/:catchAll(.*)",
         name: "NotFound",
         component: PageNotFound

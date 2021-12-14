@@ -9,13 +9,19 @@ export default {
     state: {
         student_id: "",
         password: "",
+        isSuperUser: false,
         token: null,
         user: null,
         clubs: [],
     },
     mutations: {
-        handleSubmit() {
-            router.push({ path: '/home' })
+        handleSubmit(state) {
+            if (state.isSuperUser == true) {
+                router.push({ path: '/admin' })
+            } else {
+                router.push({ path: '/home' })
+            }
+
         },
         setStudent_id(state, newVal) {
             state.student_id = newVal;
@@ -31,6 +37,9 @@ export default {
         setUser(state, userData) {
             state.user = userData
         },
+        setSuperUser(state, newVal) {
+            state.isSuperUser = newVal
+        },
         setClubs(state, newArr) {
             state.clubs = newArr
         },
@@ -40,7 +49,12 @@ export default {
             ManagerClubs = state.clubs.filter((value) => {
                 return value.owner == userID
             })
-            sessionStorage.setItem('manageID', ManagerClubs[0].id)
+            if (ManagerClubs[0] == null) {
+                sessionStorage.setItem('manageID', -1)
+            } else {
+                sessionStorage.setItem('manageID', ManagerClubs[0].id)
+            }
+
         }
     },
     actions: {
@@ -55,12 +69,14 @@ export default {
                     // console.log(res.data.user.id)
                     store.commit('setToken', res.data.token)
                     store.commit('setUserID', res.data.user.id)
+                    store.commit('setSuperUser', res.data.user.is_superuser)
                     sessionStorage.setItem('userID', res.data.user.id);
                     sessionStorage.setItem('token', res.data.token);
+                    sessionStorage.setItem('isAuth', res.data.user.is_superuser);
+                    state.isSuperUser = res.data.user.is_superuser
                     dispatch('getClubs') // this.$store.state.Signin.clubs
                     commit('handleSubmit')
                 }).catch(err => {
-                    // console.log(err)
                     if (err.response.status == 401 || err.response.status == 500) {
                         swal('Input Error', 'Your Credentials Are Invalid, Please Check Your Student ID and Password', "error")
                     } else {
