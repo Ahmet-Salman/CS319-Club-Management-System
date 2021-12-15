@@ -6,4 +6,39 @@ import store from '@/store/index'
 
 export default {
     namespaced: true,
+    state: {
+        clubName: "",
+        clubDescription: "",
+    },
+    mutations: {
+        setName(state, newVal) {
+            state.clubName = newVal
+        },
+        setDesc(state, newVal) {
+            state.clubDescription = newVal
+        }
+    },
+    actions: {
+        async createClub({ commit, state }) {
+            if (state.clubName == "" || state.clubDescription == "") {
+                swal("Missing Information", "All Fields Must be Populated", "error")
+            } else {
+                // Uncomment this when alperen fixes the id issue
+
+                // var userID = sessionStorage.getItem("userID");
+                // axios.post("http://127.0.0.1:8000/api/request/createclub", {
+                //     student_id: userID,
+                //     clubName: state.clubName,
+                //     clubDescription: state.clubDescription
+                // }).then(res => {
+                //     console.log(res)
+                //     swal("Success", "Your request has been recieved successfully and will be evaluted soon", "success")
+                // }).catch(err => {
+                //     console.log(err)
+                // })
+                // console.log("Inside create club")
+            }
+
+        },
+    },
 }
