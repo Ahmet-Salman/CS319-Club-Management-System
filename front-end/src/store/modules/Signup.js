@@ -41,24 +41,16 @@ export default {
                     if (!isNaN(state.student_id)) {
                         if (state.password === state.confirmPass) {
                             await axios.post('http://localhost:3001/users', {
-                                    username: state.student_id,
-                                    password: state.password
-                                }).then(res => {
-                                    console.log(res)
-                                    swal('Success', 'Registration Successful', 'success')
-                                    router.push('/login')
-                                }).catch(err => {
-                                    console.log(err)
-                                    swal('Internal Error', 'Registration Unuccessful', 'error')
-                                })
-                                // axios.post('https://reqres.in/api/register', {
-                                //     email: state.name, //+ '.' + state.surname + '@' + state.student_id + '.com',
-                                //     password: state.password
-                                // }).then(res => {
-                                //     commit('handleSubmit', res)
-                                // }).catch(err => {
-                                //     swal("Internal Error", "Something Wrong Happened, Please Retry Again", "error")
-                                // })
+                                username: state.student_id,
+                                password: state.password
+                            }).then(res => {
+                                console.log(res)
+                                swal('Success', 'Registration Successful', 'success')
+                                router.push('/login')
+                            }).catch(err => {
+                                console.log(err)
+                                swal('Internal Error', 'Registration Unuccessful', 'error')
+                            })
                         } else {
                             swal("Input Warning", 'Password Do Not Match, Please Enter Password Again', "warning")
                         }

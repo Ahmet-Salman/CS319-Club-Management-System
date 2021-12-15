@@ -50,16 +50,11 @@ export default {
 
         setAllManagerClubs(state) {
             var userID = sessionStorage.getItem('userID')
-                // console.log(userID)
             var managerArray = state.testAllClubs.filter((value) => {
                 return value.owner == userID
             })
 
             state.AllManagerClub = managerArray
-                // console.log(managerArray)
-                // state.testAllManagerClub = managerArray
-                // parse the recieved JSON response and convert it to an array
-                // Then set the resulting array to its respective array
         },
 
         setPendingRequests(state, res) {
@@ -78,7 +73,6 @@ export default {
     },
     actions: {
         async setAllClubs({ commit, state }) {
-            // console.log("update all clubs")
             await axios.get('http://127.0.0.1:8000/api/clubs')
                 .then(res => {
                     commit('setAllClubs', res.data) // returns the array of data

@@ -88,7 +88,6 @@ export default {
             get(){},
             set(newVal) {
                 this.$store.commit('ManageClubs/setEventName', newVal)
-                // console.log(newVal)
             }
         },
         location: {

@@ -109,24 +109,6 @@ export default {
       ],
     };
   },
-//   computed: {
-//     clubName: {
-//       get() {
-//         return this.$store.state.student_id;
-//       },
-//       set(newVal) {
-//         this.$store.commit('Admin/setName', newVal)
-//       },
-//     },
-//     clubDesc: {
-//       get() {
-//         return this.$store.state.password;
-//       },
-//       set(newVal) {
-//         this.$store.commit('Admin/setDesc', newVal)
-//       },
-//     },
-//   },
   methods: {
     openModal(data) {
       var name = data.name;

@@ -113,7 +113,6 @@ export default {
         return this.$store.state.name;
       },
       set(newVal) {
-        // console.log("name: ", newVal);
         this.$store.commit("Signup/setName", newVal);
       },
     },
@@ -122,7 +121,6 @@ export default {
         return this.$store.state.surname;
       },
       set(newVal) {
-        // console.log("surname: ", newVal);
         this.$store.commit("Signup/setSurname", newVal);
       },
     },
@@ -131,7 +129,6 @@ export default {
         return this.$store.state.student_id;
       },
       set(newVal) {
-        // console.log("student_id: ", newVal);
         this.$store.commit("Signup/setStudent_id", newVal);
       },
     },
@@ -140,7 +137,6 @@ export default {
         return this.$store.state.password;
       },
       set(newVal) {
-        // console.log("password: ", newVal);
         this.$store.commit("Signup/setPassword", newVal);
       },
     },

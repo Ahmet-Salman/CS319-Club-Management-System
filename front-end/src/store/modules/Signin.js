@@ -66,7 +66,6 @@ export default {
                     student_id: state.student_id,
                     password: state.password
                 }).then(res => {
-                    // console.log(res.data.user.id)
                     store.commit('setToken', res.data.token)
                     store.commit('setUserID', res.data.user.id)
                     store.commit('setSuperUser', res.data.user.is_superuser)

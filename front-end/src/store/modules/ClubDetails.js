@@ -23,7 +23,6 @@ export default {
         setClubDetails(state, payload) {
             state.clubDescription = payload.desc
             state.clubName = payload.name
-                // console.log("Club Desc: ", state.clubDescription, ", club name: ", state.clubName)
         }
     },
     actions: {
@@ -42,8 +41,6 @@ export default {
         },
 
         async deleteAnnouncement({ commit }, payload) {
-            // console.log(payload.club_id)
-            // console.log(payload.annId)
             var annId = payload.annId
             const objHeaders = {
                 "Authorization": `Token ${store.getters.getToken}`
@@ -60,8 +57,6 @@ export default {
 
         async getClubDescription({ commit }, clubId) {
             await axios.get(`http://127.0.0.1:8000/api/club/${clubId}`).then(res => {
-                // console.log(res.data.name)
-                // console.log(res.data.description)
                 commit('setClubDetails', {
                     desc: res.data.description,
                     name: res.data.name

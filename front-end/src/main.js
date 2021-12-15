@@ -5,16 +5,3 @@ import store from './store'
 import axios from 'axios'
 
 createApp(App).use(store).use(router).mount('#app')
-
-// The following code is to detect expired tokens
-// axios.interceptors.response.use(undefined, function(error) {
-//     if (error) {
-//         // const originalRequest = error.config;
-//         // if (error.response.status === 400 && !originalRequest._retry) {
-
-//         //     originalRequest._retry = true;
-//         //     // store.dispatch('LogOut')
-//         // return router.push('/')
-//         // }
-//     }
-// })

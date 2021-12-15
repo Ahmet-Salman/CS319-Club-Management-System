@@ -16,19 +16,6 @@ import admin from '../views/Admin.vue'
 import store from '@/store/index'
 import axios from 'axios'
 
-// var allClubs = [],
-
-//     async getClubs() {
-//         await axios.get('http://127.0.0.1:8000/api/clubs')
-//             .then(res => {
-//                 commit('setAllClubs', res.data) // returns the array of data
-//             }).catch(err => {
-//                 console.log(err)
-//             })
-//     }
-
-
-
 const routes = [{
         path: '/',
         redirect: {
@@ -54,18 +41,6 @@ const routes = [{
         name: 'Admin',
         component: admin,
         beforeEnter: (to, from, next) => {
-            // var isSuper = store.state.isSuperUser
-            // console.log("Value outside is: ", isSuper)
-            // if (store.state.token == null) {
-            //     next("/login");
-            // } else if (isSuper == true) {
-            //     console.log("Value inside if is: ", isSuper)
-            //     next("/admin");
-            // } else {
-            //     console.log("Value inside else is: ", isSuper)
-            //     next("/home");
-            // }
-
             if (store.state.token == null) {
                 next("/login");
             } else {
@@ -88,9 +63,6 @@ const routes = [{
     }, {
         path: '/about',
         name: 'About',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
         component: () =>
             import ( /* webpackChunkName: "about" */ '../views/About.vue'),
     }, {
@@ -140,9 +112,6 @@ const routes = [{
         props: true,
         beforeEnter: (to, from, next) => {
             var ManageID = sessionStorage.getItem('manageID')
-                // console.log(managerClubs[0])
-                // console.log(to.params.clubID)
-                // console.log(managerClubs.owner)
             if (store.state.token == null) {
                 next("/login");
             } else if (to.params.clubID != ManageID) {
@@ -150,11 +119,6 @@ const routes = [{
             } else {
                 next();
             }
-            // if (store.state.token == null) {
-            //     next("/login");
-            // } else {
-            //     next();
-            // }
         },
     }, {
         path: '/createEvent/:clubID',

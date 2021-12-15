@@ -64,29 +64,25 @@ export default {
                         "Authorization": `Token ${store.getters.getToken}`
                     }
                     await axios.post("http://127.0.0.1:8000/api/events", {
-                            title: state.eventName,
-                            description: state.eventDescription,
-                            location: state.eventLocation,
-                            date: state.eventDate,
-                            club: clubID
-                        }, {
-                            headers: objHeaders
-                        }).then(res => {
-                            swal("Success", "Event Has Been Created Successfully", "success");
-                            router.push({ path: `/manage/${clubID}` })
-                        }).catch(err => {
-                            console.log(err)
-                        })
-                        // console.log('Event ', state.eventName, ' is taking place in ', state.eventLocation, ' at time: ', state.eventDate, ' and its description is ', state.eventDescription)
+                        title: state.eventName,
+                        description: state.eventDescription,
+                        location: state.eventLocation,
+                        date: state.eventDate,
+                        club: clubID
+                    }, {
+                        headers: objHeaders
+                    }).then(res => {
+                        swal("Success", "Event Has Been Created Successfully", "success");
+                        router.push({ path: `/manage/${clubID}` })
+                    }).catch(err => {
+                        console.log(err)
+                    })
                 }
 
             }
 
         },
         async CreateAnnouncement({ commit, state }, club) {
-            // console.log("content: ", state.announcementMsg)
-            // console.log("club: ", club)
-            // console.log("Authorization: Token ", store.getters.getToken)
             const objHeaders = {
                 "Authorization": `Token ${store.getters.getToken}`
             }
