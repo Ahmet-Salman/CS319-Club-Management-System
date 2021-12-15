@@ -2,8 +2,8 @@ from django.http.response import HttpResponse
 from rest_framework import generics, serializers
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import  DeleteClubRequestSerializer,CreateClubRequestSerializer
-from .models import CreateClubRequest, Request,DeleteClubRequest
+from .serializers import  DeleteClubRequestSerializer,CreateClubRequestSerializer, JoinClubRequestSerializer
+from .models import CreateClubRequest, Request,DeleteClubRequest,JoinClubRequest
 from accounts.permissions import IsAdminOrReadOnly
 from rest_framework import status
 from django.http import Http404
@@ -11,10 +11,11 @@ from accounts.models import Account
 from clubs.models import Club
 from datetime import datetime, timedelta
 from django.views.generic import ListView
-
+from clubs.permissions import IsClubOwnerOrReadOnly
     
 #club manager
 class DeleteClubRequestList(generics.ListCreateAPIView):
+    permission_classes = [IsClubOwnerOrReadOnly]
     queryset = DeleteClubRequest.objects.all()
     serializer_class = DeleteClubRequestSerializer
 
@@ -48,7 +49,6 @@ class CreateClubRequestAPI(APIView):
 
 #admin
 class ApproveClubRequest(APIView):
-    
     def post(self,request):
         #get club request id
         club_request_id = request.data['club_request_id']
@@ -77,3 +77,10 @@ class RejectClubRequest(APIView):
         #maybe some additional code can be added
         clubRequest.delete()
         return HttpResponse( status = 200)
+
+class JoinClubRequest(generics.ListCreateAPIView):
+    permission_classes = [IsAdminOrReadOnly]
+    queryset = JoinClubRequest.objects.all()
+    serializer_class = JoinClubRequestSerializer
+
+

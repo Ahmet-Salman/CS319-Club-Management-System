@@ -1,4 +1,4 @@
-'''''
+
 from datetime import datetime, timedelta
 
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -19,4 +19,3 @@ def delete_request():
             #request.delete()
 
 register_events(scheduler)
-'''

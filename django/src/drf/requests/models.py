@@ -13,7 +13,7 @@ class Request(models.Model):
 
 
     def __str__(self):
-        return str(self.student_id)
+        return str(self.user_id)
 
 class CreateClubRequest(Request):
     # define department name and description columns, the id column will be added automatically.
@@ -22,7 +22,12 @@ class CreateClubRequest(Request):
 
 
 class DeleteClubRequest(Request):
-    # define department name and description columns, the id column will be added automatically.
+    clubId = models.CharField(max_length=1000)
+    
+    def __str__(self):
+        return str(self.name)
+
+class JoinClubRequest(Request):
     clubId = models.CharField(max_length=1000)
     
     def __str__(self):
