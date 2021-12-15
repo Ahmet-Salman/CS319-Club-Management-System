@@ -23,4 +23,5 @@ urlpatterns = [
     path('', include('announcements.urls')),
     path('', include('events.urls')),
     path('', include('comments.urls')),
+    path('', include('requests.urls')),
 ]

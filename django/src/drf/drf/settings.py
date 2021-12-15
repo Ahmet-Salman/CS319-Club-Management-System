@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'events',
     'announcements',
     'comments',
-    'corsheaders'
+    'corsheaders',
+    'requests'
 ]
 
 MIDDLEWARE = [
