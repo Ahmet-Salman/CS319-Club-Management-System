@@ -180,7 +180,8 @@ const routes = [{
                 next();
             }
         }
-    }, {
+    },
+    {
         path: "/:catchAll(.*)",
         name: "NotFound",
         component: PageNotFound

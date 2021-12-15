@@ -12,6 +12,8 @@
                       Club Creation Requests
                     </h5>
                     <ul class="list-group list-group-flush">
+                      <!-- <h3>{{this.createReqs.length}}</h3> -->
+                      <h3 v-if="this.createReqs.length == 0">There Are No Club Requests</h3>
                       <li
                         v-for="req in createReqs"
                         :key="req.id"
@@ -23,15 +25,16 @@
                           flex-wrap
                         "
                       >
-                        <h6 class="mb-0">{{ req.name }}</h6>
+                        <h6 class="mb-0">{{ req.clubName }}</h6>
                         <span
                           ><button
                             class="btn btn-outline-info mx-2"
                             @click="
                               openModal({
-                                name: req.name,
-                                desc: req.desc,
+                                name: req.clubName,
+                                desc: req.clubDescription,
                                 time: req.date,
+                                id: req.student_id
                               })
                             "
                           >View Club Details (TBI)</button>
@@ -97,32 +100,47 @@ export default {
   name: "Admin",
   data() {
     return {
+       student_id: 0,
         clubName: "",
-        clubDesc: "",
-      createReqs: [{id: 2, name: "First Club Request", description: "best club ever", date: "abc"},
-      {id: 1, name: "Club Request 2", description: "club req 2", date: "abc"},
-      {id: 6, name: "Club Request 3", description: "club req 3", date: "abc"},
-      {id: 7, name: "Club Request 4", description: "club req 4", date: "abc"},
-      {id: 9, name: "Club Request 5", description: "club req 5", date: "abc"},
-      {id: 11, name: "Club Request 6", description: "club req 6", date: "abc"},
-      {id: 3, name: "Club Request 7", description: "club req 7", date: "abc"},
-      ],
+        clubDescription: "",
+      createReqs: [],
     };
   },
   methods: {
-    openModal(data) {
+    async openModal(data) {
+      
+      var id = data.id
       var name = data.name;
       var description = data.desc;
-    //   var time = new Date(data.time);
-    var time = data.time
+      var time = new Date(data.time);
+      await this.get_user_name(id)
+     
+    // var time = data.time
       
       swal({
         title: `Club Name: ${name}`,
-        text: `Club Description: ${description} \n\nTime of Creation: ${time}`,
+        text: `Club Description: ${description} \n\nTime of Creation: ${time.getDate()}/${time.getMonth()}/${time.getFullYear()} at ${time.getHours()}:${time.getMinutes()}\n\n By Student: ${this.student_id}`,
         icon: "info",
         button: "Close",
       });
     },
+    async get_user_name(id) {
+      var token = sessionStorage.getItem("token")
+      const objHeaders = {
+                "Authorization": `Token ${token}`
+            }
+      await axios.get(`http://127.0.0.1:8000/api/account/${id}`, {
+        headers: objHeaders
+      }).then (res => {
+        this.student_id = res.data.student_id
+      }).catch (err => {
+        console.log(err)
+      })
+    }
+  },
+  async mounted() {
+    await this.$store.dispatch("Admin/getRequests");
+    this.createReqs = this.$store.state.Admin.createReqs;
   },
 };
 </script>

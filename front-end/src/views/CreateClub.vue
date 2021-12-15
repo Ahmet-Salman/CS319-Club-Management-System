@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="text-center mt-5">
-      <h1>Event Creation Form For Club {{ $route.params.clubID }}</h1>
+      <h1>Club Creation Form</h1>
     </div>
     <div class="row">
       <div class="col-lg-7 mx-auto">
@@ -23,34 +23,12 @@
                         />
                       </div>
                     </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label
-                          >Location of The Event *</label
-                        >
-                        <input
-                          type="text"
-                          name="surname"
-                          class="form-control"
-                          required="required"
-                          v-model="location"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label>Time of The Event *</label>
-                        <input v-model="time" type="datetime-local" />
-                      </div>
-                    </div>
                   </div>
                   <div class="row">
                     <div class="col-md-12">
                       <div class="form-group">
                         <label
-                          >Description of The Event *</label
+                          >Description of The Club *</label
                         >
                         <textarea
                           name="message"
@@ -65,7 +43,7 @@
                     <div class="col-md-12">
                       <input
                         type="submit"
-                        @click.prevent="$store.dispatch('ManageClubs/CreateEvent', $route.params.clubID)"
+                        @click.prevent="$store.dispatch('CreateClub/createClub')"
                         class="btn btn-outline-secondary mr-1 btn-block"
                         value="Create Event"
                       />
@@ -87,26 +65,13 @@ export default {
         name: {
             get(){},
             set(newVal) {
-                this.$store.commit('ManageClubs/setEventName', newVal)
-            }
-        },
-        location: {
-            get(){},
-            set(newVal) {
-                this.$store.commit('ManageClubs/setEventLocation', newVal)
-            }
-        },
-        time: {
-            get(){},
-            set(newVal) {
-                    this.$store.commit('ManageClubs/setEventDate', newVal)
+                this.$store.commit('CreateClub/setName', newVal)
             }
         },
         description: {
             get(){},
             set(newVal) {
-                this.$store.commit('ManageClubs/setEventDescription', newVal)
-
+                this.$store.commit('CreateClub/setDesc', newVal)
             }
         },
     }
