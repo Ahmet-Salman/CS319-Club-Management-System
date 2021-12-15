@@ -4,7 +4,7 @@ from accounts.models import Account
 # Create your models here.
 class Request(models.Model):
     timeStamp = models.CharField(max_length=1000, default=" ")
-    student_id = models.IntegerField()
+    user_id = models.IntegerField()
     status = models.CharField(max_length=1000, default="")
     date = models.DateTimeField(auto_now_add = True,blank=True)
 

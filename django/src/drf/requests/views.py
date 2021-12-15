@@ -22,7 +22,7 @@ class DeleteClubRequestList(generics.ListCreateAPIView):
 class CreateClubRequestAPI(APIView):
     def post(self, request):
         def userHasClub():
-            return Account.objects.get( student_id = request.data['student_id'] ).is_club_manager
+            return Account.objects.get( id = request.data['user_id'] ).is_club_manager
             
         print(userHasClub())
         serializer = CreateClubRequestSerializer(data=request.data)
@@ -39,6 +39,13 @@ class CreateClubRequestAPI(APIView):
         serializer = CreateClubRequestSerializer(objects,many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    def delete(self, request):
+        objects = CreateClubRequest.objects.all()
+        serializer = CreateClubRequestSerializer(objects,many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+
 #admin
 class ApproveClubRequest(APIView):
     
@@ -51,9 +58,9 @@ class ApproveClubRequest(APIView):
         #first turn request to objeect
         name = clubRequest.clubName
         description = clubRequest.clubDescription
-        student_id = clubRequest.student_id
+        user_id = clubRequest.user_id
         #set the student as club manager
-        student = Account.objects.get(student_id=student_id)
+        student = Account.objects.get(id=user_id)
         student.is_club_manager = True
         student.save()
         data = Club(name=name, description=description,owner=student)
