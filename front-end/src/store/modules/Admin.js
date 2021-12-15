@@ -18,31 +18,35 @@ export default {
     },
     actions: {
         async Reject({ commit, state }, reqId) {
-            console.log("Rejected Club Request ", reqId)
-                // axios.post("localhost/8000/clubReq/reject").then(res => {
-                //     console.log(res)
-                // }).catch(err => {
-                //     console.log(err)
-                // })
+            var token = sessionStorage.getItem("token")
+            const objHeaders = {
+                "Authorization": `Token ${token}`
+            }
+            axios.post("http://127.0.0.1:8000/api/request/rejectclubrequest", {
+                    club_request_id: reqId
+                },
+                // {
+                //     headers: objHeaders
+                // }
+            ).then(res => {
+                location.reload();
+                console.log(res)
+            }).catch(err => {
+                console.log(err)
+            })
         },
         async Accept({ commit, state }, reqId) {
             var token = sessionStorage.getItem("token")
             const objHeaders = {
                 "Authorization": `Token ${token}`
             }
-            console.log("Accepted Club Request ", reqId)
-            var req = state.createReqs.find(x => x.id == reqId)
-            console.log(req)
-            var clubName = req.clubName
-            var clubDescription = req.clubDescription
-            var clubOwner = req.student_id
-            axios.post("http://127.0.0.1:8000/api/clubs", {
-                name: clubName,
-                description: clubDescription,
-                owner: clubOwner
-            }, {
-                headers: objHeaders
-            }).then(res => {
+            axios.post("http://127.0.0.1:8000/api/request/approveclubrequest", {
+                    club_request_id: reqId
+                },
+                // {
+                //     headers: objHeaders
+                // }
+            ).then(res => {
                 location.reload();
                 console.log(res)
             }).catch(err => {
@@ -50,19 +54,13 @@ export default {
             })
         },
         async getRequests({ commit }) {
-            await axios.get("http://127.0.0.1:8000/api/request/createclub").then(res => {
+            await axios.get("http://127.0.0.1:8000/api/request/createclubrequest").then(res => {
+                console.log(res.data)
                 commit('getRequests', res.data)
             }).catch(err => {
                 console.log(err)
             })
         },
-        async user({ commit }) {
-            await axios.get("http://127.0.0.1:8000/api/request/createclub").then(res => {
-                commit('getRequests', res.data)
-            }).catch(err => {
-                console.log(err)
-            })
-        }
     },
     getters: {},
     modules: {},

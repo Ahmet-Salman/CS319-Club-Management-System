@@ -45,7 +45,7 @@
                         type="submit"
                         @click.prevent="$store.dispatch('CreateClub/createClub')"
                         class="btn btn-outline-secondary mr-1 btn-block"
-                        value="Create Event"
+                        value="Create Club"
                       />
                     </div>
                   </div>
