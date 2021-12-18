@@ -9,13 +9,9 @@ at the top there is a delete button for the club
     <h1>Hello Manager of club {{ club_id }}</h1>
     <div class="container">
       <div class="main-body">
-        
         <div class="row">
-          
           <div class="col-lg-4">
-            
             <div class="card">
-              
               <div class="card-body">
                 <div class="d-flex flex-column align-items-center text-center">
                   <div class="mt-3">
@@ -38,22 +34,36 @@ at the top there is a delete button for the club
                       </button></router-link
                     >
                   </div>
-                  
                 </div>
                 <hr class="my-4" />
                 <router-link
-              :to="{
-                name: 'Members',
-                params: { clubID: $route.params.clubID },
-              }"
-              ><button class="btn btn btn-outline-success mx-1">
-                Go To Members List (TBI )
-              </button></router-link
-            >
-            <button class="btn btn btn-outline-success my-3 mx-1">
-                View Messages (TBI )
-              </button>
-              
+                  :to="{
+                    name: 'Announcements',
+                    params: { clubID: $route.params.clubID },
+                  }"
+                  ><button class="btn btn btn-outline-success my-3 mx-1">
+                    Check Announcements
+                  </button></router-link
+                >
+                <router-link
+                  :to="{
+                    name: 'Members',
+                    params: { clubID: $route.params.clubID },
+                  }"
+                  ><button class="btn btn btn-outline-success mx-1">
+                    Go To Members List
+                  </button></router-link
+                >
+                <router-link
+                  :to="{
+                    name: 'Messages',
+                    params: { clubID: $route.params.clubID },
+                  }"
+                  ><button class="btn btn btn-outline-success my-3 mx-1">
+                    View Messages
+                  </button></router-link
+                >
+
                 <hr class="my-2" />
                 <ul class="list-group list-group-flush">
                   <li
@@ -148,9 +158,9 @@ at the top there is a delete button for the club
                       >
                         <h6 class="mb-0">{{ req.name }}</h6>
                         <span
-                          ><button
-                            class="btn btn-outline-info mx-2"
-                          >View Profile (TBI)</button>
+                          ><button class="btn btn-outline-info mx-2">
+                            View Profile
+                          </button>
                           <button
                             class="btn btn-outline-secondary mx-2"
                             @click="
@@ -312,7 +322,9 @@ export default {
         .get(`http://127.0.0.1:8000/api/club/${this.club_id}`)
         .then((res) => {
           var DOC = new Date(res.data.date);
-          this.dateOfCreation = `${DOC.getDate()}/${DOC.getMonth() + 1}/${DOC.getFullYear()}`;
+          this.dateOfCreation = `${DOC.getDate()}/${
+            DOC.getMonth() + 1
+          }/${DOC.getFullYear()}`;
         })
         .catch((err) => {
           console.log(err);

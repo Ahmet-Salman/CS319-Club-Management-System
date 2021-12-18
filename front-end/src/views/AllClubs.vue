@@ -127,7 +127,11 @@
           <td>{{ clubs.manager }}</td>
           <td style="color: white" class="bg-success">Member</td>
           <td>
-            <button class="btn btn-outline-dark mr-1">
+            <router-link
+              :to="{ name: 'ClubDetails', params: { clubID: clubs.id } }"
+              type="button"
+              class="btn btn-outline-dark mr-1"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -144,7 +148,7 @@
                 />
               </svg>
               Details
-            </button>
+            </router-link>
 
             <button type="button" class="btn btn-outline-primary mr-1">
               <svg
@@ -363,9 +367,7 @@ export default {
       AllManagerClub: [],
       pendingRequests: [
         { id: 13, name: "Club13", catagory: "catagory13", manager: "Person13" },
-        { id: 14, name: "Club14", catagory: "catagory14", manager: "Person14" },
-        { id: 15, name: "Club15", catagory: "catagory15", manager: "Person15" },
-        { id: 16, name: "Club16", catagory: "catagory16", manager: "Person16" },
+        
       ],
     };
   },

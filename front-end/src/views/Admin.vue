@@ -40,7 +40,7 @@
                               })
                             "
                           >
-                            View Club Details (TBI)
+                            View Club Details
                           </button>
                           <button
                             class="btn btn-outline-secondary mx-2"
