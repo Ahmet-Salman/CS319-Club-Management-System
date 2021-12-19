@@ -127,13 +127,10 @@
           <td>{{ clubs.manager }}</td>
           <td style="color: white" class="bg-success">Member</td>
           <td>
-            <button
+            <router-link
+              :to="{ name: 'ClubAnnouncements', params: { clubID: clubs.id } }"
               type="button"
               class="btn btn-outline-info mr-1"
-              data-toggle="modal"
-              data-target="#exampleModal"
-              data-backdrop="static"
-              data-keyboard="false"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -151,14 +148,11 @@
                 />
               </svg>
               Announcements
-            </button>
-            <button
+            </router-link>
+            <router-link
+              :to="{ name: 'ClubEvents', params: { clubID: clubs.id } }"
               type="button"
               class="btn btn-outline-info mr-1"
-              data-toggle="modal"
-              data-target="#exampleModal"
-              data-backdrop="static"
-              data-keyboard="false"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -176,7 +170,7 @@
                 />
               </svg>
               Events
-            </button>
+            </router-link>
             <router-link
               :to="{ name: 'ClubDetails', params: { clubID: clubs.id } }"
               type="button"
