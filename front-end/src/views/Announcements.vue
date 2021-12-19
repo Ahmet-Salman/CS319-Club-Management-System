@@ -10,15 +10,17 @@
               <div class="card-body">
                 <div class="d-flex flex-column align-items-center text-center">
                   <router-link
-              :to="{ name: 'Manage', params: { clubID: $route.params.clubID } }"
-              ><button class="btn btn btn-outline-success mx-1">
-                Go To Club Management
-              </button></router-link
-            >
+                    :to="{
+                      name: 'Manage',
+                      params: { clubID: $route.params.clubID },
+                    }"
+                    ><button class="btn btn btn-outline-success mx-1">
+                      Go To Club Management
+                    </button></router-link
+                  >
                 </div>
               </div>
             </div>
-            
           </div>
           <div class="col-lg-8">
             <div class="row">
@@ -47,14 +49,26 @@
                           ID: {{ ann.id }}
                         </h6>
                         <h6 class="badge badge-info even-larger-badge mb-0">
-                          Date: {{new Date(ann.date).getDate() }}/{{new Date(ann.date).getMonth() }}/{{new Date(ann.date).getFullYear() }}
+                          Date: {{ new Date(ann.date).getDate() }}/{{
+                            new Date(ann.date).getMonth()
+                          }}/{{ new Date(ann.date).getFullYear() }}
                         </h6>
-                        <div class="d-flex flex-column align-items-center text-center">
-                  <div class="mt-3" style="word-wrap: break-word; width: 300px">
-                    <h4>Announcement: </h4>
-                    <h6>{{ ann.content }}</h6>
-                  </div>
-                </div>
+                        <div
+                          class="
+                            d-flex
+                            flex-column
+                            align-items-center
+                            text-center
+                          "
+                        >
+                          <div
+                            class="mt-3"
+                            style="word-wrap: break-word; width: 300px"
+                          >
+                            <h4>Announcement:</h4>
+                            <h6>{{ ann.content }}</h6>
+                          </div>
+                        </div>
                         <!-- <h6 class="badge badge-info even-larger-badge mb-0">Location: {{ann.date}} </h6> -->
                         <span>
                           <button
@@ -101,10 +115,8 @@
 </template>
 
 <script>
-// import modal from './Modal' 
-import swal from 'sweetalert';
+import swal from "sweetalert";
 export default {
-  
   // components: {
   //   modal
   // },
@@ -124,20 +136,20 @@ export default {
   },
   methods: {
     openModal(data) {
-      var title = data.title
-      var location = data.loc
-      var time = new Date(data.time)
+      var title = data.title;
+      var location = data.loc;
+      var time = new Date(data.time);
 
-    // var dateAndTime = new Date(time)
+      // var dateAndTime = new Date(time)
 
-      var description = data.desc
+      var description = data.desc;
 
       swal({
-  title: `Event Title: ${title}`,
-  text: `Event Location: ${location}\n\n Event Date: ${time.getDate()}/${time.getMonth()}/${time.getFullYear()}\n\n Event Time: ${time.getHours()}:${time.getMinutes()} \n\n Event Description: ${description}`,
-  icon: "info",
-  button: "Close",
-});
+        title: `Event Title: ${title}`,
+        text: `Event Location: ${location}\n\n Event Date: ${time.getDate()}/${time.getMonth()}/${time.getFullYear()}\n\n Event Time: ${time.getHours()}:${time.getMinutes()} \n\n Event Description: ${description}`,
+        icon: "info",
+        button: "Close",
+      });
     },
   },
   async mounted() {

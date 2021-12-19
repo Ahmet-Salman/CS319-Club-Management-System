@@ -215,9 +215,11 @@ at the top there is a delete button for the club
                 <div class="card">
                   <div class="card-body">
                     <h5 class="d-flex align-items-center mb-3">
-                      Current Events
+                      All Events
                     </h5>
-                    <ul class="list-group list-group-flush">
+                    <ul 
+                     v-if="events.length"
+                    class="list-group list-group-flush">
                       <li
                         v-for="req in events"
                         :key="req.id"
@@ -261,7 +263,7 @@ at the top there is a delete button for the club
                             </svg>
                             Details
                           </button>
-                          <button
+                          <button v-if="req.date > today"
                             class="btn btn-outline-info mx-2"
                             @click="
                               $store.dispatch('ClubDetails/deleteEvent', req.id)
@@ -287,6 +289,9 @@ at the top there is a delete button for the club
                         >
                       </li>
                     </ul>
+                    <h4 v-if="!events.length">
+                      There Are No Events
+                    </h4>
                   </div>
                 </div>
               </div>
@@ -304,6 +309,7 @@ export default {
   name: "ManageClubs",
   data() {
     return {
+      today: new Date(new Date().toString().split('GMT')[0] + ' UTC').toISOString(),
       club_id: this.$route.params.clubID,
       dateOfCreation: "",
       JoinRequests: [

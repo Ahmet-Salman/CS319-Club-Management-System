@@ -30,15 +30,15 @@
                 <div class="card">
                   <div class="card-body">
                     <h5 class="d-flex align-items-center mb-3">
-                      Past Announcements
+                      Past Events
                     </h5>
                     <ul
-                      v-if="announcements.length"
+                      v-if="pastEvents.length"
                       class="list-group list-group-flush"
                     >
                       <li
-                        v-for="ann in announcements"
-                        :key="ann.id"
+                        v-for="event in pastEvents"
+                        :key="event.id"
                         class="
                           list-group-item
                           d-flex
@@ -47,33 +47,46 @@
                           flex-wrap
                         "
                       >
-                        <!-- <h6 class="badge badge-primary even-larger-badge mb-0">
-                          ID: {{ ann.id }}
-                        </h6> -->
                         <h6 class="badge badge-primary even-larger-badge mb-0">
-                          Date: {{new Date(ann.date).getDate() }}/{{new Date(ann.date).getMonth() }}/{{new Date(ann.date).getFullYear() }}
+                          Name: {{ event.title }}
                         </h6>
-                        <div
-                          class="
-                            d-flex
-                            flex-column
-                            align-items-center
-                            text-center
-                          "
-                        >
-                          <div
-                            class="mt-3"
-                            style="word-wrap: break-word; width: 300px"
+                        <h6 class="badge badge-primary even-larger-badge mb-0">
+                          Date: {{new Date(event.date).getDate() }}/{{new Date(event.date).getMonth() }}/{{new Date(event.date).getFullYear() }}
+                        </h6>
+                        <span>
+                          <button
+                            class="btn btn-outline-dark mr-1"
+                            @click="
+                              openModal({
+                                title: event.title,
+                                loc: event.location,
+                                time: event.date,
+                                desc: event.description,
+                              })
+                            "
                           >
-                            <h4>Announcement:</h4>
-                            <hr />
-                            <h6>{{ ann.content }}</h6>
-                          </div>
-                        </div>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              fill="currentColor"
+                              class="bi bi-info-circle"
+                              viewBox="0 0 16 16"
+                            >
+                              <path
+                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                              />
+                              <path
+                                d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
+                              />
+                            </svg>
+                            Details
+                          </button>
+                        </span>
                       </li>
                     </ul>
-                    <h4 v-if="!announcements.length">
-                      There are No Announcements
+                    <h4 v-if="!pastEvents.length">
+                      This Club Has No Past Events
                     </h4>
                   </div>
                 </div>
@@ -87,12 +100,8 @@
 </template>
 
 <script>
-// import modal from './Modal'
 import swal from "sweetalert";
 export default {
-  // components: {
-  //   modal
-  // },
   name: "ClubDetails",
   data() {
     return {
@@ -107,8 +116,8 @@ export default {
         { id: 7, name: "Member 7" },
         { id: 9, name: "Member 9" },
       ],
-      announcements: [],
-      // events: [],
+      // announcements: [],
+      pastEvents: [],
       userID: sessionStorage.getItem("userID"),
       clubDescription: "",
       clubName: "",
@@ -119,29 +128,45 @@ export default {
       var title = data.title;
       var location = data.loc;
       var time = new Date(data.time);
-
-      // var dateAndTime = new Date(time)
-
       var description = data.desc;
 
       swal({
         title: `Event Title: ${title}`,
-        text: `Event Location: ${location}\n\n Event Date: ${time.getDate()}/${time.getMonth()}/${time.getFullYear()}\n\n Event Time: ${time.getHours()}:${time.getMinutes()} \n\n Event Description: ${description}`,
+        text: `Event Location: ${location}\n\n Event Date: ${time.getDate()}/${time.getMonth()}/${time.getFullYear()}\n\n Event Description: ${description}`,
         icon: "info",
         button: "Close",
       });
     },
+    // openModal(data) {
+    //   var title = data.title;
+    //   var location = data.loc;
+    //   var time = new Date(data.time);
+
+    //   // var dateAndTime = new Date(time)
+
+    //   var description = data.desc;
+
+    //   swal({
+    //     title: `Event Title: ${title}`,
+    //     text: `Event Location: ${location}\n\n Event Date: ${time.getDate()}/${time.getMonth()}/${time.getFullYear()}\n\n Event Time: ${time.getHours()}:${time.getMinutes()} \n\n Event Description: ${description}`,
+    //     icon: "info",
+    //     button: "Close",
+    //   });
+    // },
   },
   async mounted() {
-    await this.$store.dispatch("ClubDetails/getAnnouncements", this.club_id);
-    this.announcements = this.$store.state.ClubDetails.announcements;
+    // await this.$store.dispatch("ClubDetails/getAnnouncements", this.club_id);
+    // this.announcements = this.$store.state.ClubDetails.announcements;
 
     await this.$store.dispatch("ClubDetails/getClubDescription", this.club_id);
     this.clubDescription = this.$store.state.ClubDetails.clubDescription;
     this.clubName = this.$store.state.ClubDetails.clubName;
 
-    // await this.$store.dispatch("ClubDetails/getEvents", this.club_id);
+    await this.$store.dispatch("ClubDetails/getEvents", this.club_id);
+    this.pastEvents = this.$store.state.ClubDetails.pastEvents;
     // this.events = this.$store.state.ClubDetails.events;
+
+    // this.$store.commit("ClubDetails/setPastEvents");
   },
   computed: {},
 };

@@ -23,8 +23,6 @@ export default {
             if (state.clubName == "" || state.clubDescription == "") {
                 swal("Missing Information", "All Fields Must be Populated", "error")
             } else {
-                // Uncomment this when alperen fixes the id issue
-
                 var userID = sessionStorage.getItem("userID");
                 axios.post("http://127.0.0.1:8000/api/request/createclubrequest", {
                     user_id: userID,
