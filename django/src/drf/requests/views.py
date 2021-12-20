@@ -98,7 +98,7 @@ class ApproveJoinClubRequest(APIView):
 
 
 class RejectJoinClubRequest(APIView):
-        def delete(self,request):
+        def post(self,request):
             #get club request id
             join_id = request.data['id'];
             #get club request

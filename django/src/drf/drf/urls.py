@@ -24,4 +24,5 @@ urlpatterns = [
     path('', include('events.urls')),
     path('', include('comments.urls')),
     path('', include('requests.urls')),
+    path('', include('club_enrollment.urls')),
 ]
