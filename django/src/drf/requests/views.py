@@ -9,6 +9,7 @@ from rest_framework import status
 from django.http import Http404
 from accounts.models import Account
 from clubs.models import Club
+from club_enrollment.models import ClubEnrollment
 from datetime import datetime, timedelta
 from django.views.generic import ListView
 from clubs.permissions import IsClubOwnerOrReadOnly
@@ -78,9 +79,32 @@ class RejectClubRequest(APIView):
         clubRequest.delete()
         return HttpResponse( status = 200)
 
-class JoinClubRequest(generics.ListCreateAPIView):
-    permission_classes = [IsAdminOrReadOnly]
+class JoinClubRequestAPI(generics.ListCreateAPIView):
+    #permission_classes = [IsAdminOrReadOnly]
     queryset = JoinClubRequest.objects.all()
     serializer_class = JoinClubRequestSerializer
+
+class ApproveJoinClubRequest(APIView):
+        def post(self,request):
+            #get club request id
+            join_id = request.data['id'];
+            #get club request
+            join_request = JoinClubRequest.objects.get(id=join_id)
+            #maybe some additional code can be added
+            data = ClubEnrollment(club_id=join_request.club_id, user_id=join_request.user_id,title="user")
+            data.save()
+            join_request.delete()
+            return HttpResponse( status = 200)
+
+
+class RejectJoinClubRequest(APIView):
+        def delete(self,request):
+            #get club request id
+            join_id = request.data['id'];
+            #get club request
+            join_request = JoinClubRequest.objects.get(id=join_id)
+            #maybe some additional code can be added
+            join_request.delete()
+            return HttpResponse( status = 200)
 
 

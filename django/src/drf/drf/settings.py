@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'announcements',
     'comments',
     'corsheaders',
-    'requests'
+    'requests',
+    'club_enrollment'
 ]
 
 MIDDLEWARE = [

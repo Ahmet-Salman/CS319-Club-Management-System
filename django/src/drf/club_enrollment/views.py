@@ -7,7 +7,7 @@ class LeaveClub(APIView):
         #get club request id
         club_id = request.data['club_id']
         #get club request
-        clubRequest = CreateClubRequest.objects.get(id=club_request_id)
+        clubRequest = CreateClubRequest.objects.get(club_id=club_request_id)
         #maybe some additional code can be added
         clubRequest.delete()
         return HttpResponse( status = 200)

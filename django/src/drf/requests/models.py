@@ -1,5 +1,4 @@
 from django.db import models
-from accounts.models import Account
 
 # Create your models here.
 class Request(models.Model):
@@ -17,19 +16,17 @@ class Request(models.Model):
 
 class CreateClubRequest(Request):
     # define department name and description columns, the id column will be added automatically.
-    clubName = models.CharField(max_length=1000, default="")
-    clubDescription = models.CharField(max_length=1000, default="")
+    club_name = models.CharField(max_length=1000, default="")
+    club_description = models.CharField(max_length=1000, default="")
 
 
 class DeleteClubRequest(Request):
-    clubId = models.CharField(max_length=1000)
-    
+    club_id = models.CharField(max_length=1000)
     def __str__(self):
         return str(self.name)
 
 class JoinClubRequest(Request):
-    clubId = models.CharField(max_length=1000)
-    
+    club_id = models.CharField(max_length=1000)
     def __str__(self):
         return str(self.name)
 
