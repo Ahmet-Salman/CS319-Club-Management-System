@@ -57,7 +57,6 @@
               <a href="#" class="float-right">Forgot Password?</a>
             </div>
           </form>
-          <p class="text-center"><router-link to="/signup">Create An Account</router-link></p>
         </div>
       </body>
     </html>

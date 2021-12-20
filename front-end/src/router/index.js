@@ -11,7 +11,11 @@ import CreateAnnouncement from '../views/CreateAnnouncement.vue'
 import clubDetails from '../views/ClubDetails.vue'
 import Profile from '../views/Profile.vue'
 import members from '../views/MembersList.vue'
+import message from '../views/MessageManager.vue'
 import createClub from '../views/CreateClub.vue'
+import ann from '../views/Announcements.vue'
+import clubAnn from '../views/ClubAnnouncements.vue'
+import clubEvents from '../views/ClubEvents.vue'
 import admin from '../views/Admin.vue'
 import store from '@/store/index'
 import axios from 'axios'
@@ -172,6 +176,58 @@ const routes = [{
         path: '/members/:clubID',
         name: 'Members',
         component: members,
+        props: true,
+        beforeEnter: (to, from, next) => {
+            if (store.state.token == null) {
+                next("/login");
+            } else {
+                next();
+            }
+        }
+    },
+    {
+        path: '/messages/:clubID',
+        name: 'Messages',
+        component: message,
+        props: true,
+        beforeEnter: (to, from, next) => {
+            if (store.state.token == null) {
+                next("/login");
+            } else {
+                next();
+            }
+        }
+    },
+    {
+        path: '/announcement/:clubID',
+        name: 'Announcements',
+        component: ann,
+        props: true,
+        beforeEnter: (to, from, next) => {
+            if (store.state.token == null) {
+                next("/login");
+            } else {
+                next();
+            }
+        }
+    },
+    {
+        path: '/clubAnn/:clubID',
+        name: 'ClubAnnouncements',
+        component: clubAnn,
+        props: true,
+        beforeEnter: (to, from, next) => {
+            if (store.state.token == null) {
+                next("/login");
+            } else {
+                next();
+            }
+        }
+    },
+    {
+        path: '/clubEvents/:clubID',
+        name: 'ClubEvents',
+        component: clubEvents,
         props: true,
         beforeEnter: (to, from, next) => {
             if (store.state.token == null) {

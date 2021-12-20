@@ -1,9 +1,9 @@
 <template>
-    <div>
-        <div class="container my-5">
+  <div>
+    <div class="container my-5">
       <div class="main-body">
         <div class="row">
-        <div class="col-lg-8">
+          <div class="col-lg-8">
             <div class="row">
               <div class="col-sm-12">
                 <div class="card">
@@ -13,7 +13,9 @@
                     </h5>
                     <ul class="list-group list-group-flush">
                       <!-- <h3>{{this.createReqs.length}}</h3> -->
-                      <h3 v-if="this.createReqs.length == 0">There Are No Club Requests</h3>
+                      <h3 v-if="this.createReqs.length == 0">
+                        There Are No Club Requests
+                      </h3>
                       <li
                         v-for="req in createReqs"
                         :key="req.id"
@@ -34,50 +36,49 @@
                                 name: req.clubName,
                                 desc: req.clubDescription,
                                 time: req.date,
-                                id: req.student_id
+                                user_id: req.user_id,
                               })
                             "
-                          >View Club Details (TBI)</button>
+                          >
+                            View Club Details
+                          </button>
                           <button
                             class="btn btn-outline-secondary mx-2"
-                            @click="
-                              $store.dispatch('Admin/Accept', req.id)
-                            "
+                            @click="$store.dispatch('Admin/Accept', req.id)"
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="16"
                               height="16"
                               fill="currentColor"
-                              class="bi bi-person-check-fill"
+                              class="bi bi-plus-circle"
                               viewBox="0 0 16 16"
                             >
                               <path
-                                fill-rule="evenodd"
-                                d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z"
+                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
                               />
                               <path
-                                d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"
+                                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"
                               />
                             </svg>
                           </button>
                           <button
                             class="btn btn-outline-primary mx-2"
-                            @click="
-                              $store.dispatch('Admin/Reject', req.id)
-                            "
+                            @click="$store.dispatch('Admin/Reject', req.id)"
                           >
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
                               width="16"
                               height="16"
                               fill="currentColor"
-                              class="bi bi-person-x-fill"
+                              class="bi bi-dash-circle"
                               viewBox="0 0 16 16"
                             >
                               <path
-                                fill-rule="evenodd"
-                                d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6.146-2.854a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z"
+                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                              />
+                              <path
+                                d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"
                               />
                             </svg></button
                         ></span>
@@ -90,8 +91,8 @@
           </div>
         </div>
       </div>
-        </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -100,43 +101,44 @@ export default {
   name: "Admin",
   data() {
     return {
-       student_id: 0,
-        clubName: "",
-        clubDescription: "",
+      user_name: "",
+      clubName: "",
+      clubDescription: "",
       createReqs: [],
     };
   },
   methods: {
     async openModal(data) {
-      
-      var id = data.id
+      var id = data.user_id;
+      await this.get_user_name(id);
       var name = data.name;
       var description = data.desc;
       var time = new Date(data.time);
-      await this.get_user_name(id)
-     
-    // var time = data.time
-      
+      var userName = this.user_name;
+
       swal({
         title: `Club Name: ${name}`,
-        text: `Club Description: ${description} \n\nTime of Creation: ${time.getDate()}/${time.getMonth()}/${time.getFullYear()} at ${time.getHours()}:${time.getMinutes()}\n\n By Student: ${this.student_id}`,
+        text: `Club Description: ${description} \n\nTime of Creation: ${time.getDate()}/${time.getMonth()}/${time.getFullYear()} at ${time.getHours()}:${time.getMinutes()}\n\n By Student: ${userName} with ID ${id}`,
         icon: "info",
         button: "Close",
       });
     },
     async get_user_name(id) {
-      var token = sessionStorage.getItem("token")
+      var token = sessionStorage.getItem("token");
       const objHeaders = {
-                "Authorization": `Token ${token}`
-            }
-      await axios.get(`http://127.0.0.1:8000/api/account/${id}`, {
-        headers: objHeaders
-      }).then (res => {
-        this.student_id = res.data.student_id
-      }).catch (err => {
-        console.log(err)
-      })
-    }
+        Authorization: `Token ${token}`,
+      };
+      await axios
+        .get(`http://127.0.0.1:8000/api/account/${id}`, {
+          headers: objHeaders,
+        })
+        .then((res) => {
+          this.user_name = res.data.first_name + " " + res.data.last_name;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
   },
   async mounted() {
     await this.$store.dispatch("Admin/getRequests");

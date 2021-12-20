@@ -9,20 +9,18 @@
             <div class="card">
               <div class="card-body">
                 <div class="d-flex flex-column align-items-center text-center">
-                  <div class="mt-3" style="word-wrap: break-word; width: 300px">
-                    <h3>Club Description</h3>
-                    <hr />
-                    <h5>{{ clubDescription }}</h5>
-                  </div>
+                  <router-link
+                    :to="{
+                      name: 'Manage',
+                      params: { clubID: $route.params.clubID },
+                    }"
+                    ><button class="btn btn btn-outline-success mx-1">
+                      Go To Club Management
+                    </button></router-link
+                  >
                 </div>
               </div>
             </div>
-            <router-link
-              :to="{ name: 'Manage', params: { clubID: $route.params.clubID } }"
-              ><button class="btn btn btn-outline-success mx-1">
-                Go To Club Management
-              </button></router-link
-            >
           </div>
           <div class="col-lg-8">
             <div class="row">
@@ -30,15 +28,15 @@
                 <div class="card">
                   <div class="card-body">
                     <h5 class="d-flex align-items-center mb-3">
-                      Past Events
+                      Announcements
                     </h5>
                     <ul
-                      v-if="pastEvents.length"
+                      v-if="announcements.length"
                       class="list-group list-group-flush"
                     >
                       <li
-                        v-for="event in pastEvents"
-                        :key="event.id"
+                        v-for="ann in announcements"
+                        :key="ann.id"
                         class="
                           list-group-item
                           d-flex
@@ -48,21 +46,38 @@
                         "
                       >
                         <h6 class="badge badge-primary even-larger-badge mb-0">
-                          Name: {{ event.title }}
+                          ID: {{ ann.id }}
                         </h6>
-                        <h6 class="badge badge-primary even-larger-badge mb-0">
-                          Date: {{new Date(event.date).getDate() }}/{{new Date(event.date).getMonth() }}/{{new Date(event.date).getFullYear() }}
+                        <h6 class="badge badge-info even-larger-badge mb-0">
+                          Date: {{ new Date(ann.date).getDate() }}/{{
+                            new Date(ann.date).getMonth()
+                          }}/{{ new Date(ann.date).getFullYear() }}
                         </h6>
+                        <div
+                          class="
+                            d-flex
+                            flex-column
+                            align-items-center
+                            text-center
+                          "
+                        >
+                          <div
+                            class="mt-3"
+                            style="word-wrap: break-word; width: 300px"
+                          >
+                            <h4>Announcement:</h4>
+                            <h6>{{ ann.content }}</h6>
+                          </div>
+                        </div>
+                        <!-- <h6 class="badge badge-info even-larger-badge mb-0">Location: {{ann.date}} </h6> -->
                         <span>
                           <button
-                            class="btn btn-outline-dark mr-1"
+                            class="btn btn-outline-info mx-2"
                             @click="
-                              openModal({
-                                title: event.title,
-                                loc: event.location,
-                                time: event.date,
-                                desc: event.description,
-                              })
+                              $store.dispatch(
+                                'ClubDetails/deleteAnnouncement',
+                                { club_id: club_id, annId: ann.id }
+                              )
                             "
                           >
                             <svg
@@ -70,23 +85,23 @@
                               width="16"
                               height="16"
                               fill="currentColor"
-                              class="bi bi-info-circle"
+                              class="bi bi-x-square"
                               viewBox="0 0 16 16"
                             >
                               <path
-                                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                                d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"
                               />
                               <path
-                                d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
+                                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"
                               />
                             </svg>
-                            Details
-                          </button>
-                        </span>
+                            Delete
+                          </button></span
+                        >
                       </li>
                     </ul>
-                    <h4 v-if="!pastEvents.length">
-                      This Club Has No Past Events
+                    <h4 v-if="!announcements.length">
+                      There are No Announcements
                     </h4>
                   </div>
                 </div>
@@ -102,6 +117,9 @@
 <script>
 import swal from "sweetalert";
 export default {
+  // components: {
+  //   modal
+  // },
   name: "ClubDetails",
   data() {
     return {
@@ -109,15 +127,8 @@ export default {
       modalData: null,
 
       club_id: this.$route.params.clubID,
-      JoinRequests: [
-        { id: 1, name: "Member 1" },
-        { id: 2, name: "Member 2" },
-        { id: 5, name: "Member 5" },
-        { id: 7, name: "Member 7" },
-        { id: 9, name: "Member 9" },
-      ],
-      // announcements: [],
-      pastEvents: [],
+      announcements: [],
+      events: [],
       userID: sessionStorage.getItem("userID"),
       clubDescription: "",
       clubName: "",
@@ -128,45 +139,31 @@ export default {
       var title = data.title;
       var location = data.loc;
       var time = new Date(data.time);
+
+      // var dateAndTime = new Date(time)
+
       var description = data.desc;
 
       swal({
         title: `Event Title: ${title}`,
-        text: `Event Location: ${location}\n\n Event Date: ${time.getDate()}/${time.getMonth()}/${time.getFullYear()}\n\n Event Description: ${description}`,
+        text: `Event Location: ${location}\n\n Event Date: ${time.getDate()}/${time.getMonth()}/${time.getFullYear()}\n\n Event Time: ${time.getHours()}:${time.getMinutes()} \n\n Event Description: ${description}`,
         icon: "info",
         button: "Close",
       });
     },
-    // openModal(data) {
-    //   var title = data.title;
-    //   var location = data.loc;
-    //   var time = new Date(data.time);
-
-    //   // var dateAndTime = new Date(time)
-
-    //   var description = data.desc;
-
-    //   swal({
-    //     title: `Event Title: ${title}`,
-    //     text: `Event Location: ${location}\n\n Event Date: ${time.getDate()}/${time.getMonth()}/${time.getFullYear()}\n\n Event Time: ${time.getHours()}:${time.getMinutes()} \n\n Event Description: ${description}`,
-    //     icon: "info",
-    //     button: "Close",
-    //   });
-    // },
   },
   async mounted() {
-    // await this.$store.dispatch("ClubDetails/getAnnouncements", this.club_id);
-    // this.announcements = this.$store.state.ClubDetails.announcements;
+    await this.$store.dispatch("ClubDetails/getAnnouncements", this.club_id);
+    this.announcements = this.$store.state.ClubDetails.announcements;
 
     await this.$store.dispatch("ClubDetails/getClubDescription", this.club_id);
     this.clubDescription = this.$store.state.ClubDetails.clubDescription;
     this.clubName = this.$store.state.ClubDetails.clubName;
 
     await this.$store.dispatch("ClubDetails/getEvents", this.club_id);
-    this.pastEvents = this.$store.state.ClubDetails.pastEvents;
-    // this.events = this.$store.state.ClubDetails.events;
-
-    // this.$store.commit("ClubDetails/setPastEvents");
+    this.events = this.$store.state.ClubDetails.events;
+    // console.log(this.events);
+    // console.log("Club Desc: ", this.clubDescription, ", club name: ", this.clubName)
   },
   computed: {},
 };

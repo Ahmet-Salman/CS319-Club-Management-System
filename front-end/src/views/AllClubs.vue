@@ -127,7 +127,55 @@
           <td>{{ clubs.manager }}</td>
           <td style="color: white" class="bg-success">Member</td>
           <td>
-            <button class="btn btn-outline-dark mr-1">
+            <router-link
+              :to="{ name: 'ClubAnnouncements', params: { clubID: clubs.id } }"
+              type="button"
+              class="btn btn-outline-info mr-1"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-info-circle"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                />
+                <path
+                  d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
+                />
+              </svg>
+              Announcements
+            </router-link>
+            <router-link
+              :to="{ name: 'ClubEvents', params: { clubID: clubs.id } }"
+              type="button"
+              class="btn btn-outline-info mr-1"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-info-circle"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+                />
+                <path
+                  d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
+                />
+              </svg>
+              Events
+            </router-link>
+            <router-link
+              :to="{ name: 'ClubDetails', params: { clubID: clubs.id } }"
+              type="button"
+              class="btn btn-outline-dark mr-1"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -144,7 +192,7 @@
                 />
               </svg>
               Details
-            </button>
+            </router-link>
 
             <button type="button" class="btn btn-outline-primary mr-1">
               <svg
@@ -178,7 +226,11 @@
             Waiting For Response
           </td>
           <td>
-            <button type="button" class="btn btn-outline-dark mr-1">
+            <router-link
+              :to="{ name: 'ClubDetails', params: { clubID: clubs.id } }"
+              type="button"
+              class="btn btn-outline-dark mr-1"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -195,10 +247,10 @@
                 />
               </svg>
               Details
-            </button>
+            </router-link>
             <button
               type="button"
-              class="btn btn-outline-info mr-1"
+              class="btn btn-outline-primary mr-1"
               data-toggle="modal"
               data-target="#exampleModal"
               data-backdrop="static"
@@ -228,7 +280,11 @@
           <td>{{ clubs.manager }}</td>
           <td style="color: white" class="bg-info">Unaffiliated</td>
           <td>
-            <button type="button" class="btn btn-outline-dark mr-1">
+            <router-link
+              :to="{ name: 'ClubDetails', params: { clubID: clubs.id } }"
+              type="button"
+              class="btn btn-outline-dark mr-1"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -245,7 +301,7 @@
                 />
               </svg>
               Details
-            </button>
+            </router-link>
             <button
               type="button"
               class="btn btn-outline-secondary mr-1"
@@ -363,9 +419,6 @@ export default {
       AllManagerClub: [],
       pendingRequests: [
         { id: 13, name: "Club13", catagory: "catagory13", manager: "Person13" },
-        { id: 14, name: "Club14", catagory: "catagory14", manager: "Person14" },
-        { id: 15, name: "Club15", catagory: "catagory15", manager: "Person15" },
-        { id: 16, name: "Club16", catagory: "catagory16", manager: "Person16" },
       ],
     };
   },

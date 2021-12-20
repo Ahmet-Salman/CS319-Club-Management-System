@@ -7,6 +7,7 @@ import ManageClubs from './modules/ManageClubs'
 import ClubDetails from './modules/ClubDetails'
 import Admin from './modules/Admin'
 import CreateClub from './modules/CreateClub'
+import Members from './modules/Members'
 import router from '../router/index'
 import swal from 'sweetalert'
 
@@ -75,6 +76,7 @@ export default createStore({
         ManageClubs,
         ClubDetails,
         Admin,
-        CreateClub
+        CreateClub,
+        Members
     }
 })

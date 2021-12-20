@@ -10,6 +10,7 @@ export default {
     state: {
         announcements: [],
         events: [],
+        pastEvents: [],
         clubDescription: "",
         clubName: "",
     },
@@ -23,6 +24,16 @@ export default {
         setClubDetails(state, payload) {
             state.clubDescription = payload.desc
             state.clubName = payload.name
+        },
+        setPastEvents(state, allEvents) {
+            var today = new Date(new Date().toString().split('GMT')[0] + ' UTC').toISOString()
+            console.log(today)
+            console.log(allEvents)
+            var events = allEvents.filter((event) => {
+                return event.date < today
+            })
+
+            state.pastEvents = events
         }
     },
     actions: {
@@ -74,6 +85,7 @@ export default {
                 params
             }).then(res => {
                 commit('setEvents', res.data)
+                commit('setPastEvents', res.data)
             }).catch(err => {
                 swal('Error', 'An error Occured, Please Try Again', 'error')
             })

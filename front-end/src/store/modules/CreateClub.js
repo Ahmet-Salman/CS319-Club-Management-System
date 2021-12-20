@@ -23,20 +23,19 @@ export default {
             if (state.clubName == "" || state.clubDescription == "") {
                 swal("Missing Information", "All Fields Must be Populated", "error")
             } else {
-                // Uncomment this when alperen fixes the id issue
-
-                // var userID = sessionStorage.getItem("userID");
-                // axios.post("http://127.0.0.1:8000/api/request/createclub", {
-                //     student_id: userID,
-                //     clubName: state.clubName,
-                //     clubDescription: state.clubDescription
-                // }).then(res => {
-                //     console.log(res)
-                //     swal("Success", "Your request has been recieved successfully and will be evaluted soon", "success")
-                // }).catch(err => {
-                //     console.log(err)
-                // })
-                // console.log("Inside create club")
+                var userID = sessionStorage.getItem("userID");
+                axios.post("http://127.0.0.1:8000/api/request/createclubrequest", {
+                    user_id: userID,
+                    clubName: state.clubName,
+                    clubDescription: state.clubDescription
+                }).then(res => {
+                    console.log(res)
+                    swal("Success", "Your request has been recieved successfully and will be evaluted soon", "success")
+                    router.push({ path: '/clubs' })
+                }).catch(err => {
+                    console.log(err)
+                })
+                console.log("Inside create club")
             }
 
         },
