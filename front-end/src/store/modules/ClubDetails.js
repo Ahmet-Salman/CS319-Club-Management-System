@@ -27,8 +27,6 @@ export default {
         },
         setPastEvents(state, allEvents) {
             var today = new Date(new Date().toString().split('GMT')[0] + ' UTC').toISOString()
-            console.log(today)
-            console.log(allEvents)
             var events = allEvents.filter((event) => {
                 return event.date < today
             })

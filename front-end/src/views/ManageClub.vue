@@ -144,7 +144,9 @@ at the top there is a delete button for the club
                     <h5 class="d-flex align-items-center mb-3">
                       Join Requests
                     </h5>
-                    <ul class="list-group list-group-flush">
+                    <ul 
+                    v-if="JoinRequests.length"
+                    class="list-group list-group-flush">
                       <li
                         v-for="req in JoinRequests"
                         :key="req.id"
@@ -156,7 +158,10 @@ at the top there is a delete button for the club
                           flex-wrap
                         "
                       >
-                        <h6 class="mb-0">{{ req.name }}</h6>
+                        <h6 class="mb-0">{{ req.id }}/Name TBI</h6>
+                        <h6 class="badge badge-primary even-larger-badge mb-0">
+                          Date: {{new Date(req.date).getDate() }}/{{new Date(req.date).getMonth() }}/{{new Date(req.date).getFullYear() }}
+                        </h6>
                         <span
                           ><button class="btn btn-outline-info mx-2">
                             View Profile
@@ -164,7 +169,7 @@ at the top there is a delete button for the club
                           <button
                             class="btn btn-outline-secondary mx-2"
                             @click="
-                              $store.dispatch('ManageClubs/testAccept', req.id)
+                              $store.dispatch('ManageClubs/AcceptMember', req.id)
                             "
                           >
                             <svg
@@ -187,7 +192,7 @@ at the top there is a delete button for the club
                           <button
                             class="btn btn-outline-primary mx-2"
                             @click="
-                              $store.dispatch('ManageClubs/testReject', req.id)
+                              $store.dispatch('ManageClubs/RejectMember', req.id)
                             "
                           >
                             <svg
@@ -206,6 +211,9 @@ at the top there is a delete button for the club
                         ></span>
                       </li>
                     </ul>
+                    <h4 v-if="!JoinRequests.length">
+                      There Are No Join Requests
+                    </h4>
                   </div>
                 </div>
               </div>
@@ -312,13 +320,7 @@ export default {
       today: new Date(new Date().toString().split('GMT')[0] + ' UTC').toISOString(),
       club_id: this.$route.params.clubID,
       dateOfCreation: "",
-      JoinRequests: [
-        { id: 1, name: "Member 1" },
-        { id: 2, name: "Member 2" },
-        { id: 5, name: "Member 5" },
-        { id: 7, name: "Member 7" },
-        { id: 9, name: "Member 9" },
-      ],
+      JoinRequests: [],
       events: [],
     };
   },
@@ -356,6 +358,9 @@ export default {
 
     await this.$store.dispatch("ClubDetails/getEvents", this.club_id);
     this.events = this.$store.state.ClubDetails.events;
+    await this.$store.dispatch("ManageClubs/getJoinRequests", this.club_id)
+    this.JoinRequests = this.$store.state.ManageClubs.JoinRequests;
+    // console.log(this.$store.state.ManageClubs.JoinRequests)
   },
 };
 </script>

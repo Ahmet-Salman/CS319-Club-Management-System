@@ -9,14 +9,8 @@ import store from '@/store/index'
 export default {
     namespaced: true,
     state: {
-        AllClubs: [
-            { id: 1, name: 'Club1', catagory: 'catagory1', manager: 'Person1' },
-            { id: 2, name: 'Club2', catagory: 'catagory2', manager: 'Person2' },
-            { id: 5, name: 'Club5', catagory: 'catagory5', manager: 'Person5' },
-            { id: 7, name: 'Club7', catagory: 'catagory7', manager: 'Person7' },
-            { id: 9, name: 'Club9', catagory: 'catagory9', manager: 'Person9' },
-            { id: 11, name: 'Club11', catagory: 'catagory11', manager: 'Person11' },
-        ],
+        AllClubs: [],
+        UnaffiliatedClub: [],
         AllMemberClub: [
             { id: 3, name: 'Club3', catagory: 'catagory3', manager: 'Person3' },
             { id: 6, name: 'Club6', catagory: 'catagory6', manager: 'Person6' },
@@ -29,8 +23,6 @@ export default {
             { id: 15, name: 'Club15', catagory: 'catagory15', manager: 'Person15' },
             { id: 16, name: 'Club16', catagory: 'catagory16', manager: 'Person16' },
         ],
-        testAllClubs: [],
-        testAllManagerClub: []
 
     },
     mutations: {
@@ -38,9 +30,40 @@ export default {
             // router.go()
         },
         setAllClubs(state, res) {
-            state.testAllClubs = res
+            state.AllClubs = res
                 // parse the recieved JSON response and convert it to an array
                 // Then set the resulting array to its respective array
+        },
+        setUnaffiliatedClub(state) {
+            // Filters through manager clubs
+            var userID = sessionStorage.getItem('userID')
+            var unAffArray = state.AllClubs.filter((value) => {
+                return value.owner != userID
+            })
+            state.UnaffiliatedClub = unAffArray
+
+            // Filter through member clubs
+
+            // Filter through pending requests
+
+            // array which holds all values
+            // const namesArr = ["Lily", "Roy", "John", "Jessica"];
+
+            // // array of values that needs to be deleted
+            // const namesToDeleteArr = ["Roy", "John"];
+
+            // // make a Set to hold values from namesToDeleteArr
+            // const namesToDeleteSet = new Set(namesToDeleteArr);
+
+            // // use filter() method
+            // // to filter only those elements
+            // // that need not to be deleted from the array
+            // const newArr = namesArr.filter((name) => {
+            //     // return those elements not in the namesToDeleteSet
+            //     return !namesToDeleteSet.has(name);
+            // });
+
+            // console.log(newArr); // ["Lily", "Jessica"]
         },
 
         setAllMemberClubs(state, res) {
@@ -50,7 +73,7 @@ export default {
 
         setAllManagerClubs(state) {
             var userID = sessionStorage.getItem('userID')
-            var managerArray = state.testAllClubs.filter((value) => {
+            var managerArray = state.AllClubs.filter((value) => {
                 return value.owner == userID
             })
 
@@ -76,6 +99,7 @@ export default {
             await axios.get('http://127.0.0.1:8000/api/clubs')
                 .then(res => {
                     commit('setAllClubs', res.data) // returns the array of data
+                    commit('setUnaffiliatedClub')
                 }).catch(err => {
                     console.log(err)
                 })
@@ -109,14 +133,14 @@ export default {
                 })
         },
 
-        async joinClub() {
-            await axios.post('http://localhost:3000/requests/:club_id', {
-                name: $store.user.name,
-                surname: $store.user.surname,
-                student_id: $store.user.student_id
+        async JoinClub({ commit }, clubID) {
+            console.log("User ", sessionStorage.getItem("userID"), " Joined club ", clubID)
+            await axios.post('http://127.0.0.1:8000/api/request/joinclubrequest', {
+                user_id: sessionStorage.getItem("userID"),
+                club_id: clubID,
             }).then(res => {
                 console.log(res)
-                console.log('Request Send Successfully')
+                swal("Success", "Your Request Has Been Recieved, Please Wait Until The Club Manager Accepts Your Request", "success")
             }).catch(err => {
                 console.log(err)
             })
