@@ -57,8 +57,8 @@ class ApproveClubRequest(APIView):
         clubRequest = CreateClubRequest.objects.get(id=club_request_id)
         #turn the club request into a club
         #first turn request to objeect
-        name = clubRequest.clubName
-        description = clubRequest.clubDescription
+        name = clubRequest.club_name
+        description = clubRequest.club_description
         user_id = clubRequest.user_id
         #set the student as club manager
         student = Account.objects.get(id=user_id)
@@ -99,6 +99,18 @@ class JoinClubRequestAPI(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 
+    serializer_class = JoinClubRequestWithInfoSerializer
+    model = JoinClubRequest
+    def get_queryset(self):
+        user_id = self.request.query_params.get("userId")
+        club_id = self.request.query_params.get("clubId")
+        if (user_id and club_id):
+            return JoinClubWithInfoRequest.objects.filter(club_id=club_id).filter(user_id=user_id)
+        elif user_id:
+            return JoinClubWithInfoRequest.objects.filter(user_id=user_id)
+        elif club_id:
+            return JoinClubWithInfoRequest.objects.filter(club_id=club_id)
+        return JoinClubRequest.objects.all()
 
 class ApproveJoinClubRequest(APIView):
         def post(self,request):

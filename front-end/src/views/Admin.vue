@@ -27,14 +27,14 @@
                           flex-wrap
                         "
                       >
-                        <h6 class="mb-0">{{ req.clubName }}</h6>
+                        <h6 class="mb-0">{{ req.club_name }}</h6>
                         <span
                           ><button
                             class="btn btn-outline-info mx-2"
                             @click="
                               openModal({
-                                name: req.clubName,
-                                desc: req.clubDescription,
+                                name: req.club_name,
+                                desc: req.club_description,
                                 time: req.date,
                                 user_id: req.user_id,
                               })

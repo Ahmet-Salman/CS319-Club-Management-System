@@ -3,8 +3,13 @@ from accounts.serializers import AccountSerializer
 from .models import Club
 
 # Club Serializer
-class ClubSerializer(serializers.ModelSerializer):
-    owner = AccountSerializer(read_only=True)
+class ReadClubSerializer(serializers.ModelSerializer):
+    owner = AccountSerializer(read_only=False)
+    class Meta:
+        model = Club
+        fields = '__all__'
+
+class WriteClubSerializer(serializers.ModelSerializer):
     class Meta:
         model = Club
         fields = '__all__'

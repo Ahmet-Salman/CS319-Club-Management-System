@@ -35,7 +35,6 @@
       <thead>
         <tr class="bg-info">
           <th>Club Name</th>
-          <!-- <th>Catagory</th> -->
           <th>Manager</th>
           <th>Status</th>
           <th>Options</th>
@@ -45,8 +44,7 @@
         <!-- We loop over the AllManagerClub Array here -->
         <tr v-for="clubs in AllManagerClub" :key="clubs.id" class="table-info">
           <td>{{ clubs.name }}</td>
-          <!-- <td>{{clubs.description}}</td> -->
-          <td>{{ clubs.owner }}</td>
+          <td>{{ clubs.owner.first_name }} {{ clubs.owner.last_name }}</td>
           <td style="color: white" class="bg-danger">Manager</td>
           <td>
             <router-link
@@ -216,7 +214,7 @@
             </button>
           </td>
         </tr>
-        <br />
+        <br v-if="pendingRequests.length" />
         <!-- We will loop over pendingRequests here -->
         <tr v-for="clubs in pendingRequests" :key="clubs.id" class="table-info">
           <td>{{ clubs.name }}</td>
@@ -255,6 +253,7 @@
               data-target="#exampleModal"
               data-backdrop="static"
               data-keyboard="false"
+              @click="$store.dispatch('AllClubs/cancelJoin', clubs.id)"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -277,7 +276,7 @@
         <tr v-for="clubs in UnaffiliatedClub" :key="clubs.id" class="table-info">
           <td>{{ clubs.name }}</td>
           <!-- <td>{{clubs.catagory}}</td> -->
-          <td>{{ clubs.owner }}</td>
+          <td>{{ clubs.owner.first_name }} {{ clubs.owner.last_name }}</td>
           <td style="color: white" class="bg-info">Unaffiliated</td>
           <td>
             <router-link
@@ -361,18 +360,17 @@ export default {
         { id: 12, name: "Club12", catagory: "catagory12", manager: "Person12" },
       ],
       AllManagerClub: [],
-      pendingRequests: [
-        { id: 13, name: "Club13", catagory: "catagory13", manager: "Person13" },
-      ],
+      pendingRequests: [],
     };
   },
   methods: {},
   async mounted() {
     await this.$store.dispatch("AllClubs/setAllClubs");
-    this.UnaffiliatedClub = this.$store.state.AllClubs.UnaffiliatedClub;
-    // this.testAllClubs = this.$store.state.AllClubs.testAllClubs;
     await this.$store.dispatch("AllClubs/setAllManagerClubs");
     this.AllManagerClub = this.$store.state.AllClubs.AllManagerClub;
+    await this.$store.dispatch("AllClubs/setPendingRequests");
+    this.pendingRequests = this.$store.state.AllClubs.pendingRequests;
+    this.UnaffiliatedClub = this.$store.state.AllClubs.UnaffiliatedClub;
   },
 };
 </script>

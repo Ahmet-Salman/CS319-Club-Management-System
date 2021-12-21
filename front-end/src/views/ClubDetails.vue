@@ -18,6 +18,7 @@
               </div>
             </div>
             <router-link
+            v-if="club_id == manageID"
               :to="{ name: 'Manage', params: { clubID: $route.params.clubID } }"
               ><button class="btn btn btn-outline-success mx-1">
                 Go To Club Management
@@ -105,10 +106,8 @@ export default {
   name: "ClubDetails",
   data() {
     return {
-      modalVisible: false,
-      modalData: null,
-
       club_id: this.$route.params.clubID,
+      manageID: sessionStorage.getItem("manageID"),
       JoinRequests: [
         { id: 1, name: "Member 1" },
         { id: 2, name: "Member 2" },
