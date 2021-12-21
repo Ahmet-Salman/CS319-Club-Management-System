@@ -81,8 +81,18 @@ class RejectClubRequest(APIView):
 
 class JoinClubRequestAPI(generics.ListCreateAPIView):
     #permission_classes = [IsAdminOrReadOnly]
-    queryset = JoinClubRequest.objects.all()
     serializer_class = JoinClubRequestSerializer
+    model = JoinClubRequest
+    def get_queryset(self):
+        user_id = self.request.query_params.get("userId")
+        club_id = self.request.query_params.get("clubId")
+        if (user_id and club_id):
+            return JoinClubRequest.objects.filter(club_id=club_id).filter(user_id=user_id)
+        elif user_id:
+            return JoinClubRequest.objects.filter(user_id=user_id)
+        elif club_id:
+            return JoinClubRequest.objects.filter(club_id=club_id)
+        return JoinClubRequest.objects.all()
 
 class ApproveJoinClubRequest(APIView):
         def post(self,request):
