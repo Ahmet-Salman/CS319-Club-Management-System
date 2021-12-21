@@ -153,11 +153,25 @@ export default {
                     swal('Error', 'An error Occured, Please Try Again', 'error')
                 })
             }
-
-
-
-
         },
+
+        async cancelJoin({ commit }, clubID) {
+            var userID = sessionStorage.getItem('userID')
+            var reqId = -1
+            await axios.get(`http://127.0.0.1:8000/api/request/joinclubrequest?userId=${userID}&clubId=${clubID}`).then(res => {
+                reqId = res.data[0].id
+            }).catch(err => {
+                swal('Error', 'An error Occured, Please Try Again', 'error')
+            })
+
+            await axios.post("http://127.0.0.1:8000/api/request/rejectjoin", {
+                id: reqId
+            }).then(res => {
+                location.reload();
+            }).catch(err => {
+                console.log(err)
+            })
+        }
     },
     getters: {
         getAllClubs(state) {

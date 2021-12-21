@@ -214,7 +214,7 @@
             </button>
           </td>
         </tr>
-        <br />
+        <br v-if="pendingRequests.length" />
         <!-- We will loop over pendingRequests here -->
         <tr v-for="clubs in pendingRequests" :key="clubs.id" class="table-info">
           <td>{{ clubs.name }}</td>
@@ -253,6 +253,7 @@
               data-target="#exampleModal"
               data-backdrop="static"
               data-keyboard="false"
+              @click="$store.dispatch('AllClubs/cancelJoin', clubs.id)"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

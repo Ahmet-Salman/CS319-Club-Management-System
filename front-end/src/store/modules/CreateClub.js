@@ -33,7 +33,7 @@ export default {
                     swal("Success", "Your request has been recieved successfully and will be evaluted soon", "success")
                     router.push({ path: '/clubs' })
                 }).catch(err => {
-                    console.log(err)
+                    swal("Error", "You Cannot Create A Club Request Because You Are Already The Manager of A Club", "error")
                 })
             }
 
