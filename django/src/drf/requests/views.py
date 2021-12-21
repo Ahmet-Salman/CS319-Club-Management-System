@@ -2,8 +2,8 @@ from django.http.response import HttpResponse
 from rest_framework import generics, serializers
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializers import  DeleteClubRequestSerializer,CreateClubRequestSerializer, JoinClubRequestSerializer
-from .models import CreateClubRequest, Request,DeleteClubRequest,JoinClubRequest
+from .serializers import  DeleteClubRequestSerializer,CreateClubRequestSerializer, JoinClubRequestSerializer,JoinClubRequestWithInfoSerializer
+from .models import CreateClubRequest, JoinClubWithInfoRequest, Request,DeleteClubRequest,JoinClubRequest
 from accounts.permissions import IsAdminOrReadOnly
 from rest_framework import status
 from django.http import Http404
@@ -30,7 +30,7 @@ class CreateClubRequestAPI(APIView):
         serializer = CreateClubRequestSerializer(data=request.data)
         if serializer.is_valid():
             if(userHasClub()):
-                return Response("USER HAS CLUB", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                return Response({"error": "USER HAS CLUB"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             else:
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_200_OK)
@@ -78,30 +78,34 @@ class RejectClubRequest(APIView):
         #maybe some additional code can be added
         clubRequest.delete()
         return HttpResponse( status = 200)
-'''
+
 class JoinClubRequestAPI(APIView):
     #permission_classes = [IsAdminOrReadOnly]
-    def post():
-        user_id = request.data['user_id'];
-        club_id = request.data['club_id'];
+    def post(self,request):
+        serializer = JoinClubRequestSerializer(data=request.data)
+        if serializer.is_valid():
+            student = Account.objects.get(id=request.data['user_id'])
+            joinClubWithInfo = JoinClubWithInfoRequest(timeStamp=request.data['timeStamp'],user_id = request.data['user_id'],club_id =request.data['club_id'], status = request.data['status'],name= student.first_name,surname=student.last_name,email=student.email)
+            joinClubWithInfo.save()
+            Otherserializer = JoinClubRequestWithInfoSerializer(joinClubWithInfo)
+            return Response(Otherserializer.data,status=status.HTTP_200_OK)
+        else:
+            data = serializer.errors
+            return Response(serializer.errors,status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-        user = Account.objects.get(id= user_id)
-
-        joinClubReq =  JoinClubRequest(name = user.name,surname = user.surname)
-        joinClubReq.save()
-
-    def get():
-        #JoinClubRequest.objects.all()
+    def get(self,request):
+        objects = JoinClubWithInfoRequest.objects.all()
+        serializer = JoinClubRequestWithInfoSerializer(objects,many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 
-'''
 
 class ApproveJoinClubRequest(APIView):
         def post(self,request):
             #get club request id
             join_id = request.data['id'];
             #get club request
-            join_request = JoinClubRequest.objects.get(id=join_id)
+            join_request = JoinClubWithInfoRequest.objects.get(id=join_id)
             #maybe some additional code can be added
             data = ClubEnrollment(club_id=join_request.club_id, user_id=join_request.user_id,title="user")
             data.save()
@@ -114,7 +118,7 @@ class RejectJoinClubRequest(APIView):
             #get club request id
             join_id = request.data['id'];
             #get club request
-            join_request = JoinClubRequest.objects.get(id=join_id)
+            join_request = JoinClubWithInfoRequest.objects.get(id=join_id)
             #maybe some additional code can be added
             join_request.delete()
             return HttpResponse( status = 200)

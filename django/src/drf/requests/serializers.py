@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import CreateClubRequest, DeleteClubRequest, JoinClubRequest, Request
+from .models import CreateClubRequest, DeleteClubRequest, JoinClubRequest, Request,JoinClubWithInfoRequest
 
 class RequestSerializer(serializers.ModelSerializer):
     class Meta:
@@ -22,5 +22,12 @@ class JoinClubRequestSerializer(RequestSerializer):
     class Meta:
         model = JoinClubRequest
         fields = '__all__'
+
+class JoinClubRequestWithInfoSerializer(RequestSerializer):
+    class Meta:
+        model = JoinClubWithInfoRequest
+        fields = '__all__'
+
+
 
 
