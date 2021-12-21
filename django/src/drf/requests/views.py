@@ -85,7 +85,7 @@ class JoinClubRequestAPI(APIView):
         serializer = JoinClubRequestSerializer(data=request.data)
         if serializer.is_valid():
             student = Account.objects.get(id=request.data['user_id'])
-            joinClubWithInfo = JoinClubWithInfoRequest(timeStamp=request.data['timeStamp'],user_id = request.data['user_id'],club_id =request.data['club_id'], status = request.data['status'],name= student.first_name,surname=student.last_name,email=student.email)
+            joinClubWithInfo = JoinClubWithInfoRequest(user_id = request.data['user_id'],club_id =request.data['club_id'],name= student.first_name,surname=student.last_name,email=student.email)
             joinClubWithInfo.save()
             Otherserializer = JoinClubRequestWithInfoSerializer(joinClubWithInfo)
             return Response(Otherserializer.data,status=status.HTTP_200_OK)
@@ -100,7 +100,7 @@ class JoinClubRequestAPI(APIView):
 
 
     serializer_class = JoinClubRequestWithInfoSerializer
-    model = JoinClubRequest
+    model = JoinClubWithInfoRequest
     def get_queryset(self):
         user_id = self.request.query_params.get("userId")
         club_id = self.request.query_params.get("clubId")
@@ -110,7 +110,7 @@ class JoinClubRequestAPI(APIView):
             return JoinClubWithInfoRequest.objects.filter(user_id=user_id)
         elif club_id:
             return JoinClubWithInfoRequest.objects.filter(club_id=club_id)
-        return JoinClubRequest.objects.all()
+        return JoinClubWithInfoRequest.objects.all()
 
 class ApproveJoinClubRequest(APIView):
         def post(self,request):

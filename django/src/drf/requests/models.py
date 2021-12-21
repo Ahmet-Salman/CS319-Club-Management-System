@@ -2,9 +2,7 @@ from django.db import models
 
 # Create your models here.
 class Request(models.Model):
-    timeStamp = models.CharField(max_length=1000)
     user_id = models.IntegerField()
-    status = models.CharField(max_length=1000)
     date = models.DateTimeField(auto_now_add = True)
 
     class Meta:
