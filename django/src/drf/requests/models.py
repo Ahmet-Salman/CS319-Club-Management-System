@@ -22,13 +22,9 @@ class CreateClubRequest(Request):
 
 class DeleteClubRequest(Request):
     club_id = models.CharField(max_length=1000)
-    def __str__(self):
-        return str(self.name)
 
 class JoinClubRequest(Request):
     club_id = models.CharField(max_length=1000)
-    def __str__(self):
-        return str(self.name)
 
 
 
