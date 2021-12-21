@@ -109,11 +109,8 @@ export default {
 
         },
         async getJoinRequests({ commit }, clubID) {
-            await axios.get('http://127.0.0.1:8000/api/request/joinclubrequest').then(res => {
-                var joinArr = res.data.filter((req) => {
-                    return req.club_id == clubID
-                })
-                commit('setJoinRequests', joinArr)
+            await axios.get(`http://127.0.0.1:8000/api/request/joinclubrequest?clubId=${clubID}`).then(res => {
+                commit('setJoinRequests', res.data)
             }).catch(err => {
                 console.log(err)
             })

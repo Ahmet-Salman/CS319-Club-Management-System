@@ -98,10 +98,9 @@ export default {
         },
 
         async setPendingRequests({ commit, state }) {
-            await axios.get('http://127.0.0.1:8000/api/request/joinclubrequest')
+            var userID = sessionStorage.getItem('userID')
+            await axios.get(`http://127.0.0.1:8000/api/request/joinclubrequest?userId=${userID}`)
                 .then(res => {
-                    // console.log(res.data)
-                    // console.log(state.AllClubs)
                     var response = state.AllClubs.filter(item => {
                         var clubID = item.id
                         for (let x of res.data) {
@@ -112,15 +111,6 @@ export default {
                     });
                     commit('setPendingRequests', response)
                     commit('setUnaffiliatedClub')
-
-                    // var pendingArray = state.AllClubs.filter((value) => {
-                    //     // console.log(value.id)
-                    //     console.log("value.id ", value.id, " == ", res.data.club_id, "res.data.club_id", " => ", value.club_id == res.data.club_id)
-                    //     return value.id == res.data.club_id
-                    // })
-
-                    // console.log(pendingArray)
-                    // commit('setPendingRequests', res.data)
                 }).catch(err => {
                     console.log(err)
                 })
@@ -133,7 +123,8 @@ export default {
                 club_id: clubID,
             }).then(res => {
                 console.log(res)
-                swal("Success", "Your Request Has Been Recieved, Please Wait Until The Club Manager Accepts Your Request", "success")
+                location.reload()
+                    // swal("Success", "Your Request Has Been Recieved, Please Wait Until The Club Manager Accepts Your Request", "success")
             }).catch(err => {
                 console.log(err)
             })

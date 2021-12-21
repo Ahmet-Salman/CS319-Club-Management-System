@@ -360,6 +360,7 @@ export default {
     this.events = this.$store.state.ClubDetails.events;
     await this.$store.dispatch("ManageClubs/getJoinRequests", this.club_id)
     this.JoinRequests = this.$store.state.ManageClubs.JoinRequests;
+    console.log(this.JoinRequests)
     // console.log(this.$store.state.ManageClubs.JoinRequests)
   },
 };

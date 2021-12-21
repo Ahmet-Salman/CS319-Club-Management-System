@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>The current user is super: {{isSuper}}</h1>
     <router-link v-if="userID != 1" :to="{ name: 'CreateClub' }"
       ><button style="float: right" class="btn btn-outline-secondary my-2 mr-4">
         <svg
@@ -36,7 +35,6 @@
       <thead>
         <tr class="bg-info">
           <th>Club Name</th>
-          <!-- <th>Catagory</th> -->
           <th>Manager</th>
           <th>Status</th>
           <th>Options</th>
@@ -46,7 +44,6 @@
         <!-- We loop over the AllManagerClub Array here -->
         <tr v-for="clubs in AllManagerClub" :key="clubs.id" class="table-info">
           <td>{{ clubs.name }}</td>
-          <!-- <td>{{clubs.description}}</td> -->
           <td>{{ clubs.owner.first_name }} {{ clubs.owner.last_name }}</td>
           <td style="color: white" class="bg-danger">Manager</td>
           <td>
