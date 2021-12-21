@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>The current user is super: {{isSuper}}</h1>
     <router-link v-if="userID != 1" :to="{ name: 'CreateClub' }"
       ><button style="float: right" class="btn btn-outline-secondary my-2 mr-4">
         <svg
@@ -46,7 +47,7 @@
         <tr v-for="clubs in AllManagerClub" :key="clubs.id" class="table-info">
           <td>{{ clubs.name }}</td>
           <!-- <td>{{clubs.description}}</td> -->
-          <td>{{ clubs.owner }}</td>
+          <td>{{ clubs.owner.first_name }} {{ clubs.owner.last_name }}</td>
           <td style="color: white" class="bg-danger">Manager</td>
           <td>
             <router-link
@@ -277,7 +278,7 @@
         <tr v-for="clubs in UnaffiliatedClub" :key="clubs.id" class="table-info">
           <td>{{ clubs.name }}</td>
           <!-- <td>{{clubs.catagory}}</td> -->
-          <td>{{ clubs.owner }}</td>
+          <td>{{ clubs.owner.first_name }} {{ clubs.owner.last_name }}</td>
           <td style="color: white" class="bg-info">Unaffiliated</td>
           <td>
             <router-link
@@ -361,18 +362,17 @@ export default {
         { id: 12, name: "Club12", catagory: "catagory12", manager: "Person12" },
       ],
       AllManagerClub: [],
-      pendingRequests: [
-        { id: 13, name: "Club13", catagory: "catagory13", manager: "Person13" },
-      ],
+      pendingRequests: [],
     };
   },
   methods: {},
   async mounted() {
     await this.$store.dispatch("AllClubs/setAllClubs");
-    this.UnaffiliatedClub = this.$store.state.AllClubs.UnaffiliatedClub;
-    // this.testAllClubs = this.$store.state.AllClubs.testAllClubs;
     await this.$store.dispatch("AllClubs/setAllManagerClubs");
     this.AllManagerClub = this.$store.state.AllClubs.AllManagerClub;
+    await this.$store.dispatch("AllClubs/setPendingRequests");
+    this.pendingRequests = this.$store.state.AllClubs.pendingRequests;
+    this.UnaffiliatedClub = this.$store.state.AllClubs.UnaffiliatedClub;
   },
 };
 </script>

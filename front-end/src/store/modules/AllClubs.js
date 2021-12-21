@@ -17,12 +17,7 @@ export default {
             { id: 12, name: 'Club12', catagory: 'catagory12', manager: 'Person12' },
         ],
         AllManagerClub: [],
-        pendingRequests: [
-            { id: 13, name: 'Club13', catagory: 'catagory13', manager: 'Person13' },
-            { id: 14, name: 'Club14', catagory: 'catagory14', manager: 'Person14' },
-            { id: 15, name: 'Club15', catagory: 'catagory15', manager: 'Person15' },
-            { id: 16, name: 'Club16', catagory: 'catagory16', manager: 'Person16' },
-        ],
+        pendingRequests: [],
 
     },
     mutations: {
@@ -38,32 +33,11 @@ export default {
             // Filters through manager clubs
             var userID = sessionStorage.getItem('userID')
             var unAffArray = state.AllClubs.filter((value) => {
-                return value.owner != userID
+                return value.owner.id != userID
             })
+
+            var unAffArray = unAffArray.filter(item => !state.pendingRequests.includes(item));
             state.UnaffiliatedClub = unAffArray
-
-            // Filter through member clubs
-
-            // Filter through pending requests
-
-            // array which holds all values
-            // const namesArr = ["Lily", "Roy", "John", "Jessica"];
-
-            // // array of values that needs to be deleted
-            // const namesToDeleteArr = ["Roy", "John"];
-
-            // // make a Set to hold values from namesToDeleteArr
-            // const namesToDeleteSet = new Set(namesToDeleteArr);
-
-            // // use filter() method
-            // // to filter only those elements
-            // // that need not to be deleted from the array
-            // const newArr = namesArr.filter((name) => {
-            //     // return those elements not in the namesToDeleteSet
-            //     return !namesToDeleteSet.has(name);
-            // });
-
-            // console.log(newArr); // ["Lily", "Jessica"]
         },
 
         setAllMemberClubs(state, res) {
@@ -74,15 +48,14 @@ export default {
         setAllManagerClubs(state) {
             var userID = sessionStorage.getItem('userID')
             var managerArray = state.AllClubs.filter((value) => {
-                return value.owner == userID
+                return value.owner.id == userID
             })
 
             state.AllManagerClub = managerArray
         },
 
-        setPendingRequests(state, res) {
-            // parse the recieved JSON response and convert it to an array
-            // Then set the resulting array to its respective array
+        setPendingRequests(state, pendingReq) {
+            state.pendingRequests = pendingReq
         },
 
         filterClubs(state) {
@@ -99,7 +72,7 @@ export default {
             await axios.get('http://127.0.0.1:8000/api/clubs')
                 .then(res => {
                     commit('setAllClubs', res.data) // returns the array of data
-                    commit('setUnaffiliatedClub')
+                    commit('setPendingRequests')
                 }).catch(err => {
                     console.log(err)
                 })
@@ -124,17 +97,37 @@ export default {
                 //     })
         },
 
-        async setPendingRequests({ commit }) {
-            await axios.get('http://localhost:3000/Pending_join/:user_id')
+        async setPendingRequests({ commit, state }) {
+            await axios.get('http://127.0.0.1:8000/api/request/joinclubrequest')
                 .then(res => {
-                    commit('setPendingRequests', res.data)
+                    // console.log(res.data)
+                    // console.log(state.AllClubs)
+                    var response = state.AllClubs.filter(item => {
+                        var clubID = item.id
+                        for (let x of res.data) {
+                            if (x.club_id == clubID) {
+                                return item
+                            }
+                        }
+                    });
+                    commit('setPendingRequests', response)
+                    commit('setUnaffiliatedClub')
+
+                    // var pendingArray = state.AllClubs.filter((value) => {
+                    //     // console.log(value.id)
+                    //     console.log("value.id ", value.id, " == ", res.data.club_id, "res.data.club_id", " => ", value.club_id == res.data.club_id)
+                    //     return value.id == res.data.club_id
+                    // })
+
+                    // console.log(pendingArray)
+                    // commit('setPendingRequests', res.data)
                 }).catch(err => {
                     console.log(err)
                 })
         },
 
         async JoinClub({ commit }, clubID) {
-            console.log("User ", sessionStorage.getItem("userID"), " Joined club ", clubID)
+            // console.log("User ", sessionStorage.getItem("userID"), " Joined club ", clubID)
             await axios.post('http://127.0.0.1:8000/api/request/joinclubrequest', {
                 user_id: sessionStorage.getItem("userID"),
                 club_id: clubID,
