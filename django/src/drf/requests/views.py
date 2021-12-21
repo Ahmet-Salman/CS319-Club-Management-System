@@ -64,7 +64,7 @@ class ApproveClubRequest(APIView):
         student = Account.objects.get(id=user_id)
         student.is_club_manager = True
         student.save()
-        data = Club(name=name, description=description,owner=student)
+        data = Club(name=name, description=description,owner=user_id)
         data.save()
         clubRequest.delete()
         return HttpResponse( status = 200)
