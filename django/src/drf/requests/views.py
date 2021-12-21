@@ -30,7 +30,7 @@ class CreateClubRequestAPI(APIView):
         serializer = CreateClubRequestSerializer(data=request.data)
         if serializer.is_valid():
             if(userHasClub()):
-                return Response(serializer.errors, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+                return Response("USER HAS CLUB", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
             else:
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_200_OK)
@@ -78,11 +78,23 @@ class RejectClubRequest(APIView):
         #maybe some additional code can be added
         clubRequest.delete()
         return HttpResponse( status = 200)
-
-class JoinClubRequestAPI(generics.ListCreateAPIView):
+'''
+class JoinClubRequestAPI(APIView):
     #permission_classes = [IsAdminOrReadOnly]
-    queryset = JoinClubRequest.objects.all()
-    serializer_class = JoinClubRequestSerializer
+    def post():
+        user_id = request.data['user_id'];
+        club_id = request.data['club_id'];
+
+        user = Account.objects.get(id= user_id)
+
+        joinClubReq =  JoinClubRequest(name = user.name,surname = user.surname)
+        joinClubReq.save()
+
+    def get():
+        #JoinClubRequest.objects.all()
+
+
+'''
 
 class ApproveJoinClubRequest(APIView):
         def post(self,request):
