@@ -57,8 +57,8 @@ class ApproveClubRequest(APIView):
         clubRequest = CreateClubRequest.objects.get(id=club_request_id)
         #turn the club request into a club
         #first turn request to objeect
-        name = clubRequest.clubName
-        description = clubRequest.clubDescription
+        name = clubRequest.club_name
+        description = clubRequest.club_description
         user_id = clubRequest.user_id
         #set the student as club manager
         student = Account.objects.get(id=user_id)
