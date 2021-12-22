@@ -1,6 +1,7 @@
 <template>
   <div>
-    <h1>Hello To announcements of club {{ club_id }}</h1>
+    <br/>
+    <br/>
     <div class="container">
       <div class="main-body">
         <div class="row">

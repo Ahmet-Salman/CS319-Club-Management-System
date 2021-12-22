@@ -11,11 +11,7 @@ export default {
     state: {
         AllClubs: [],
         UnaffiliatedClub: [],
-        AllMemberClub: [
-            { id: 3, name: 'Club3', catagory: 'catagory3', manager: 'Person3' },
-            { id: 6, name: 'Club6', catagory: 'catagory6', manager: 'Person6' },
-            { id: 12, name: 'Club12', catagory: 'catagory12', manager: 'Person12' },
-        ],
+        AllMemberClub: [],
         AllManagerClub: [],
         pendingRequests: [],
 
@@ -36,13 +32,21 @@ export default {
                 return value.owner.id != userID
             })
 
-            var unAffArray = unAffArray.filter(item => !state.pendingRequests.includes(item));
+            unAffArray = unAffArray.filter(item => !state.pendingRequests.includes(item));
+            unAffArray = unAffArray.filter(item => !state.AllMemberClub.includes(item));
             state.UnaffiliatedClub = unAffArray
         },
 
         setAllMemberClubs(state, res) {
-            // parse the recieved JSON response and convert it to an array
-            // Then set the resulting array to its respective array
+            var response = state.AllClubs.filter(item => {
+                var clubID = item.id
+                for (let x of res) {
+                    if (x.club == clubID) {
+                        return item
+                    }
+                }
+            });
+            state.AllMemberClub = response
         },
 
         setAllManagerClubs(state) {
@@ -79,9 +83,12 @@ export default {
         },
 
         async setAllMemberClubs({ commit }) {
-            await axios.get('http://localhost:3000/:user_id/clubs')
+            var userID = sessionStorage.getItem('userID')
+            await axios.get(`http://127.0.0.1:8000/api/request/clubenrollments?user_id=${userID}`)
                 .then(res => {
+                    // console.log(res.data)
                     commit('setAllMemberClubs', res.data)
+                    commit('setUnaffiliatedClub')
                 }).catch(err => {
                     console.log(err)
                 })
@@ -110,7 +117,6 @@ export default {
                         }
                     });
                     commit('setPendingRequests', response)
-                    commit('setUnaffiliatedClub')
                 }).catch(err => {
                     console.log(err)
                 })
@@ -171,6 +177,40 @@ export default {
             }).catch(err => {
                 console.log(err)
             })
+        },
+
+        async leaveClub({ commit }, club_id) {
+            var userID = sessionStorage.getItem('userID')
+            var isConfirmed = null
+
+            await swal("Are You Sure You Want To Leave This Club?", {
+                dangerMode: true,
+                buttons: true,
+            }).then(res => {
+                isConfirmed = res
+            })
+            if (isConfirmed == true) {
+                await axios.delete(`http://127.0.0.1:8000/api/club/${clubID}`, {
+                    headers: objHeaders
+                }).then(res => {
+                    location.reload();
+                }).catch(err => {
+                    swal('Error', 'An error Occured, Please Try Again', 'error')
+                })
+            }
+            // const objHeaders = {
+            //     "Authorization": `Token ${store.getters.getToken}`
+            // }
+            // await axios.post(`http://127.0.0.1:8000/api/comments`, {
+            //     content: text,
+            //     club: clubID
+            // }, {
+            //     headers: objHeaders
+            // }).then(res => {
+            //     console.log(res)
+            // }).catch(err => {
+            //     console.log(err)
+            // })
         }
     },
     getters: {

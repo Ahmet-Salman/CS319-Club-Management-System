@@ -110,7 +110,6 @@ export default {
         },
         async getJoinRequests({ commit }, clubID) {
             await axios.get(`http://127.0.0.1:8000/api/request/joinclubrequest?clubId=${clubID}`).then(res => {
-                console.log(res.data)
                 commit('setJoinRequests', res.data)
             }).catch(err => {
                 console.log(err)
@@ -138,7 +137,6 @@ export default {
                 await axios.post("http://127.0.0.1:8000/api/request/rejectjoin", {
                     id: reqId
                 }).then(res => {
-                    // swal("Success", "You have Successfully Rejected This Members", "success")
                     location.reload();
                 }).catch(err => {
                     console.log(err)

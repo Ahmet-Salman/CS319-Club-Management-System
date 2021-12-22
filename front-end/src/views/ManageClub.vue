@@ -158,12 +158,20 @@ at the top there is a delete button for the club
                           flex-wrap
                         "
                       >
-                        <h6 class="mb-0">{{ req.id }}/Name TBI</h6>
+                        <h6 class="mb-0">{{ req.name }} {{req.surname}}</h6>
                         <h6 class="badge badge-primary even-larger-badge mb-0">
                           Date: {{new Date(req.date).getDate() }}/{{new Date(req.date).getMonth() }}/{{new Date(req.date).getFullYear() }}
                         </h6>
                         <span
-                          ><button class="btn btn-outline-info mx-2">
+                          ><button class="btn btn-outline-info mx-2"
+                          @click="
+                              openModalJ({
+                                name: req.name,
+                                surname: req.surname,
+                                email: req.email,
+                                id: req.user_id,
+                              })
+                            ">
                             View Profile
                           </button>
                           <button
@@ -246,7 +254,7 @@ at the top there is a delete button for the club
                           <button
                             class="btn btn-outline-dark mr-1"
                             @click="
-                              openModal({
+                              openModalE({
                                 title: req.title,
                                 loc: req.location,
                                 time: req.date,
@@ -339,7 +347,7 @@ export default {
         });
     },
 
-    openModal(data) {
+    openModalE(data) {
       var title = data.title;
       var location = data.loc;
       var time = new Date(data.time);
@@ -352,6 +360,19 @@ export default {
         button: "Close",
       });
     },
+    openModalJ(data) {
+     var name = data.name
+     var surname = data.surname
+     var email = data.email
+     var id = data.id
+
+      swal({
+        title: `User's Name: ${name} ${surname}`,
+        text: `User's Email: ${email}\n\n User's ID: ${id}`,
+        icon: "info",
+        button: "Close",
+      });
+    },
   },
   async mounted() {
     this.getDateCreated();
@@ -360,7 +381,6 @@ export default {
     this.events = this.$store.state.ClubDetails.events;
     await this.$store.dispatch("ManageClubs/getJoinRequests", this.club_id)
     this.JoinRequests = this.$store.state.ManageClubs.JoinRequests;
-    console.log(this.JoinRequests)
     // console.log(this.$store.state.ManageClubs.JoinRequests)
   },
 };

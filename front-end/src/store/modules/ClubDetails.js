@@ -45,7 +45,7 @@ export default {
             }).then(res => {
                 commit('setAnnouncements', res.data)
             }).catch(err => {
-                swal('Errpr', 'An error Occured, Please Try Again', 'error')
+                swal('Error', 'An error Occured, Please Try Again', 'error')
             })
         },
 

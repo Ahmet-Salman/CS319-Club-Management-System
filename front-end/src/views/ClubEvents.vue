@@ -1,12 +1,7 @@
 <template>
-  <!-- In this, i need a "send announcment" button that redirects to a form
-also a create event which also redirects to another page with a form
-the main dashboard includes all members currently enrolled
-at the bottom there is a place to accept/reject member requests
-at the top there is a delete button for the club 
- -->
   <div>
-    <h1>Hello Manager of club {{ club_id }}</h1>
+    <br/>
+    <br/>
     <div class="container">
       <div class="main-body">
         <div class="row">
