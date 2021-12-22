@@ -219,7 +219,7 @@
         <tr v-for="clubs in pendingRequests" :key="clubs.id" class="table-info">
           <td>{{ clubs.name }}</td>
           <!-- <td>{{clubs.catagory}}</td> -->
-          <td>{{ clubs.manager }}</td>
+          <td>{{ clubs.owner.first_name }} {{ clubs.owner.last_name }}</td>
           <td style="color: white; background-color: #c632f5">
             Waiting For Response
           </td>

@@ -99,20 +99,18 @@ export default {
 
         async setPendingRequests({ commit, state }) {
             var userID = sessionStorage.getItem('userID')
-            console.log(userID)
-            await axios.get(`http://127.0.0.1:8000/api/request/joinclubrequest?userId=${userID}`)
+            await axios.get(`http://127.0.0.1:8000/api/request/joinclubfilter?user_id=${userID}`)
                 .then(res => {
-                    // var response = state.AllClubs.filter(item => {
-                    //     var clubID = item.id
-                    //     for (let x of res.data) {
-                    //         if (x.club_id == clubID) {
-                    //             return item
-                    //         }
-                    //     }
-                    // });
-                    console.log(res)
-                        // commit('setPendingRequests', response)
-                        // commit('setUnaffiliatedClub')
+                    var response = state.AllClubs.filter(item => {
+                        var clubID = item.id
+                        for (let x of res.data) {
+                            if (x.club_id == clubID /*&& (x.user_id == userID)*/ ) {
+                                return item
+                            }
+                        }
+                    });
+                    commit('setPendingRequests', response)
+                    commit('setUnaffiliatedClub')
                 }).catch(err => {
                     console.log(err)
                 })
