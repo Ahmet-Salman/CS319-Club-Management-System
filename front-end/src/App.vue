@@ -10,7 +10,7 @@
           role="group"
           aria-label="Basic mixed styles example"
         >
-          <button type="button" class="btn btn-danger" v-if="token">
+          <button type="button" class="btn btn-danger" @click="goToNotifications()" v-if="token">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -75,6 +75,11 @@ export default {
       token: (state) => state.token,
     }),
   },
+  methods: {
+    goToNotifications() {
+      this.$router.push('/notifications');
+    }
+  }
 };
 </script>
 

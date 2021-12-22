@@ -18,6 +18,7 @@ import clubAnn from '../views/ClubAnnouncements.vue'
 import clubEvents from '../views/ClubEvents.vue'
 import admin from '../views/Admin.vue'
 import store from '@/store/index'
+import Notifications from '../views/Notifications.vue'
 import axios from 'axios'
 
 const routes = [{
@@ -172,7 +173,21 @@ const routes = [{
                 next();
             }
         }
-    }, {
+    },
+    {
+        path: '/Notifications',
+        name: 'Notifications',
+        component: Notifications,
+        props: true,
+        beforeEnter: (to, from, next) => {
+            if (store.state.token == null) {
+                next("/Notifications");
+            } else {
+                next();
+            }
+        }
+    },
+    {
         path: '/members/:clubID',
         name: 'Members',
         component: members,
