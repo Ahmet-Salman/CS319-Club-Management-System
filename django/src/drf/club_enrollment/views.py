@@ -11,9 +11,9 @@ class ClubEnrollmentsAPI(generics.ListCreateAPIView):
         user_id = self.request.query_params.get("user_id")
         club_id = self.request.query_params.get("club_id")
         if (user_id and club_id):
-            return ClubEnrollment.objects.filter(club_id=club_id).filter(user_id=user_id)
+            return ClubEnrollment.objects.filter(club=club_id).filter(user_id=user_id)
         elif user_id:
             return ClubEnrollment.objects.filter(user_id=user_id)
         elif club_id:
-            return ClubEnrollment.objects.filter(club_id=club_id)
+            return ClubEnrollment.objects.filter(club=club_id)
         return ClubEnrollment.objects.all()
