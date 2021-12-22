@@ -98,18 +98,20 @@ class JoinClubRequestAPI(APIView):
         serializer = JoinClubRequestWithInfoSerializer(objects,many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-
+class JoinClubAPIWithParam(generics.ListCreateAPIView):
     serializer_class = JoinClubRequestWithInfoSerializer
     model = JoinClubWithInfoRequest
     def get_queryset(self):
-        user_id = self.request.query_params.get("userId")
-        club_id = self.request.query_params.get("clubId")
+        print(self.request.query_params.get("sa"))
+        user_id = self.request.query_params.get("user_id")
+        club_id = self.request.query_params.get("club_id")
         if (user_id and club_id):
             return JoinClubWithInfoRequest.objects.filter(club_id=club_id).filter(user_id=user_id)
         elif user_id:
             return JoinClubWithInfoRequest.objects.filter(user_id=user_id)
         elif club_id:
             return JoinClubWithInfoRequest.objects.filter(club_id=club_id)
+        print("no")
         return JoinClubWithInfoRequest.objects.all()
 
 class ApproveJoinClubRequest(APIView):

@@ -1,4 +1,4 @@
-from .views import CreateClubRequestAPI, DeleteClubRequestList,ApproveClubRequest, RejectClubRequest,ApproveJoinClubRequest,RejectJoinClubRequest,JoinClubRequestAPI
+from .views import CreateClubRequestAPI, DeleteClubRequestList,ApproveClubRequest, RejectClubRequest,ApproveJoinClubRequest,RejectJoinClubRequest,JoinClubRequestAPI,JoinClubAPIWithParam
 from django.urls import path
 from django.views.decorators.csrf import csrf_exempt
 #from .scheduler import scheduler
@@ -10,5 +10,6 @@ urlpatterns = [
     path('api/request/joinclubrequest', JoinClubRequestAPI.as_view()),
     path('api/request/approvejoin', ApproveJoinClubRequest.as_view()),
     path('api/request/rejectjoin', RejectJoinClubRequest.as_view()),
+    path('api/request/joinclubfilter', JoinClubAPIWithParam.as_view()),
 ]
 #scheduler.start()
