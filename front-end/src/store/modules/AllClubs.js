@@ -9,28 +9,11 @@ import store from '@/store/index'
 export default {
     namespaced: true,
     state: {
-        AllClubs: [
-            { id: 1, name: 'Club1', catagory: 'catagory1', manager: 'Person1' },
-            { id: 2, name: 'Club2', catagory: 'catagory2', manager: 'Person2' },
-            { id: 5, name: 'Club5', catagory: 'catagory5', manager: 'Person5' },
-            { id: 7, name: 'Club7', catagory: 'catagory7', manager: 'Person7' },
-            { id: 9, name: 'Club9', catagory: 'catagory9', manager: 'Person9' },
-            { id: 11, name: 'Club11', catagory: 'catagory11', manager: 'Person11' },
-        ],
-        AllMemberClub: [
-            { id: 3, name: 'Club3', catagory: 'catagory3', manager: 'Person3' },
-            { id: 6, name: 'Club6', catagory: 'catagory6', manager: 'Person6' },
-            { id: 12, name: 'Club12', catagory: 'catagory12', manager: 'Person12' },
-        ],
+        AllClubs: [],
+        UnaffiliatedClub: [],
+        AllMemberClub: [],
         AllManagerClub: [],
-        pendingRequests: [
-            { id: 13, name: 'Club13', catagory: 'catagory13', manager: 'Person13' },
-            { id: 14, name: 'Club14', catagory: 'catagory14', manager: 'Person14' },
-            { id: 15, name: 'Club15', catagory: 'catagory15', manager: 'Person15' },
-            { id: 16, name: 'Club16', catagory: 'catagory16', manager: 'Person16' },
-        ],
-        testAllClubs: [],
-        testAllManagerClub: []
+        pendingRequests: [],
 
     },
     mutations: {
@@ -38,28 +21,45 @@ export default {
             // router.go()
         },
         setAllClubs(state, res) {
-            state.testAllClubs = res
+            state.AllClubs = res
                 // parse the recieved JSON response and convert it to an array
                 // Then set the resulting array to its respective array
         },
+        setUnaffiliatedClub(state) {
+            // Filters through manager clubs
+            var userID = sessionStorage.getItem('userID')
+            var unAffArray = state.AllClubs.filter((value) => {
+                return value.owner.id != userID
+            })
+
+            unAffArray = unAffArray.filter(item => !state.pendingRequests.includes(item));
+            unAffArray = unAffArray.filter(item => !state.AllMemberClub.includes(item));
+            state.UnaffiliatedClub = unAffArray
+        },
 
         setAllMemberClubs(state, res) {
-            // parse the recieved JSON response and convert it to an array
-            // Then set the resulting array to its respective array
+            var response = state.AllClubs.filter(item => {
+                var clubID = item.id
+                for (let x of res) {
+                    if (x.club == clubID) {
+                        return item
+                    }
+                }
+            });
+            state.AllMemberClub = response
         },
 
         setAllManagerClubs(state) {
             var userID = sessionStorage.getItem('userID')
-            var managerArray = state.testAllClubs.filter((value) => {
-                return value.owner == userID
+            var managerArray = state.AllClubs.filter((value) => {
+                return value.owner.id == userID
             })
 
             state.AllManagerClub = managerArray
         },
 
-        setPendingRequests(state, res) {
-            // parse the recieved JSON response and convert it to an array
-            // Then set the resulting array to its respective array
+        setPendingRequests(state, pendingReq) {
+            state.pendingRequests = pendingReq
         },
 
         filterClubs(state) {
@@ -76,15 +76,19 @@ export default {
             await axios.get('http://127.0.0.1:8000/api/clubs')
                 .then(res => {
                     commit('setAllClubs', res.data) // returns the array of data
+                    commit('setPendingRequests')
                 }).catch(err => {
                     console.log(err)
                 })
         },
 
         async setAllMemberClubs({ commit }) {
-            await axios.get('http://localhost:3000/:user_id/clubs')
+            var userID = sessionStorage.getItem('userID')
+            await axios.get(`http://127.0.0.1:8000/api/request/clubenrollments?user_id=${userID}`)
                 .then(res => {
+                    // console.log(res.data)
                     commit('setAllMemberClubs', res.data)
+                    commit('setUnaffiliatedClub')
                 }).catch(err => {
                     console.log(err)
                 })
@@ -100,23 +104,33 @@ export default {
                 //     })
         },
 
-        async setPendingRequests({ commit }) {
-            await axios.get('http://localhost:3000/Pending_join/:user_id')
+        async setPendingRequests({ commit, state }) {
+            var userID = sessionStorage.getItem('userID')
+            await axios.get(`http://127.0.0.1:8000/api/request/joinclubfilter?user_id=${userID}`)
                 .then(res => {
-                    commit('setPendingRequests', res.data)
+                    var response = state.AllClubs.filter(item => {
+                        var clubID = item.id
+                        for (let x of res.data) {
+                            if (x.club_id == clubID /*&& (x.user_id == userID)*/ ) {
+                                return item
+                            }
+                        }
+                    });
+                    commit('setPendingRequests', response)
                 }).catch(err => {
                     console.log(err)
                 })
         },
 
-        async joinClub() {
-            await axios.post('http://localhost:3000/requests/:club_id', {
-                name: $store.user.name,
-                surname: $store.user.surname,
-                student_id: $store.user.student_id
+        async JoinClub({ commit }, clubID) {
+            // console.log("User ", sessionStorage.getItem("userID"), " Joined club ", clubID)
+            await axios.post('http://127.0.0.1:8000/api/request/joinclubrequest', {
+                user_id: sessionStorage.getItem("userID"),
+                club_id: clubID,
             }).then(res => {
                 console.log(res)
-                console.log('Request Send Successfully')
+                location.reload()
+                    // swal("Success", "Your Request Has Been Recieved, Please Wait Until The Club Manager Accepts Your Request", "success")
             }).catch(err => {
                 console.log(err)
             })
@@ -145,11 +159,59 @@ export default {
                     swal('Error', 'An error Occured, Please Try Again', 'error')
                 })
             }
-
-
-
-
         },
+
+        async cancelJoin({ commit }, clubID) {
+            var userID = sessionStorage.getItem('userID')
+            var reqId = -1
+            await axios.get(`http://127.0.0.1:8000/api/request/joinclubrequest?userId=${userID}&clubId=${clubID}`).then(res => {
+                reqId = res.data[0].id
+            }).catch(err => {
+                swal('Error', 'An error Occured, Please Try Again', 'error')
+            })
+
+            await axios.post("http://127.0.0.1:8000/api/request/rejectjoin", {
+                id: reqId
+            }).then(res => {
+                location.reload();
+            }).catch(err => {
+                console.log(err)
+            })
+        },
+
+        async leaveClub({ commit }, club_id) {
+            var userID = sessionStorage.getItem('userID')
+            var isConfirmed = null
+
+            await swal("Are You Sure You Want To Leave This Club?", {
+                dangerMode: true,
+                buttons: true,
+            }).then(res => {
+                isConfirmed = res
+            })
+            if (isConfirmed == true) {
+                await axios.delete(`http://127.0.0.1:8000/api/club/${clubID}`, {
+                    headers: objHeaders
+                }).then(res => {
+                    location.reload();
+                }).catch(err => {
+                    swal('Error', 'An error Occured, Please Try Again', 'error')
+                })
+            }
+            // const objHeaders = {
+            //     "Authorization": `Token ${store.getters.getToken}`
+            // }
+            // await axios.post(`http://127.0.0.1:8000/api/comments`, {
+            //     content: text,
+            //     club: clubID
+            // }, {
+            //     headers: objHeaders
+            // }).then(res => {
+            //     console.log(res)
+            // }).catch(err => {
+            //     console.log(err)
+            // })
+        }
     },
     getters: {
         getAllClubs(state) {

@@ -21,6 +21,9 @@ export default {
         club: "",
     },
     mutations: {
+        setJoinRequests(state, val) {
+            state.JoinRequests = val
+        },
         setEventName(state, val) {
             state.eventName = val
         },
@@ -105,8 +108,41 @@ export default {
             }
 
         },
-        testAccept({ commit }, id) {
-            commit('testAccept', id)
+        async getJoinRequests({ commit }, clubID) {
+            await axios.get(`http://127.0.0.1:8000/api/request/joinclubrequest?clubId=${clubID}`).then(res => {
+                commit('setJoinRequests', res.data)
+            }).catch(err => {
+                console.log(err)
+            })
+        },
+        async AcceptMember({ commit }, reqId) {
+            await axios.post("http://127.0.0.1:8000/api/request/approvejoin", {
+                id: reqId
+            }).then(res => {
+                location.reload();
+            }).catch(err => {
+                console.log(err)
+            })
+
+        },
+        async RejectMember({ commit }, reqId) {
+            var isConfirmed = false
+            await swal("Are You Sure You Want To Reject This Member?", {
+                dangerMode: true,
+                buttons: true,
+            }).then(res => {
+                isConfirmed = res
+            })
+            if (isConfirmed == true) {
+                await axios.post("http://127.0.0.1:8000/api/request/rejectjoin", {
+                    id: reqId
+                }).then(res => {
+                    location.reload();
+                }).catch(err => {
+                    console.log(err)
+                })
+            }
+
         },
         testReject({ commit }, id) {
             commit('testReject', id)

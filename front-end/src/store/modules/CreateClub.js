@@ -26,16 +26,14 @@ export default {
                 var userID = sessionStorage.getItem("userID");
                 axios.post("http://127.0.0.1:8000/api/request/createclubrequest", {
                     user_id: userID,
-                    clubName: state.clubName,
-                    clubDescription: state.clubDescription
+                    club_name: state.clubName,
+                    club_description: state.clubDescription
                 }).then(res => {
-                    console.log(res)
                     swal("Success", "Your request has been recieved successfully and will be evaluted soon", "success")
                     router.push({ path: '/clubs' })
                 }).catch(err => {
-                    console.log(err)
+                    swal("Error", "You Cannot Create A Club Request Because You Are Already The Manager of A Club", "error")
                 })
-                console.log("Inside create club")
             }
 
         },

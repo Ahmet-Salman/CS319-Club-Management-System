@@ -2,10 +2,8 @@ from django.db import models
 
 # Create your models here.
 class Request(models.Model):
-    timeStamp = models.CharField(max_length=1000, default=" ")
     user_id = models.IntegerField()
-    status = models.CharField(max_length=1000, default="")
-    date = models.DateTimeField(auto_now_add = True,blank=True)
+    date = models.DateTimeField(auto_now_add = True)
 
     class Meta:
         abstract = True
@@ -23,12 +21,22 @@ class CreateClubRequest(Request):
 class DeleteClubRequest(Request):
     club_id = models.CharField(max_length=1000)
     def __str__(self):
-        return str(self.name)
+        return str(self.id)
 
 class JoinClubRequest(Request):
     club_id = models.CharField(max_length=1000)
+
     def __str__(self):
-        return str(self.name)
+        return str(self.id)
+
+class JoinClubWithInfoRequest(Request):
+    club_id = models.CharField(max_length=1000)
+    name= models.CharField(max_length=1000)
+    surname=models.CharField(max_length=1000)
+    email=models.CharField(max_length=1000)
+
+    def __str__(self):
+        return str(self.club_id)
 
 
 

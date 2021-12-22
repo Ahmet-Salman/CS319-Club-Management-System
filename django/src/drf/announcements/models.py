@@ -5,7 +5,7 @@ from clubs.models import Club
 
 class Announcement(models.Model):
     # define department name and description columns, the id column will be added automatically.
-    content = models.CharField(max_length=100)
+    content = models.CharField(max_length=350)
     club = models.ForeignKey(Club, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add = True)
 

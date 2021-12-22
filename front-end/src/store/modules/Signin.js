@@ -47,7 +47,7 @@ export default {
             var userID = sessionStorage.getItem('userID')
             var ManagerClubs;
             ManagerClubs = state.clubs.filter((value) => {
-                return value.owner == userID
+                return value.owner.id == userID
             })
             if (ManagerClubs[0] == null) {
                 sessionStorage.setItem('manageID', -1)

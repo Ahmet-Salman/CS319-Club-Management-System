@@ -36,17 +36,11 @@ export default {
             })
         },
         async Accept({ commit, state }, reqId) {
+            console.log(reqId)
             var token = sessionStorage.getItem("token")
-            const objHeaders = {
-                "Authorization": `Token ${token}`
-            }
             axios.post("http://127.0.0.1:8000/api/request/approveclubrequest", {
-                    club_request_id: reqId
-                },
-                // {
-                //     headers: objHeaders
-                // }
-            ).then(res => {
+                club_request_id: reqId
+            }).then(res => {
                 location.reload();
                 console.log(res)
             }).catch(err => {
