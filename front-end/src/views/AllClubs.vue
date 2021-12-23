@@ -1,7 +1,7 @@
 <template>
   <div>
     <router-link v-if="userID != 1" :to="{ name: 'CreateClub' }"
-      ><button style="float: right" class="btn btn-outline-secondary my-2 mr-4">
+      ><button style="float: right; border-radius: 10px" class="btn btn-outline-secondary my-2 mr-4">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -22,7 +22,7 @@
     >
 
     <router-link v-if="userID == 1" :to="{ name: 'Admin' }"
-      ><button style="float: right" class="btn btn-outline-secondary my-2 mr-4">
+      ><button style="float: right; border-radius: 10px" class="btn btn-outline-secondary my-2 mr-4">
         Admin Page
       </button></router-link
     >
@@ -31,9 +31,9 @@
   - send a get request to find all clubs a member is associated with (manager or member) :user_id/clubs
   on top of returning all the data for the clubs, it will also return a "type" which could be "member" or "manager" 
   depending on the "type" we will condtionally render each club -->
-    <table class="table table-striped">
+    <table  class="table table-striped">
       <thead>
-        <tr class="bg-info">
+        <tr style="border-radius: 10px" class="bg-info">
           <th>Club Name</th>
           <th>Manager</th>
           <th>Status</th>
@@ -42,10 +42,10 @@
       </thead>
       <tbody>
         <!-- We loop over the AllManagerClub Array here -->
-        <tr v-for="clubs in AllManagerClub" :key="clubs.id" class="table-info">
+        <tr  v-for="clubs in AllManagerClub" :key="clubs.id" class="table-info">
           <td>{{ clubs.name }}</td>
           <td>{{ clubs.owner.first_name }} {{ clubs.owner.last_name }}</td>
-          <td style="color: white" class="bg-danger">Manager</td>
+          <td style="color: white; border-radius: 10px" class="bg-danger">Manager</td>
           <td>
             <router-link
               :to="{ name: 'Manage', params: { clubID: clubs.id } }"
@@ -123,7 +123,7 @@
           <td>{{ clubs.name }}</td>
           <!-- <td>{{clubs.catagory}}</td> -->
           <td>{{ clubs.manager }}</td>
-          <td style="color: white" class="bg-success">Member</td>
+          <td style="color: white; border-radius: 10px" class="bg-success">Member</td>
           <td>
             <button
               type="button"
@@ -244,7 +244,7 @@
           <td>{{ clubs.name }}</td>
           <!-- <td>{{clubs.catagory}}</td> -->
           <td>{{ clubs.owner.first_name }} {{ clubs.owner.last_name }}</td>
-          <td style="color: white; background-color: #c632f5">
+          <td style="color: white; background-color: #c632f5; border-radius: 10px">
             Waiting For Response
           </td>
           <td>
@@ -305,7 +305,7 @@
         >
           <td>{{ clubs.name }}</td>
           <td>{{ clubs.owner.first_name }} {{ clubs.owner.last_name }}</td>
-          <td style="color: white" class="bg-info">Unaffiliated</td>
+          <td style="color: white; border-radius: 10px" class="bg-info">Unaffiliated</td>
           <td>
             <button
               type="button"

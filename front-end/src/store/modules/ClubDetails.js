@@ -103,6 +103,7 @@ export default {
                 var clubComments = res.data.filter((value) => {
                     return value.club == clubID
                 })
+                console.log(clubComments)
                 commit('setComments', clubComments)
             }).catch(err => {
                 console.log(err)
