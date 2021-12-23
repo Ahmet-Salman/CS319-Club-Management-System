@@ -4,7 +4,7 @@ from .models import Club
 
 # Club Serializer
 class ReadClubSerializer(serializers.ModelSerializer):
-    owner = AccountSerializer(read_only=False)
+    owner = AccountSerializer(read_only=True)
     class Meta:
         model = Club
         fields = '__all__'
