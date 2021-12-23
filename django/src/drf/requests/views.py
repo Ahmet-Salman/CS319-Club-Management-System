@@ -9,7 +9,7 @@ from rest_framework import status
 from django.http import Http404
 from accounts.models import Account
 from clubs.models import Club
-from club_enrollment.models import ClubEnrollment
+from clubenrollment.models import ClubEnrollment
 from datetime import datetime, timedelta
 from django.views.generic import ListView
 from clubs.permissions import IsClubOwnerOrReadOnly
