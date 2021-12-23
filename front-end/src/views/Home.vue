@@ -10,9 +10,30 @@
 </template>
 
 <script>
+import axios from 'axios';
+import store from "@/store/index";
 export default {
+    name: "Home",
+    data() {
+        return {
+            clubEvents: [],
+            AllClubs: [],
+            Clubs: [],
+            userID: sessionStorage.getItem("userID"),
+        };
+    },
+    methods: {
 
-}
+    },
+
+    async mounted() {
+        await this.$store.dispatch("Home/setAllMemberClubs");
+        await this.$store.dispatch("Home/setAllClubs");
+        this.AllClubs = this.$store.state.Home.AllClubs;
+        this.Clubs = this.$store.state.Home.Clubs;
+        console.log(this.AllClubs);
+    },
+};
 </script>
 
 <style>
