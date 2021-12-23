@@ -1,7 +1,7 @@
 <template>
   <div>
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
-    <h1>Hello Manager of club {{ club_id }} called {{ clubName }}</h1>
+    <br/>
+    <br/>
     <div class="container">
       <div class="main-body">
         <div class="row">

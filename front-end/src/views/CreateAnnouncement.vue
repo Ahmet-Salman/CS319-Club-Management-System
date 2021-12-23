@@ -1,9 +1,8 @@
 <template>
   <div class="container">
     <div class="text-center mt-5">
-      <h1>
-        Welcome to creating an announcment for club {{ $route.params.clubID }}
-      </h1>
+      <br/>
+      <br/>
     </div>
     <div class="row">
       <div class="col-lg-7 mx-auto">

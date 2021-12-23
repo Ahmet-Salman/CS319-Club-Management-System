@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="text-center mt-5">
-      <h1>Event Creation Form For Club {{ $route.params.clubID }}</h1>
+      <h1>Event Creation Form</h1>
     </div>
     <div class="row">
       <div class="col-lg-7 mx-auto">

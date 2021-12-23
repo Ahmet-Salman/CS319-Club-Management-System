@@ -9,7 +9,7 @@ from rest_framework import status
 from django.http import Http404
 from accounts.models import Account
 from clubs.models import Club
-from club_enrollment.models import ClubEnrollment
+from clubenrollment.models import ClubEnrollment
 from datetime import datetime, timedelta
 from django.views.generic import ListView
 from clubs.permissions import IsClubOwnerOrReadOnly
@@ -119,7 +119,7 @@ class ApproveJoinClubRequest(APIView):
             #get club request
             join_request = JoinClubWithInfoRequest.objects.get(id=join_id)
             #maybe some additional code can be added
-            data = ClubEnrollment(club_id=join_request.club_id, user_id=join_request.user_id,title="user")
+            data = ClubEnrollment(club_id=join_request.club_id, user_id=Account.objects.get(id=join_request.user_id),title="user")
             data.save()
             join_request.delete()
             return HttpResponse( status = 200)
