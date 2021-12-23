@@ -90,7 +90,7 @@
                         ></path></svg
                       >Number of Members
                     </h6>
-                    <span class="text-secondary">26</span>
+                    <span class="text-secondary">{{numberofMembers}}</span>
                   </li>
                   <li
                     class="
@@ -114,7 +114,7 @@
                           d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zM2 2a1 1 0 0 0-1 1v1h14V3a1 1 0 0 0-1-1H2zm13 3H1v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5z"
                         />
                       </svg>
-                      Created:
+                     Created:
                     </h6>
                     <span class="text-secondary">{{ dateOfCreation }}</span>
                   </li>
@@ -336,17 +336,29 @@ export default {
       dateOfCreation: "",
       JoinRequests: [],
       events: [],
+      numberofMembers: 0
     };
   },
   methods: {
-    getDateCreated() {
-      axios
+    async getDateCreated() {
+      await axios
         .get(`http://127.0.0.1:8000/api/club/${this.club_id}`)
         .then((res) => {
           var DOC = new Date(res.data.date);
           this.dateOfCreation = `${DOC.getDate()}/${
             DOC.getMonth() + 1
           }/${DOC.getFullYear()}`;
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    },
+
+    async getNumberofMembers() {
+      await axios
+        .get(`http://127.0.0.1:8000/api/request/clubenrollments?club_id=${this.club_id}`)
+        .then((res) => {
+          this.numberofMembers = res.data.length
         })
         .catch((err) => {
           console.log(err);
@@ -382,6 +394,7 @@ export default {
   },
   async mounted() {
     this.getDateCreated();
+    this.getNumberofMembers();
 
     await this.$store.dispatch("ClubDetails/getEvents", this.club_id);
     this.events = this.$store.state.ClubDetails.events;
