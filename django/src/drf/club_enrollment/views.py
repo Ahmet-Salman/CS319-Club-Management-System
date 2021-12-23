@@ -20,13 +20,11 @@ class ClubEnrollmentsAPI(generics.ListCreateAPIView):
         return ClubEnrollment.objects.all()
 
 class ClubEnrollmentsDELETE(APIView):
-    model = ClubEnrollment
     def delete(self,request):
-        user_id = self.request.query_params.get("user_id")
-        club_id = self.request.query_params.get("club_id")
+        user_id = request.query_params.get("user_id")
+        club_id = request.query_params.get("club_id")
         if (user_id and club_id):
             object =  ClubEnrollment.objects.filter(club=club_id).filter(user_id=user_id)
-            print(object.data)
             object.delete()
             return HttpResponse( status = 200)
         return HttpResponse( status = 500)
