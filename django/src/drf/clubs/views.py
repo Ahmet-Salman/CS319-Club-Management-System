@@ -23,6 +23,7 @@ class ClubDetails(generics.RetrieveUpdateDestroyAPIView):
         if self.request.method in permissions.SAFE_METHODS:
             return ReadClubSerializer
         return WriteClubSerializer
+        
     #make club managers no manager and delete related club enrollments
     def perform_destroy(self, instance):
         #get owner
