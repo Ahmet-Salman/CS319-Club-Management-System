@@ -10,6 +10,7 @@ export default {
     state: {
         announcements: [],
         events: [],
+        comments: [],
         pastEvents: [],
         clubDescription: "",
         clubName: "",
@@ -32,6 +33,9 @@ export default {
             })
 
             state.pastEvents = events
+        },
+        setComments(state, val) {
+            state.comments = val
         }
     },
     actions: {
@@ -89,6 +93,22 @@ export default {
             })
         },
 
+        async getComments({ commit }, clubID) {
+            const objHeaders = {
+                "Authorization": `Token ${store.getters.getToken}`
+            }
+            await axios.get('http://127.0.0.1:8000/api/comments', {
+                headers: objHeaders
+            }).then(res => {
+                var clubComments = res.data.filter((value) => {
+                    return value.club == clubID
+                })
+                commit('setComments', clubComments)
+            }).catch(err => {
+                console.log(err)
+            })
+        },
+
         async deleteEvent({ commit }, eventID) {
             const objHeaders = {
                 "Authorization": `Token ${store.getters.getToken}`
@@ -103,6 +123,19 @@ export default {
                 swal('Error', 'An error Occured, Please Try Again', 'error')
             })
         },
+
+        async DeleteComment({ commit }, commentID) {
+            const objHeaders = {
+                "Authorization": `Token ${store.getters.getToken}`
+            }
+            await axios.delete(`http://127.0.0.1:8000/api/comment/${commentID}`, {
+                headers: objHeaders
+            }).then(res => {
+                location.reload()
+            }).catch(err => {
+                swal('Error', 'An Error Occured, Your Comment Was Not Deleted', 'error')
+            })
+        }
 
 
     },

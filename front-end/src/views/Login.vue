@@ -49,7 +49,6 @@
                 Log in
               </button>
             </div>
-            <div></div>
             <div class="clearfix">
               <label class="float-left form-check-label"
                 ><input type="checkbox" /> Remember me</label

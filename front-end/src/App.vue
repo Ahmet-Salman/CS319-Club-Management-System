@@ -1,6 +1,6 @@
 <template>
   <div>
-    <nav class="navbar navbar-dark bg-primary">
+    <nav style="border-radius: 10px" class="navbar navbar-dark bg-primary">
       <div class="container-fluid">
         <router-link to="/home" class="navbar-brand"
           >Home</router-link
@@ -10,7 +10,7 @@
           role="group"
           aria-label="Basic mixed styles example"
         >
-          <button type="button" class="btn btn-danger" @click="goToNotifications()" v-if="token">
+          <button style="border-radius: 10px" type="button" class="btn btn-danger" @click="goToNotifications()" v-if="token">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -29,7 +29,7 @@
             to="/clubs"
             type="button"
             class="btn btn-warning mx-3 px-2"
-            style="width: 100px"
+            style="width: 100px; border-radius: 10px"
             v-if="token"
             >All Clubs</router-link
           >
@@ -37,7 +37,7 @@
             to="/profile"
             type="button"
             class="btn btn-info mr-3 px-1"
-            style="width: 100px"
+            style="width: 100px; border-radius: 10px"
             v-if="token"
             >Profile</router-link
           >
@@ -45,7 +45,7 @@
             to="/signup"
             type="button"
             class="mx-auto btn btn-success mx-3 px-3"
-            style="width: 100px"
+            style="width: 100px; border-radius: 10px"
             @click="$store.dispatch('logout')"
             v-if="token"
           >
@@ -55,7 +55,7 @@
             to="/login"
             type="button"
             class="btn btn-info mx-3 px-2"
-            style="width: 100px"
+            style="width: 100px; border-radius: 10px"
             v-show="!token"
             >Login</router-link
           >
