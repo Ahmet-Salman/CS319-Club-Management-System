@@ -85,7 +85,7 @@ class JoinClubRequestAPI(APIView):
         serializer = JoinClubRequestSerializer(data=request.data)
         if serializer.is_valid():
             student = Account.objects.get(id=request.data['user_id'])
-            joinClubWithInfo = JoinClubWithInfoRequest(user_id = student,club_id =request.data['club_id'],name= student.first_name,surname=student.last_name,email=student.email)
+            joinClubWithInfo = JoinClubWithInfoRequest(user_id = request.data['user_id'],club_id =request.data['club_id'],name= student.first_name,surname=student.last_name,email=student.email)
             joinClubWithInfo.save()
             Otherserializer = JoinClubRequestWithInfoSerializer(joinClubWithInfo)
             return Response(Otherserializer.data,status=status.HTTP_200_OK)
