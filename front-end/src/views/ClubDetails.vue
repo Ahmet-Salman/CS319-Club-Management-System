@@ -112,8 +112,7 @@
                         "
                       >
                         <h6 class="badge badge-primary even-larger-badge mb-0">
-                          Name: {{com.owner.first_name}} {{com.owner.last_name}},
-                          ID: {{com.owner.student_id}}
+                          Name: {{com.owner.first_name}} {{com.owner.last_name}}
                         </h6>
                         <h6 class="badge badge-info even-larger-badge mb-0">
                           Date: {{new Date(com.date).getDate() }}/{{new Date(com.date).getMonth() }}/{{new Date(com.date).getFullYear() }}

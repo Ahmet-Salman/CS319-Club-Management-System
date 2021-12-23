@@ -1,7 +1,8 @@
 <template>
   <div>
+    
     <router-link v-if="userID != 1" :to="{ name: 'CreateClub' }"
-      ><button style="float: right; border-radius: 10px" class="btn btn-outline-secondary my-2 mr-4">
+      ><button style="float: right; border-radius: 7px" class="btn btn-outline-secondary my-2 mr-4">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -22,18 +23,13 @@
     >
 
     <router-link v-if="userID == 1" :to="{ name: 'Admin' }"
-      ><button style="float: right; border-radius: 10px" class="btn btn-outline-secondary my-2 mr-4">
+      ><button style="float: right; border-radius: 7px" class="btn btn-outline-secondary my-2 mr-4">
         Admin Page
       </button></router-link
     >
-    <!-- Steps for displaying the list of all clubs 
-  - send a get request to /clubs (gets all clubs) information about each club is id, name, catagory
-  - send a get request to find all clubs a member is associated with (manager or member) :user_id/clubs
-  on top of returning all the data for the clubs, it will also return a "type" which could be "member" or "manager" 
-  depending on the "type" we will condtionally render each club -->
     <table  class="table table-striped">
       <thead>
-        <tr style="border-radius: 10px" class="bg-info">
+        <tr style="border-radius: 7px" class="bg-info">
           <th>Club Name</th>
           <th>Manager</th>
           <th>Status</th>
@@ -45,12 +41,13 @@
         <tr  v-for="clubs in AllManagerClub" :key="clubs.id" class="table-info">
           <td>{{ clubs.name }}</td>
           <td>{{ clubs.owner.first_name }} {{ clubs.owner.last_name }}</td>
-          <td style="color: white; border-radius: 10px" class="bg-danger">Manager</td>
+          <td style="color: white; border-radius: 7px" class="bg-danger">Manager</td>
           <td>
             <router-link
               :to="{ name: 'Manage', params: { clubID: clubs.id } }"
               type="button"
               class="btn btn-outline-secondary mr-1"
+              style="border-radius: 7px;"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -77,6 +74,7 @@
               :to="{ name: 'ClubDetails', params: { clubID: clubs.id } }"
               type="button"
               class="btn btn-outline-dark mr-1"
+              style="border-radius: 7px;"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -100,6 +98,7 @@
               type="button"
               class="btn btn-outline-primary mr-1"
               @click="$store.dispatch('AllClubs/deleteClub', clubs.id)"
+              style="border-radius: 7px;"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -129,6 +128,7 @@
               type="button"
               class="btn btn-outline-info mr-1"
               @click="getComment(clubs.id)"
+              style="border-radius: 7px;"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -152,6 +152,7 @@
               :to="{ name: 'ClubAnnouncements', params: { clubID: clubs.id } }"
               type="button"
               class="btn btn-outline-info mr-1"
+              style="border-radius: 7px;"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -174,6 +175,7 @@
               :to="{ name: 'ClubEvents', params: { clubID: clubs.id } }"
               type="button"
               class="btn btn-outline-info mr-1"
+              style="border-radius: 7px;"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -196,6 +198,7 @@
               :to="{ name: 'ClubDetails', params: { clubID: clubs.id } }"
               type="button"
               class="btn btn-outline-dark mr-1"
+              style="border-radius: 7px;"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -216,7 +219,8 @@
             </router-link>
 
             <button @click="$store.dispatch('AllClubs/leaveClub', clubs.id)"
-            type="button" class="btn btn-outline-primary mr-1">
+            type="button" class="btn btn-outline-primary mr-1"
+            style="border-radius: 7px;">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -244,7 +248,7 @@
           <td>{{ clubs.name }}</td>
           <!-- <td>{{clubs.catagory}}</td> -->
           <td>{{ clubs.owner.first_name }} {{ clubs.owner.last_name }}</td>
-          <td style="color: white; background-color: #c632f5; border-radius: 10px">
+          <td style="color: white; background-color: #c632f5; border-radius: 7px">
             Waiting For Response
           </td>
           <td>
@@ -253,6 +257,7 @@
               :to="{ name: 'ClubDetails', params: { clubID: clubs.id } }"
               type="button"
               class="btn btn-outline-dark mr-1"
+              style="border-radius: 7px;"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -279,6 +284,7 @@
               data-backdrop="static"
               data-keyboard="false"
               @click="$store.dispatch('AllClubs/cancelJoin', clubs.id)"
+              style="border-radius: 7px;"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -311,6 +317,7 @@
               type="button"
               class="btn btn-outline-info mr-1"
               @click="getComment(clubs.id)"
+              style="border-radius: 7px;"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -334,6 +341,7 @@
               :to="{ name: 'ClubDetails', params: { clubID: clubs.id } }"
               type="button"
               class="btn btn-outline-dark mr-1"
+              style="border-radius: 7px;"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -360,6 +368,7 @@
               data-backdrop="static"
               data-keyboard="false"
               @click="$store.dispatch('AllClubs/JoinClub', clubs.id)"
+              style="border-radius: 7px;"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

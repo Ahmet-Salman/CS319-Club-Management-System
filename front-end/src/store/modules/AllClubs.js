@@ -17,16 +17,10 @@ export default {
 
     },
     mutations: {
-        reloadPage(state) {
-            // router.go()
-        },
         setAllClubs(state, res) {
             state.AllClubs = res
-                // parse the recieved JSON response and convert it to an array
-                // Then set the resulting array to its respective array
         },
         setUnaffiliatedClub(state) {
-            // Filters through manager clubs
             var userID = sessionStorage.getItem('userID')
             var unAffArray = state.AllClubs.filter((value) => {
                 return value.owner.id != userID
@@ -61,15 +55,6 @@ export default {
         setPendingRequests(state, pendingReq) {
             state.pendingRequests = pendingReq
         },
-
-        filterClubs(state) {
-            // filter the arrays according to the following rules
-            // 1- If an element is in AllClubs and AllMemberClub, the common elements are removed from AllClubs
-            // 2- If an element is in AllClubs and AllManagerClub, the common elements are removed from AllClubs
-            // 3- If an element is in AllClubs and pendingRequests, the common elements are removed from AllClubs
-            // 3- (still not confirmed) if an element is in AllManagerClub and AllMemberClub
-            // the common elements are removed from AllMemberClub
-        }
     },
     actions: {
         async setAllClubs({ commit, state }) {
@@ -96,12 +81,6 @@ export default {
 
         async setAllManagerClubs({ commit }) {
             commit('setAllManagerClubs')
-                // await axios.get('http://localhost:3000/:user_id/clubsManager')
-                //     .then(res => {
-                //         commit('setAllManagerClubs', res.data)
-                //     }).catch(err => {
-                //         console.log(err)
-                //     })
         },
 
         async setPendingRequests({ commit, state }) {
@@ -190,27 +169,12 @@ export default {
                 isConfirmed = res
             })
             if (isConfirmed == true) {
-                await axios.delete(`http://127.0.0.1:8000/api/club/${clubID}`, {
-                    headers: objHeaders
-                }).then(res => {
+                await axios.delete(`http://127.0.0.1:8000/api/request/deleteclubenrollments?club_id=${club_id}&user_id=${userID}`).then(res => {
                     location.reload();
                 }).catch(err => {
                     swal('Error', 'An error Occured, Please Try Again', 'error')
                 })
             }
-            // const objHeaders = {
-            //     "Authorization": `Token ${store.getters.getToken}`
-            // }
-            // await axios.post(`http://127.0.0.1:8000/api/comments`, {
-            //     content: text,
-            //     club: clubID
-            // }, {
-            //     headers: objHeaders
-            // }).then(res => {
-            //     console.log(res)
-            // }).catch(err => {
-            //     console.log(err)
-            // })
         }
     },
     getters: {

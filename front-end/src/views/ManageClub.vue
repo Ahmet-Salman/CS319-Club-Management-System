@@ -1,12 +1,7 @@
 <template>
-  <!-- In this, i need a "send announcment" button that redirects to a form
-also a create event which also redirects to another page with a form
-the main dashboard includes all members currently enrolled
-at the bottom there is a place to accept/reject member requests
-at the top there is a delete button for the club 
- -->
   <div>
-    <h1>Hello Manager of club {{ club_id }}</h1>
+    <br/>
+    <br/>
     <div class="container">
       <div class="main-body">
         <div class="row">
@@ -144,9 +139,10 @@ at the top there is a delete button for the club
                     <h5 class="d-flex align-items-center mb-3">
                       Join Requests
                     </h5>
-                    <ul 
-                    v-if="JoinRequests.length"
-                    class="list-group list-group-flush">
+                    <ul
+                      v-if="JoinRequests.length"
+                      class="list-group list-group-flush"
+                    >
                       <li
                         v-for="req in JoinRequests"
                         :key="req.id"
@@ -158,26 +154,33 @@ at the top there is a delete button for the club
                           flex-wrap
                         "
                       >
-                        <h6 class="mb-0">{{ req.name }} {{req.surname}}</h6>
+                        <h6 class="mb-0">{{ req.name }} {{ req.surname }}</h6>
                         <h6 class="badge badge-primary even-larger-badge mb-0">
-                          Date: {{new Date(req.date).getDate() }}/{{new Date(req.date).getMonth() }}/{{new Date(req.date).getFullYear() }}
+                          Date: {{ new Date(req.date).getDate() }}/{{
+                            new Date(req.date).getMonth()
+                          }}/{{ new Date(req.date).getFullYear() }}
                         </h6>
                         <span
-                          ><button class="btn btn-outline-info mx-2"
-                          @click="
+                          ><button
+                            class="btn btn-outline-info mx-2"
+                            @click="
                               openModalJ({
                                 name: req.name,
                                 surname: req.surname,
                                 email: req.email,
                                 id: req.user_id,
                               })
-                            ">
+                            "
+                          >
                             View Profile
                           </button>
                           <button
                             class="btn btn-outline-secondary mx-2"
                             @click="
-                              $store.dispatch('ManageClubs/AcceptMember', req.id)
+                              $store.dispatch(
+                                'ManageClubs/AcceptMember',
+                                req.id
+                              )
                             "
                           >
                             <svg
@@ -200,7 +203,10 @@ at the top there is a delete button for the club
                           <button
                             class="btn btn-outline-primary mx-2"
                             @click="
-                              $store.dispatch('ManageClubs/RejectMember', req.id)
+                              $store.dispatch(
+                                'ManageClubs/RejectMember',
+                                req.id
+                              )
                             "
                           >
                             <svg
@@ -230,12 +236,11 @@ at the top there is a delete button for the club
               <div class="col-sm-12">
                 <div class="card">
                   <div class="card-body">
-                    <h5 class="d-flex align-items-center mb-3">
-                      All Events
-                    </h5>
-                    <ul 
-                     v-if="events.length"
-                    class="list-group list-group-flush">
+                    <h5 class="d-flex align-items-center mb-3">All Events</h5>
+                    <ul
+                      v-if="events.length"
+                      class="list-group list-group-flush"
+                    >
                       <li
                         v-for="req in events"
                         :key="req.id"
@@ -279,7 +284,8 @@ at the top there is a delete button for the club
                             </svg>
                             Details
                           </button>
-                          <button v-if="req.date > today"
+                          <button
+                            v-if="req.date > today"
                             class="btn btn-outline-info mx-2"
                             @click="
                               $store.dispatch('ClubDetails/deleteEvent', req.id)
@@ -305,9 +311,7 @@ at the top there is a delete button for the club
                         >
                       </li>
                     </ul>
-                    <h4 v-if="!events.length">
-                      There Are No Events
-                    </h4>
+                    <h4 v-if="!events.length">There Are No Events</h4>
                   </div>
                 </div>
               </div>
@@ -325,7 +329,9 @@ export default {
   name: "ManageClubs",
   data() {
     return {
-      today: new Date(new Date().toString().split('GMT')[0] + ' UTC').toISOString(),
+      today: new Date(
+        new Date().toString().split("GMT")[0] + " UTC"
+      ).toISOString(),
       club_id: this.$route.params.clubID,
       dateOfCreation: "",
       JoinRequests: [],
@@ -361,10 +367,10 @@ export default {
       });
     },
     openModalJ(data) {
-     var name = data.name
-     var surname = data.surname
-     var email = data.email
-     var id = data.id
+      var name = data.name;
+      var surname = data.surname;
+      var email = data.email;
+      var id = data.id;
 
       swal({
         title: `User's Name: ${name} ${surname}`,
@@ -379,9 +385,8 @@ export default {
 
     await this.$store.dispatch("ClubDetails/getEvents", this.club_id);
     this.events = this.$store.state.ClubDetails.events;
-    await this.$store.dispatch("ManageClubs/getJoinRequests", this.club_id)
+    await this.$store.dispatch("ManageClubs/getJoinRequests", this.club_id);
     this.JoinRequests = this.$store.state.ManageClubs.JoinRequests;
-    // console.log(this.$store.state.ManageClubs.JoinRequests)
   },
 };
 </script>
