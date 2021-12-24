@@ -10,6 +10,27 @@
         </div>
         <div class="eventsContainer">
             <h1 style="text-align: right">Club Events<hr class="myHr"></h1>
+            <div>
+                <div v-for="item in CurrentEvents" :key="item.title">
+                    <h1 class="eventClubName" v-if="this.getTheClub(`${item.club}`)">
+                        {{this.ClubWithID}}
+                    </h1>
+                    <h1 class="eventTitle">
+                        {{item.title}}
+                    </h1>
+                    <hr>
+                    <p class="eventDesc">
+                        {{item.description}}
+                    </p>
+                    <div class="eventDate">
+                        {{item.date}}
+                        <div class="eventLocation">
+                            {{item.location}}
+                        </div>
+                    </div>
+                    <br>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -26,26 +47,47 @@ export default {
             Clubs: [],
             ClubEvents: [],
             userID: sessionStorage.getItem("userID"),
+            CurrentEvents: [],
+            ClubIDs: [],
+            ClubWithID: "",
         };
     },
     methods: {
+        getTheClub(id) {
+            for (let i = 0; i < this.AllClubs.length; i++) {
+                if (id == this.AllClubs[i].id) {
+                    this.ClubWithID = this.AllClubs[i].name
+                    return true
+                }
+            }
+            return false
+        },
     },
 
     async mounted() {
         await this.$store.dispatch("Home/setAllClubs");
-        await this.$store.dispatch("Home/setAllMemberClubs");
+        await this.$store.dispatch("Home/getAllUsersClubs");
         this.AllClubs = this.$store.state.Home.AllClubs;
         this.Clubs = this.$store.state.Home.Clubs;
-
-        await this.$store.dispatch("Home/getEvents", this.club_id);
+        
+        await this.$store.dispatch("Home/getAllEvents", this.club_id);
         this.clubEvents = this.$store.state.Home.AllEvents;
 
-        console.log("event arr", this.clubEvents);
-        console.log("all clubs are:", this.AllClubs);
-        console.log("clubs are:", this.Clubs);
+        for (let i = 0; i < this.Clubs.length; i++) {
+            this.ClubIDs[i] = this.Clubs[i].id;
+        }
 
-        
-    },
+        let k = 0;
+        for (let i = 0; i < this.clubEvents.length; i++) {
+            for (let j = 0; j < this.ClubIDs.length; j++) {
+                if (this.ClubIDs[j] == this.clubEvents[i].club) {
+                    this.CurrentEvents[k] = this.clubEvents[i];
+                    k++;
+                }
+            }
+        }
+        k = 0;
+    },  
 };
 </script>
 
@@ -116,5 +158,25 @@ export default {
     border: 0;
     height: 1px;
     background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+}
+
+.eventClubName {
+    float: left;
+}
+
+.eventTitle {
+    text-align: right;
+}
+
+.eventDesc {
+    text-align: left;
+}
+
+.eventDate {
+    text-align: right;
+}
+
+.eventLocation {
+    float: left;
 }
 </style>

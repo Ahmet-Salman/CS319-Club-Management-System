@@ -12,11 +12,11 @@ export default {
         AllEvents: [],
     },
     mutations: {
-        setEvents(state, eventArr) {
+        setAllEvents(state, eventArr) {
             state.AllEvents = eventArr
         },
 
-        setAllMemberClubs(state, res) {
+        getAllUsersClubs(state, res) {
             var response = state.AllClubs.filter(item => {
                 var clubID = item.id
                 for (let x of res) {
@@ -26,7 +26,6 @@ export default {
                 }
             });
             state.Clubs = response
-            console.log("this clubs", state.Clubs);
         },
 
         setAllClubs(state, res) {
@@ -34,10 +33,9 @@ export default {
         },
     },
     actions: {
-        async getEvents({ commit }, club) {
-
+        async getAllEvents({ commit }, club) {
             await axios.get("http://127.0.0.1:8000/api/events").then(res => {
-                commit('setEvents', res.data)
+                commit('setAllEvents', res.data)
             }).catch(err => {
                 swal('Error', 'An error Occured, Please Try Again', 'error')
             })
@@ -50,10 +48,11 @@ export default {
                 console.log(err)
             })
         },
-        async setAllMemberClubs({ commit }) {
+
+        async getAllUsersClubs({ commit }) {
             var userID = sessionStorage.getItem('userID')
             await axios.get(`http://127.0.0.1:8000/api/request/clubenrollments?user_id=${userID}`).then(res => {
-                commit('setAllMemberClubs', res.data)
+                commit('getAllUsersClubs', res.data)
             }).catch(err => {
                 console.log(err)
             })
