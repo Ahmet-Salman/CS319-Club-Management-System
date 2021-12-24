@@ -11,14 +11,17 @@
           <div class="d-flex justify-content-between align-items-center mb-3">
               <h4 >Profile Settings</h4>
             </div>
+            <div>
             <img
               class="rounded-circle mt-5"
-              width="150px"
+              width="170"
               src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
-            /><span class="font-weight-bold">Edogaru</span
-            ><span class="text-black-50">edogaru@mail.com.my</span>
-            <span class="text-black-50">Member Since: </span>
-            <span class="text-black-50">Student ID: </span>
+            />
+            </div>
+            <span class="font-weight-bold">{{name}} {{surname}}</span
+            ><span class="text-black-50">Email: {{email}}</span>
+            <span class="text-black-50">Member Since: {{DOJ}}</span>
+            <span class="text-black-50">Student ID: {{student_id}} </span>
           </div>
           <div class="p-2 ">
             <div class="row mt-3">
@@ -101,7 +104,7 @@ export default {
       console.log("Old Password is ", this.oldPassword, " New password is ", this.newPassword)
       console.log(this.token)
       
-      await axios.post('http://127.0.0.1:8000/api/change-password/', {
+      await axios.put('http://127.0.0.1:8000/api/change-password', {
         old_password: this.oldPassword,
         new_password: this.newPassword
       }, {
@@ -114,10 +117,17 @@ export default {
     },
   },
   async mounted() {
-    await axios.get('http://127.0.0.1:8000/api/account/', {
+    var userID = sessionStorage.getItem('userID')
+
+    await axios.get(`http://127.0.0.1:8000/api/account/${userID}`, {
       headers: this.token
     }).then(res => {
-      console.log(res)
+      var DOJ = new Date(res.data.date_joined)
+      this.name = res.data.first_name
+      this.surname = res.data.last_name
+      this.email = res.data.email
+      this.DOJ = `${DOJ.getDate()}/${DOJ.getMonth()}/${DOJ.getFullYear()}`
+      this.student_id = res.data.student_id
     }).catch (err => {
       console.log(err)
     })
