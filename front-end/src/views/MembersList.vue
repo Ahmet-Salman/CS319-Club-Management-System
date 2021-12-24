@@ -19,7 +19,7 @@
                       </h3>
                       <li
                         v-for="mem in members"
-                        :key="mem.user_id"
+                        :key="mem.id"
                         class="
                           list-group-item
                           d-flex
@@ -28,17 +28,17 @@
                           flex-wrap
                         "
                       >
-                        <h6 class="mb-0">{{ mem.name }} {{mem.surname}}</h6>
+                        <h6 class="mb-0">{{ mem.user_id.first_name }} {{mem.user_id.last_name}}</h6>
                         <span
                           ><button
                             class="btn btn-outline-info mx-2"
                             @click="
                               openModal({
-                                name: mem.name,
-                                surname: mem.surname,
-                                email: mem.email,
-                                student_id: mem.student_id,
-                                DOJ: mem.DOJ
+                                name: mem.user_id.first_name,
+                                surname: mem.user_id.last_name,
+                                email: mem.user_id.email,
+                                student_id: mem.user_id.student_id,
+                                DOJ: mem.timeStamp
                               })
                             "
                           >
@@ -46,7 +46,7 @@
                           </button>
                           <button
                             class="btn btn-outline-primary mx-2"
-                            @click="$store.dispatch('Members/KickMember', mem.user_id)"
+                            @click="$store.dispatch('Members/KickMember', mem.user_id.id)"
                           >Kick Member Out
                             <svg
                               xmlns="http://www.w3.org/2000/svg"
@@ -78,22 +78,12 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   name: "MembersList",
   data() {
     return {
-      user_name: "",
-      clubName: "",
-      clubDescription: "",
-      members: [{user_id: 1, name: "Ahmet", surname: "salman", email: "a@a", student_id: "1", DOJ: "12-6-2021"},
-      {user_id: 2, name: "Javid", surname: "Moradi", email: "b@a", student_id: "2", DOJ: "27-6-2021"},
-      {user_id: 5, name: "Onur", surname: "Avci", email: "c@a", student_id: "3", DOJ: "3-9-2021"},
-      {user_id: 9, name: "Alperen", surname: "Alkan", email: "d@a", student_id: "4", DOJ: "1-7-2021"},
-      {user_id: 13, name: "Haisam", surname: "Faramaway", email: "e@a", student_id: "5", DOJ: "16-6-2021"},
-      {user_id: 8, name: "Atasagun", surname: "Sanap", email: "f@a", student_id: "6", DOJ: "18-6-2021"},
-      {user_id: 3, name: "Tuna", surname: "Ogut", email: "g@a", student_id: "7", DOJ: "13-6-2021"},
-      ],
+      clubID: this.$route.params.clubID,
+      members: [],
     };
   },
   methods: {
@@ -102,20 +92,20 @@ export default {
       var name = data.name;
       var surname = data.surname;
       var email = data.email
-      var DOJ = data.DOJ;
+      var DOJ = new Date(data.DOJ);
 
       swal({
         title: `Student Name: ${name} ${surname}`,
-        text: `Student Email: ${email} \n\nJoined On: ${DOJ}\n\n Student ID: ${id}`,
+        text: `Student Email: ${email} \n\nJoined on: ${DOJ.getDate()}/${DOJ.getMonth()}/${DOJ.getFullYear()}\n\n Student ID: ${id}`,
         icon: "info",
         button: "Close",
       });
     },
   },
-//   async mounted() {
-//     await this.$store.dispatch("Admin/getRequests");
-//     this.createReqs = this.$store.state.Admin.createReqs;
-//   },
+  async mounted() {
+    await this.$store.dispatch("Members/getMembers", this.clubID);
+    this.members = this.$store.state.Members.members;
+  },
 };
 </script>
 

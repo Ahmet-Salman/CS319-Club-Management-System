@@ -90,7 +90,7 @@ export default {
                     commit('setClubs', res.data)
                     commit('setManageID')
                 }).catch(err => {
-                    console.log(err)
+                    swal('Error', 'An error Occured, Please Try Again', 'error')
                 })
         }
     },

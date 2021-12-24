@@ -22,3 +22,12 @@ class SimpleAccountSerializer(serializers.ModelSerializer):
         model = Account
         fields = ('id', 'student_id', 'first_name', 'last_name',)
         read_only_fields = ('id', 'student_id', 'first_name', 'last_name',)
+
+class ChangePasswordSerializer(serializers.Serializer):
+    model = Account
+
+    """
+    Serializer for password change endpoint.
+    """
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)

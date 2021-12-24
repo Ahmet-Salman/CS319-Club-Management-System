@@ -30,29 +30,29 @@ export default {
                 // }
             ).then(res => {
                 location.reload();
-                console.log(res)
+
             }).catch(err => {
-                console.log(err)
+                swal('Error', 'An error Occured, Please Try Again', 'error')
             })
         },
         async Accept({ commit, state }, reqId) {
-            console.log(reqId)
+
             var token = sessionStorage.getItem("token")
             axios.post("http://127.0.0.1:8000/api/request/approveclubrequest", {
                 club_request_id: reqId
             }).then(res => {
                 location.reload();
-                console.log(res)
+
             }).catch(err => {
-                console.log(err)
+                swal('Error', 'An error Occured, Please Try Again', 'error')
             })
         },
         async getRequests({ commit }) {
             await axios.get("http://127.0.0.1:8000/api/request/createclubrequest").then(res => {
-                console.log(res.data)
+
                 commit('getRequests', res.data)
             }).catch(err => {
-                console.log(err)
+                swal('Error', 'An error Occured, Please Try Again', 'error')
             })
         },
     },

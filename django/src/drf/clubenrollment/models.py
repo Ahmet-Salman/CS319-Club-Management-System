@@ -8,7 +8,7 @@ class ClubEnrollment(models.Model):
     club = models.ForeignKey(Club,on_delete=models.CASCADE)
     user_id = models.ForeignKey(Account,on_delete=models.PROTECT)
     title = models.CharField(max_length=1000, default=" ")
-    timeStamp = models.CharField(max_length=1000, default=" ")
+    timeStamp = models.DateTimeField(auto_now_add = True)
     leaveTimeStamp = models.CharField(max_length=1000, default=" ")
 
     def __str__(self):

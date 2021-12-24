@@ -63,7 +63,7 @@ export default {
                     commit('setAllClubs', res.data) // returns the array of data
                     commit('setPendingRequests')
                 }).catch(err => {
-                    console.log(err)
+                    swal('Error', 'An error Occured, Please Try Again', 'error')
                 })
         },
 
@@ -71,11 +71,11 @@ export default {
             var userID = sessionStorage.getItem('userID')
             await axios.get(`http://127.0.0.1:8000/api/request/clubenrollments?user_id=${userID}`)
                 .then(res => {
-                    // console.log(res.data)
+                    //  
                     commit('setAllMemberClubs', res.data)
                     commit('setUnaffiliatedClub')
                 }).catch(err => {
-                    console.log(err)
+                    swal('Error', 'An error Occured, Please Try Again', 'error')
                 })
         },
 
@@ -97,21 +97,21 @@ export default {
                     });
                     commit('setPendingRequests', response)
                 }).catch(err => {
-                    console.log(err)
+                    swal('Error', 'An error Occured, Please Try Again', 'error')
                 })
         },
 
         async JoinClub({ commit }, clubID) {
-            // console.log("User ", sessionStorage.getItem("userID"), " Joined club ", clubID)
+            //  
             await axios.post('http://127.0.0.1:8000/api/request/joinclubrequest', {
                 user_id: sessionStorage.getItem("userID"),
                 club_id: clubID,
             }).then(res => {
-                console.log(res)
+
                 location.reload()
                     // swal("Success", "Your Request Has Been Recieved, Please Wait Until The Club Manager Accepts Your Request", "success")
             }).catch(err => {
-                console.log(err)
+                swal('Error', 'An error Occured, Please Try Again', 'error')
             })
         },
 
@@ -154,7 +154,7 @@ export default {
             }).then(res => {
                 location.reload();
             }).catch(err => {
-                console.log(err)
+                swal('Error', 'An error Occured, Please Try Again', 'error')
             })
         },
 

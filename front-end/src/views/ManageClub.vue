@@ -350,7 +350,7 @@ export default {
           }/${DOC.getFullYear()}`;
         })
         .catch((err) => {
-          console.log(err);
+          swal('Error', 'An error Occured, Please Try Again', 'error');
         });
     },
 
@@ -361,7 +361,7 @@ export default {
           this.numberofMembers = res.data.length
         })
         .catch((err) => {
-          console.log(err);
+          swal('Error', 'An error Occured, Please Try Again', 'error');
         });
     },
 

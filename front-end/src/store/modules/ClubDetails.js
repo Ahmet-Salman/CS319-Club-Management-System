@@ -75,7 +75,7 @@ export default {
                     name: res.data.name
                 })
             }).catch(err => {
-                console.log(err)
+                swal('Error', 'An error Occured, Please Try Again', 'error')
             })
         },
 
@@ -103,10 +103,10 @@ export default {
                 var clubComments = res.data.filter((value) => {
                     return value.club == clubID
                 })
-                console.log(clubComments)
+
                 commit('setComments', clubComments)
             }).catch(err => {
-                console.log(err)
+                swal('Error', 'An error Occured, Please Try Again', 'error')
             })
         },
 
