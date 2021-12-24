@@ -1,7 +1,10 @@
 <template>
     <div class="homeContainer">
         <div class="clubsContainer">
-            <h1 style="text-align: left">Your Clubs<hr class="myHr"></h1>
+            <h1 style="text-align: left; color: black;">Your Clubs<hr class="myHr"></h1>
+            <h2 v-if="this.Clubs.length == 0">
+               <b>You have no enrolled Club</b> &#129300
+            </h2>
             <h2 class="className" v-for="item in Clubs" :key="item.name">
                 {{item.name}}
                 <button class="classButton" @click="this.$router.push(`/clubDetails/${item.id}`)">Go to Club</button>
@@ -9,26 +12,34 @@
             </h2>
         </div>
         <div class="eventsContainer">
-            <h1 style="text-align: right">Club Events<hr class="myHr"></h1>
+            <h1 style="text-align: right; color: black;">Club Events<hr class="myHr"></h1>
             <div>
+                <h1 v-if="this.CurrentEvents.length == 0">
+                    <b>There are no event to show</b> &#128557
+                </h1>
                 <div v-for="item in CurrentEvents" :key="item.title">
-                    <h1 class="eventClubName" v-if="this.getTheClub(`${item.club}`)">
+                    <h1 style="color: black;" class="eventClubName" v-if="this.getTheClub(`${item.club}`)">
                         {{this.ClubWithID}}
                     </h1>
-                    <h1 class="eventTitle">
-                        {{item.title}}
+                    <h1 class="eventTitle" style="color: black;">
+                        <b style="font-size: 24px;">Event Name:&nbsp</b>{{item.title}}
                     </h1>
-                    <hr>
-                    <p class="eventDesc">
+                    <hr style="position: relative; bottom: 1cm;">
+                    <p class="eventDesc" style="position: relative; bottom: 1cm;">
+                        <div style="float: left;"><b>Event Description:&nbsp</b></div>
                         {{item.description}}
                     </p>
-                    <div class="eventDate">
-                        {{item.date}}
+                    <div style="position: relative; bottom: 1cm;">
+                        <div class="eventDate">
+                            <div style="float: left;"><b>Date:&nbsp</b></div>
+                            {{item.date}}
+                        </div>
                         <div class="eventLocation">
+                            <div style="float: left;"><b>Location:&nbsp</b></div>
                             {{item.location}}
                         </div>
+                        <br><br><br>
                     </div>
-                    <br>
                 </div>
             </div>
         </div>
@@ -126,7 +137,7 @@ export default {
 
 .className {
     font-family: Georgia, sans-serif;
-    font-size: 55px;
+    font-size: 40px;
     letter-spacing: -2px;
     text-align: left;
     position: relative;
@@ -135,10 +146,10 @@ export default {
 
 .classButton {
     float: right;
-    font-size: 30px;
     position: relative;
-    top: 0.4cm;
+    top: 0.1cm;
     right: 0.5cm;
+    
     display: inline-block;
     outline: none;
     cursor: pointer;
@@ -150,9 +161,13 @@ export default {
     border: none;
     transition: box-shadow 0.2s ease 0s, -ms-transform 0.1s ease 0s, -webkit-transform 0.1s ease 0s, transform 0.1s ease 0s;
     background: rgb(0, 162, 255);
-    color: #fff;
-                
+    color: #fff; 
 }
+.classButton:hover {
+    color: rgba(255, 255, 255, 1);
+    box-shadow: 0 5px 15px rgba(33, 172, 236, 0.4);
+}
+
 
 .classSeperator {
     border: 0;
@@ -170,13 +185,34 @@ export default {
 
 .eventDesc {
     text-align: left;
+    padding: 1rem;
+    width: 100%;
+    box-shadow: 0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08);
+    background-color: #ffffff;
+    border-radius: 0.5rem;
+    border-left: 0 solid #00ff99;
+    transition: border-left 300ms ease-in-out, padding-left 300ms ease-in-out;
 }
 
 .eventDate {
-    text-align: right;
+    float: right;
+    padding: 1rem;
+    width: auto;
+    box-shadow: 0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08);
+    background-color: #4b4b4b4d;
+    border-radius: 0.5rem;
+    border-left: 0 solid #00ff99;
+    transition: border-left 300ms ease-in-out, padding-left 300ms ease-in-out;
 }
 
 .eventLocation {
     float: left;
+    padding: 1rem;
+    width: auto;
+    box-shadow: 0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08);
+    background-color: #4b4b4b4d;
+    border-radius: 0.5rem;
+    border-left: 0 solid #00ff99;
+    transition: border-left 300ms ease-in-out, padding-left 300ms ease-in-out;
 }
 </style>

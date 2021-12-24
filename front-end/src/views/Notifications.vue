@@ -10,8 +10,8 @@
               <div class="col-sm-12">
                 <div class="card">
                   <div class="card-body">
-                    <h5 class="d-flex align-items-center mb-3">
-                      Announcements
+                    <h5 class="header d-flex align-items-center mb-3">
+                      <b>Announcements</b>
                     </h5>
                     <ul
                       v-if="filteredAnn.length"
@@ -49,7 +49,7 @@
                             style="word-wrap: break-word; width: 300px"
                           >
                             <h4>Announcement:</h4>
-                            <h6>{{ ann.content }}</h6>
+                            <h6 class="content">{{ ann.content }}</h6>
                           </div>
                         </div>
                       </li>
@@ -71,25 +71,39 @@
 
 <script>
 export default {
-    data() {
+  data() {
     return {
         filteredAnn: [],
     };
   },
+  
   methods: {
-      
   },
 
-async mounted(){
-    await this.$store.dispatch("Notifications/getAnnouncements");
-    await this.$store.dispatch("Notifications/getClubIDs");
-    this.$store.commit("Notifications/setFilteredAnnouncement");
-    this.filteredAnn = this.$store.state.Notifications.filteredAnn;
-}
+  async mounted() {
+      await this.$store.dispatch("Notifications/getAnnouncements");
+      await this.$store.dispatch("Notifications/getClubIDs");
+      this.$store.commit("Notifications/setFilteredAnnouncement");
+      this.filteredAnn = this.$store.state.Notifications.filteredAnn;
+  }
 }
 </script>
 
 <style>
+.header {
+  font-size: 32px;
+}
+
+.content {
+  padding: 1rem;
+  width: 100%;
+  box-shadow: 0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08);
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  border-left: 0 solid #00ff99;
+  transition: border-left 300ms ease-in-out, padding-left 300ms ease-in-out;
+}
+
 .mainHeader {
     text-align: left;
     position: relative;
