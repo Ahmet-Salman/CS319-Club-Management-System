@@ -41,14 +41,14 @@ export default {
         },
         testAccept(state, id) {
             swal("Success", `You have Accepted Memeber ${id}`, "success")
-            console.log("Member with id: ", id, "has been accepted")
+
         },
         testReject(state, id) {
             swal("Success", `You have Rejected Memeber ${id}`, "success")
-            console.log("Member with id: ", id, "has been rejected")
+
         },
         testCancelEvent(state, id) {
-            console.log("event with id: ", id, "has been cancelled")
+
         },
         setClubID(state, newVal) {
             state.club = newVal
@@ -78,7 +78,7 @@ export default {
                         swal("Success", "Event Has Been Created Successfully", "success");
                         router.push({ path: `/manage/${clubID}` })
                     }).catch(err => {
-                        console.log(err)
+                        swal('Error', 'An error Occured, Please Try Again', 'error')
                     })
                 }
 
@@ -96,12 +96,12 @@ export default {
                 }, {
                     headers: objHeaders
                 }).then(res => {
-                    console.log(res)
+
                     swal("Success", "Announcement Has Been Created Successfully", "success");
                     router.push({ path: `/manage/${club}` })
 
                 }).catch(err => {
-                    console.log(err)
+                    swal('Error', 'An error Occured, Please Try Again', 'error')
                 })
             } else {
                 swal('Input Error', 'Announcement Cannot Be Empty', 'error')
@@ -112,7 +112,7 @@ export default {
             await axios.get(`http://127.0.0.1:8000/api/request/joinclubfilter?club_id=${clubID}`).then(res => {
                 commit('setJoinRequests', res.data)
             }).catch(err => {
-                console.log(err)
+                swal('Error', 'An error Occured, Please Try Again', 'error')
             })
         },
         async AcceptMember({ commit }, reqId) {
@@ -121,7 +121,7 @@ export default {
             }).then(res => {
                 location.reload();
             }).catch(err => {
-                console.log(err)
+                swal('Error', 'An error Occured, Please Try Again', 'error')
             })
 
         },
@@ -139,7 +139,7 @@ export default {
                 }).then(res => {
                     location.reload();
                 }).catch(err => {
-                    console.log(err)
+                    swal('Error', 'An error Occured, Please Try Again', 'error')
                 })
             }
 

@@ -1,7 +1,6 @@
 import { createStore } from 'vuex'
 import axios from 'axios'
 import Signin from './modules/Signin'
-import Signup from './modules/Signup'
 import AllClubs from './modules/AllClubs'
 import ManageClubs from './modules/ManageClubs'
 import ClubDetails from './modules/ClubDetails'
@@ -20,7 +19,7 @@ export default createStore({
     },
     mutations: {
         checkToken(state) {
-            console.log(state.token)
+
         },
         logout(state) {
             state.token = null
@@ -43,8 +42,8 @@ export default createStore({
     },
     actions: {
         async getAuthQuote({ commit, state }) {
-            console.log(state.token)
-            console.log(state.user_id)
+
+
         },
 
         async logout({ commit, state }) {
@@ -71,7 +70,6 @@ export default createStore({
     // modules
     modules: {
         Signin,
-        Signup,
         AllClubs,
         ManageClubs,
         ClubDetails,

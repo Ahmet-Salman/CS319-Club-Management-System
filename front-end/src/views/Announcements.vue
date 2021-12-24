@@ -162,8 +162,8 @@ export default {
 
     await this.$store.dispatch("ClubDetails/getEvents", this.club_id);
     this.events = this.$store.state.ClubDetails.events;
-    // console.log(this.events);
-    // console.log("Club Desc: ", this.clubDescription, ", club name: ", this.clubName)
+    //  
+    //  
   },
   computed: {},
 };

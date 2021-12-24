@@ -430,9 +430,9 @@ export default {
         },
       });
       var commentText = swal.getState().actions.confirm.value;
-      console.log(commentText);
-      console.log(club_ID);
-      console.log(objHeaders);
+       
+       
+       
       await axios
         .post(
           "http://127.0.0.1:8000/api/comments",
@@ -459,7 +459,7 @@ export default {
           );
         });
 
-      // console.log(club_ID);
+      //  
     },
   },
   async mounted() {
