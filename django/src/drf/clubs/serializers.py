@@ -13,3 +13,9 @@ class WriteClubSerializer(serializers.ModelSerializer):
     class Meta:
         model = Club
         fields = '__all__'
+
+class SimpleClubSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Club
+        fields = ('id', 'name',)
+        read_only_fields = ('id', 'name',)
