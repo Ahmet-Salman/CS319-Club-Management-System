@@ -7,9 +7,9 @@ import store from '@/store/index'
 export default {
     namespaced: true,
     state: {
-        AllEvents: [],
         AllClubs: [],
         Clubs: [],
+        AllEvents: [],
     },
     mutations: {
         setEvents(state, eventArr) {
@@ -26,19 +26,25 @@ export default {
                 }
             });
             state.Clubs = response
-            console.log("clubs", Clubs);
+            console.log("this clubs", Clubs);
         },
 
         setAllClubs(state, res) {
             state.AllClubs = res
-            console.log("all clubs", AllClubs);
         },
     },
     actions: {
+        async getEvents({ commit }, club) {
+            
+            await axios.get("http://127.0.0.1:8000/api/events").then(res => {
+                commit('setEvents', res.data)
+            }).catch(err => {
+                swal('Error', 'An error Occured, Please Try Again', 'error')
+            })
+        },
+
         async setAllClubs({ commit, state }) {
-            await axios.get('http://127.0.0.1:8000/api/clubs')
-                .then(res => {
-                    console.log(res.data);
+            await axios.get('http://127.0.0.1:8000/api/clubs').then(res => {
                     commit('setAllClubs', res.data)
                 }).catch(err => {
                     console.log(err)
@@ -46,16 +52,12 @@ export default {
         },
         async setAllMemberClubs({ commit }) {
             var userID = sessionStorage.getItem('userID')
-            await axios.get(`http://127.0.0.1:8000/api/request/clubenrollments?user_id=${userID}`)
-                .then(res => {
-                    console.log(res.data)
+            await axios.get(`http://127.0.0.1:8000/api/request/clubenrollments?user_id=${userID}`).then(res => {
                     commit('setAllMemberClubs', res.data)
-                    commit('setUnaffiliatedClub')
                 }).catch(err => {
                     console.log(err)
                 })
         },
-
     }, 
     getters: {},
     modules: {},

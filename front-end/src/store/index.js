@@ -10,7 +10,7 @@ import CreateClub from './modules/CreateClub'
 import Members from './modules/Members'
 import router from '../router/index'
 import swal from 'sweetalert'
-import userEvents from './modules/Home'
+import Home from './modules/Home'
 
 export default createStore({
     state: {
@@ -78,6 +78,6 @@ export default createStore({
         Admin,
         CreateClub,
         Members,
-        userEvents
+        Home
     }
 })

@@ -2,6 +2,11 @@
     <div class="homeContainer">
         <div class="clubsContainer">
             <h1 style="text-align: left">Your Clubs<hr class="myHr"></h1>
+            <h2 class="className" v-for="item in Clubs" :key="item.name">
+                {{item.name}}
+                <button class="classButton" @click="this.$router.push(`/clubDetails/${item.id}`)">Go to Club</button>
+                <hr class="classSeperator">
+            </h2>
         </div>
         <div class="eventsContainer">
             <h1 style="text-align: right">Club Events<hr class="myHr"></h1>
@@ -19,19 +24,27 @@ export default {
             clubEvents: [],
             AllClubs: [],
             Clubs: [],
+            ClubEvents: [],
             userID: sessionStorage.getItem("userID"),
         };
     },
     methods: {
-
     },
 
     async mounted() {
-        await this.$store.dispatch("Home/setAllMemberClubs");
         await this.$store.dispatch("Home/setAllClubs");
+        await this.$store.dispatch("Home/setAllMemberClubs");
         this.AllClubs = this.$store.state.Home.AllClubs;
         this.Clubs = this.$store.state.Home.Clubs;
-        console.log(this.AllClubs);
+
+        await this.$store.dispatch("Home/getEvents", this.club_id);
+        this.clubEvents = this.$store.state.Home.AllEvents;
+
+        console.log("event arr", this.clubEvents);
+        console.log("all clubs are:", this.AllClubs);
+        console.log("clubs are:", this.Clubs);
+
+        
     },
 };
 </script>
@@ -67,5 +80,41 @@ export default {
     border: none;
     height: 2px;
     background-color: black;
+}
+
+.className {
+    font-family: Georgia, sans-serif;
+    font-size: 55px;
+    letter-spacing: -2px;
+    text-align: left;
+    position: relative;
+    bottom: 0.5cm;  
+}
+
+.classButton {
+    float: right;
+    font-size: 30px;
+    position: relative;
+    top: 0.4cm;
+    right: 0.5cm;
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 14px 24px;
+    border: none;
+    transition: box-shadow 0.2s ease 0s, -ms-transform 0.1s ease 0s, -webkit-transform 0.1s ease 0s, transform 0.1s ease 0s;
+    background: rgb(0, 162, 255);
+    color: #fff;
+                
+}
+
+.classSeperator {
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
 }
 </style>

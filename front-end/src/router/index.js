@@ -37,6 +37,7 @@ const routes = [{
             if (store.state.token == null) {
                 next("/login");
             } else {
+                document.title = "Student Club Manager/" + to.name;
                 next();
             }
         }
@@ -49,6 +50,7 @@ const routes = [{
             if (store.state.token == null) {
                 next("/login");
             } else {
+                document.title = "Student Club Manager/" + to.name;
                 next();
             }
         }
@@ -59,6 +61,7 @@ const routes = [{
         component: Login,
         beforeEnter: (to, from, next) => {
             if (store.state.token == null) {
+                document.title = "Student Club Manager/" + to.name;
                 next();
             } else {
 
@@ -82,6 +85,7 @@ const routes = [{
             if (store.state.token == null) {
                 next("/login");
             } else {
+                document.title = "Student Club Manager/" + to.name;
                 next();
             }
         }
@@ -94,6 +98,7 @@ const routes = [{
             if (store.state.token == null) {
                 next("/login");
             } else {
+                document.title = "Student Club Manager/" + to.name;
                 next();
             }
         }
@@ -107,6 +112,7 @@ const routes = [{
             if (store.state.token == null) {
                 next("/login");
             } else {
+                document.title = "Student Club Manager/" + to.name;
                 next();
             }
         }
@@ -122,6 +128,7 @@ const routes = [{
             } else if (to.params.clubID != ManageID) {
                 next('/notFound')
             } else {
+                document.title = "Student Club Manager/" + to.name;
                 next();
             }
         },
@@ -134,6 +141,7 @@ const routes = [{
             if (store.state.token == null) {
                 next("/login");
             } else {
+                document.title = "Student Club Manager/" + to.name;
                 next();
             }
         }
@@ -146,6 +154,7 @@ const routes = [{
             if (store.state.token == null) {
                 next("/login");
             } else {
+                document.title = "Student Club Manager/" + to.name;
                 next();
             }
         }
@@ -158,6 +167,7 @@ const routes = [{
             if (store.state.token == null) {
                 next("/login");
             } else {
+                document.title = "Student Club Manager/" + to.name;
                 next();
             }
         }
@@ -170,6 +180,7 @@ const routes = [{
             if (store.state.token == null) {
                 next("/login");
             } else {
+                document.title = "Student Club Manager/" + to.name;
                 next();
             }
         }
@@ -183,6 +194,7 @@ const routes = [{
             if (store.state.token == null) {
                 next("/Notifications");
             } else {
+                document.title = "Student Club Manager/" + to.name;
                 next();
             }
         }
@@ -196,6 +208,7 @@ const routes = [{
             if (store.state.token == null) {
                 next("/login");
             } else {
+                document.title = "Student Club Manager/" + to.name;
                 next();
             }
         }
@@ -209,6 +222,7 @@ const routes = [{
             if (store.state.token == null) {
                 next("/login");
             } else {
+                document.title = "Student Club Manager/" + to.name;
                 next();
             }
         }
@@ -222,6 +236,7 @@ const routes = [{
             if (store.state.token == null) {
                 next("/login");
             } else {
+                document.title = "Student Club Manager/" + to.name;
                 next();
             }
         }
@@ -235,6 +250,7 @@ const routes = [{
             if (store.state.token == null) {
                 next("/login");
             } else {
+                document.title = "Student Club Manager/" + to.name;
                 next();
             }
         }
@@ -248,6 +264,7 @@ const routes = [{
             if (store.state.token == null) {
                 next("/login");
             } else {
+                document.title = "Student Club Manager/" + to.name;
                 next();
             }
         }
