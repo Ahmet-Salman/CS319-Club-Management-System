@@ -99,14 +99,6 @@
             </svg>
             Logout
           </button>
-          <!-- <router-link
-            to="/login"
-            type="button"
-            class="btn btn-info mx-3 px-2"
-            style="width: 100px; border-radius: 10px"
-            v-show="!token"
-            >Login</router-link
-          > -->
         </div>
       </div>
       <div></div>

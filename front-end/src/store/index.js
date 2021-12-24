@@ -7,6 +7,7 @@ import ClubDetails from './modules/ClubDetails'
 import Admin from './modules/Admin'
 import CreateClub from './modules/CreateClub'
 import Members from './modules/Members'
+import Notifications from './modules/Notifications'
 import router from '../router/index'
 import swal from 'sweetalert'
 import Home from './modules/Home'
@@ -76,6 +77,7 @@ export default createStore({
         Admin,
         CreateClub,
         Members,
-        Home
+        Home,
+        Notifications
     }
 })
