@@ -3,6 +3,7 @@ from django.shortcuts import render
 # Create your views here.
 
 from django.contrib.auth import login, logout, authenticate
+from .permissions import IsAdminOrReadOnly
 from rest_framework import permissions
 from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
@@ -38,10 +39,13 @@ class AccountList(APIView):
         return Response(data)
 
 class AccountDetails(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [permissions.IsAuthenticated, IsAdminOrReadOnly]
     serializer_class = AccountSerializer
     lookup_url_kwarg = 'id'
     queryset = Account.objects.all()
+
+    def get_object(self, queryset=None):
+        return self.request.user
 
 class LoginAPI(APIView):
     permission_classes = (permissions.AllowAny,)
@@ -79,8 +83,8 @@ class ChangePasswordView(generics.UpdateAPIView):
     model = Account
     permission_classes = (permissions.IsAuthenticated,)
 
-    def get_object(self, queryset=None):
-        obj = self.request.user
+    def get_object(self, id):
+        obj = Account.objects.get(id=id)
         return obj
 
     def update(self, request, *args, **kwargs):
