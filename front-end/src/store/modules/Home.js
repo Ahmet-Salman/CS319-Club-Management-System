@@ -26,7 +26,7 @@ export default {
                 }
             });
             state.Clubs = response
-            console.log("this clubs", Clubs);
+            console.log("this clubs", state.Clubs);
         },
 
         setAllClubs(state, res) {
@@ -35,7 +35,7 @@ export default {
     },
     actions: {
         async getEvents({ commit }, club) {
-            
+
             await axios.get("http://127.0.0.1:8000/api/events").then(res => {
                 commit('setEvents', res.data)
             }).catch(err => {
@@ -45,20 +45,20 @@ export default {
 
         async setAllClubs({ commit, state }) {
             await axios.get('http://127.0.0.1:8000/api/clubs').then(res => {
-                    commit('setAllClubs', res.data)
-                }).catch(err => {
-                    console.log(err)
-                })
+                commit('setAllClubs', res.data)
+            }).catch(err => {
+                console.log(err)
+            })
         },
         async setAllMemberClubs({ commit }) {
             var userID = sessionStorage.getItem('userID')
             await axios.get(`http://127.0.0.1:8000/api/request/clubenrollments?user_id=${userID}`).then(res => {
-                    commit('setAllMemberClubs', res.data)
-                }).catch(err => {
-                    console.log(err)
-                })
+                commit('setAllMemberClubs', res.data)
+            }).catch(err => {
+                console.log(err)
+            })
         },
-    }, 
+    },
     getters: {},
     modules: {},
 }
