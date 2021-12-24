@@ -54,7 +54,7 @@
             to="/profile"
             type="button"
             class="btn btn-outline-dark mr-3"
-            style="width: 100px; border-radius: 10px"
+            style="width: 100px; border-radius: 10px; color: black; border-color: black;"
             v-if="token"
             ><svg
               xmlns="http://www.w3.org/2000/svg"
