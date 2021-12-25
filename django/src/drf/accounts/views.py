@@ -39,13 +39,10 @@ class AccountList(APIView):
         return Response(data)
 
 class AccountDetails(generics.RetrieveUpdateDestroyAPIView):
-    permission_classes = [permissions.IsAuthenticated, IsAdminOrReadOnly]
+    permission_classes = [IsAdminOrReadOnly]
     serializer_class = AccountSerializer
     lookup_url_kwarg = 'id'
     queryset = Account.objects.all()
-
-    def get_object(self, queryset=None):
-        return self.request.user
 
 class LoginAPI(APIView):
     permission_classes = (permissions.AllowAny,)
