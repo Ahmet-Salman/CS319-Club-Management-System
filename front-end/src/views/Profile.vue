@@ -113,13 +113,8 @@ export default {
         headers: objHeaders
       }).then (res => {
         swal("Success", "Your Password Has Been Successfully Updated", "success")
-        if (isSuper == "true")
-        {
-          router.push({ path: '/admin' })
-        }
-        else{
-          router.push({ path: '/home' })
-        }
+          this.oldPassword = ""
+          this.newPassword = ""
       }).catch (err => {
         var status = err.response.status
         if (status == 400){

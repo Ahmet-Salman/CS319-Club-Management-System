@@ -47,197 +47,214 @@
 </template>
 
 <script>
-import axios from 'axios';
+import axios from "axios";
 import store from "@/store/index";
 export default {
-    name: "Home",
-    data() {
-        return {
-            clubEvents: [],
-            AllClubs: [],
-            Clubs: [],
-            ClubEvents: [],
-            userID: sessionStorage.getItem("userID"),
-            CurrentEvents: [],
-            ClubIDs: [],
-            ClubWithID: "",
-        };
-    },
-    methods: {
-        getTheClub(id) {
-            for (let i = 0; i < this.AllClubs.length; i++) {
-                if (id == this.AllClubs[i].id) {
-                    this.ClubWithID = this.AllClubs[i].name
-                    return true
-                }
-            }
-            return false
-        },
-
-        leaveTheClub(clubID) {
-            this.$store.dispatch("AllClubs/leaveClub", clubID)
-        },
+  name: "Home",
+  data() {
+    return {
+      clubEvents: [],
+      AllClubs: [],
+      Clubs: [],
+      ClubEvents: [],
+      userID: sessionStorage.getItem("userID"),
+      CurrentEvents: [],
+      ClubIDs: [],
+      ClubWithID: "",
+    };
+  },
+  methods: {
+    getTheClub(id) {
+      for (let i = 0; i < this.AllClubs.length; i++) {
+        if (id == this.AllClubs[i].id) {
+          this.ClubWithID = this.AllClubs[i].name;
+          return true;
+        }
+      }
+      return false;
     },
 
-    async mounted() {
-        await this.$store.dispatch("Home/setAllClubs");
-        await this.$store.dispatch("Home/getAllUsersClubs");
-        this.AllClubs = this.$store.state.Home.AllClubs;
-        this.Clubs = this.$store.state.Home.Clubs;
-        
-        await this.$store.dispatch("Home/getAllEvents", this.club_id);
-        this.clubEvents = this.$store.state.Home.AllEvents;
+    leaveTheClub(clubID) {
+      this.$store.dispatch("AllClubs/leaveClub", clubID);
+    },
+  },
 
-        for (let i = 0; i < this.Clubs.length; i++) {
-            this.ClubIDs[i] = this.Clubs[i].id;
-        }
+  async mounted() {
+    await this.$store.dispatch("Home/setAllClubs");
+    await this.$store.dispatch("Home/getAllUsersClubs");
+    this.AllClubs = this.$store.state.Home.AllClubs;
+    this.Clubs = this.$store.state.Home.Clubs;
 
-        let k = 0;
-        for (let i = 0; i < this.clubEvents.length; i++) {
-            for (let j = 0; j < this.ClubIDs.length; j++) {
-                if (this.ClubIDs[j] == this.clubEvents[i].club) {
-                    this.CurrentEvents[k] = this.clubEvents[i];
-                    k++;
-                }
-            }
+    await this.$store.dispatch("Home/getAllEvents", this.club_id);
+    this.clubEvents = this.$store.state.Home.AllEvents;
+
+    for (let i = 0; i < this.Clubs.length; i++) {
+      this.ClubIDs[i] = this.Clubs[i].id;
+    }
+
+    let k = 0;
+    for (let i = 0; i < this.clubEvents.length; i++) {
+      for (let j = 0; j < this.ClubIDs.length; j++) {
+        if (this.ClubIDs[j] == this.clubEvents[i].club) {
+          this.CurrentEvents[k] = this.clubEvents[i];
+          k++;
         }
-        k = 0;
-    },  
+      }
+    }
+    k = 0;
+
+    if (localStorage.getItem("reloaded")) {
+      localStorage.removeItem("reloaded");
+    } else {
+      localStorage.setItem("reloaded", "1");
+      location.reload();
+    }
+  },
 };
 </script>
 
 <style>
 .homeContainer {
-    box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .clubsContainer {
-    float: left;
-    border-radius: 20px;
-    width: 48.5%;
-    border: 3px solid black;
-    padding: 10px;
-    position: relative;
-    left: 1%;
-    top: 0.5cm;
+  float: left;
+  border-radius: 20px;
+  width: 48.5%;
+  border: 3px solid black;
+  padding: 10px;
+  position: relative;
+  left: 1%;
+  top: 0.5cm;
 }
 
 .eventsContainer {
-    float: right;
-    border-radius: 20px;
-    width: 48.5%;
-    border: 3px solid black;
-    padding: 10px;
-    position: relative;
-    right: 1%;
-    top: 0.5cm;
+  float: right;
+  border-radius: 20px;
+  width: 48.5%;
+  border: 3px solid black;
+  padding: 10px;
+  position: relative;
+  right: 1%;
+  top: 0.5cm;
 }
 
 .myHr {
-    border: none;
-    height: 2px;
-    background-color: black;
+  border: none;
+  height: 2px;
+  background-color: black;
 }
 
 .className {
-    font-family: Georgia, sans-serif;
-    font-size: 40px;
-    letter-spacing: -2px;
-    text-align: left;
-    position: relative;
-    bottom: 0.5cm;  
+  font-family: Georgia, sans-serif;
+  font-size: 40px;
+  letter-spacing: -2px;
+  text-align: left;
+  position: relative;
+  bottom: 0.5cm;
 }
 
 .classButton {
-    float: right;
-    position: relative;
-    top: 0.1cm;
-    right: 0.5cm;
-    display: inline-block;
-    outline: none;
-    cursor: pointer;
-    font-size: 16px;
-    line-height: 20px;
-    font-weight: 600;
-    border-radius: 8px;
-    padding: 14px 24px;
-    border: none;
-    transition: box-shadow 0.2s ease 0s, -ms-transform 0.1s ease 0s, -webkit-transform 0.1s ease 0s, transform 0.1s ease 0s;
-    background: rgb(0, 162, 255);
-    color: #fff; 
+  float: right;
+  position: relative;
+  top: 0.1cm;
+  right: 0.5cm;
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 14px 24px;
+  border: none;
+  transition: box-shadow 0.2s ease 0s, -ms-transform 0.1s ease 0s,
+    -webkit-transform 0.1s ease 0s, transform 0.1s ease 0s;
+  background: rgb(0, 162, 255);
+  color: #fff;
 }
 .classButton:hover {
-    color: rgba(255, 255, 255, 1);
-    box-shadow: 0 5px 15px rgba(33, 172, 236, 0.4);
+  color: rgba(255, 255, 255, 1);
+  box-shadow: 0 5px 15px rgba(33, 172, 236, 0.4);
 }
 
 .classLeaveButton {
-    float: right;
-    position: relative;
-    top: 0.1cm;
-    right: 0.65cm;
-    display: inline-block;
-    outline: none;
-    cursor: pointer;
-    font-size: 16px;
-    line-height: 20px;
-    font-weight: 600;
-    border-radius: 8px;
-    padding: 14px 24px;
-    border: none;
-    transition: box-shadow 0.2s ease 0s, -ms-transform 0.1s ease 0s, -webkit-transform 0.1s ease 0s, transform 0.1s ease 0s;
-    background: rgba(212, 32, 32, 0.938);
-    color: #fff; 
+  float: right;
+  position: relative;
+  top: 0.1cm;
+  right: 0.65cm;
+  display: inline-block;
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 14px 24px;
+  border: none;
+  transition: box-shadow 0.2s ease 0s, -ms-transform 0.1s ease 0s,
+    -webkit-transform 0.1s ease 0s, transform 0.1s ease 0s;
+  background: rgba(212, 32, 32, 0.938);
+  color: #fff;
 }
 .classLeaveButton:hover {
-    color: rgba(255, 255, 255, 1);
-    box-shadow: 0 5px 15px rgba(226, 50, 50, 0.705);
+  color: rgba(255, 255, 255, 1);
+  box-shadow: 0 5px 15px rgba(226, 50, 50, 0.705);
 }
 
 .classSeperator {
-    border: 0;
-    height: 1px;
-    background-image: linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0),
+    rgba(0, 0, 0, 0.75),
+    rgba(0, 0, 0, 0)
+  );
 }
 
 .eventClubName {
-    float: left;
+  float: left;
 }
 
 .eventTitle {
-    text-align: right;
+  text-align: right;
 }
 
 .eventDesc {
-    text-align: left;
-    padding: 1rem;
-    width: 100%;
-    box-shadow: 0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08);
-    background-color: #ffffff;
-    border-radius: 0.5rem;
-    border-left: 0 solid #00ff99;
-    transition: border-left 300ms ease-in-out, padding-left 300ms ease-in-out;
+  text-align: left;
+  padding: 1rem;
+  width: 100%;
+  box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11),
+    0 5px 15px 0 rgba(0, 0, 0, 0.08);
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  border-left: 0 solid #00ff99;
+  transition: border-left 300ms ease-in-out, padding-left 300ms ease-in-out;
 }
 
 .eventDate {
-    float: right;
-    padding: 1rem;
-    width: auto;
-    box-shadow: 0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08);
-    background-color: #4b4b4b4d;
-    border-radius: 0.5rem;
-    border-left: 0 solid #00ff99;
-    transition: border-left 300ms ease-in-out, padding-left 300ms ease-in-out;
+  float: right;
+  padding: 1rem;
+  width: auto;
+  box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11),
+    0 5px 15px 0 rgba(0, 0, 0, 0.08);
+  background-color: #4b4b4b4d;
+  border-radius: 0.5rem;
+  border-left: 0 solid #00ff99;
+  transition: border-left 300ms ease-in-out, padding-left 300ms ease-in-out;
 }
 
 .eventLocation {
-    float: left;
-    padding: 1rem;
-    width: auto;
-    box-shadow: 0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08);
-    background-color: #4b4b4b4d;
-    border-radius: 0.5rem;
-    border-left: 0 solid #00ff99;
-    transition: border-left 300ms ease-in-out, padding-left 300ms ease-in-out;
+  float: left;
+  padding: 1rem;
+  width: auto;
+  box-shadow: 0 15px 30px 0 rgba(0, 0, 0, 0.11),
+    0 5px 15px 0 rgba(0, 0, 0, 0.08);
+  background-color: #4b4b4b4d;
+  border-radius: 0.5rem;
+  border-left: 0 solid #00ff99;
+  transition: border-left 300ms ease-in-out, padding-left 300ms ease-in-out;
 }
 </style>
