@@ -7,5 +7,5 @@ urlpatterns = [
     path('api/logout', LogoutAPI.as_view()),
     path('api/accounts', AccountList.as_view()),
     path('api/account/<int:id>', AccountDetails.as_view()),
-    path('api/change-password/', ChangePasswordView.as_view(), name='change-password'),
+    path('api/change-password/', ChangePasswordView.as_view()),
 ]
