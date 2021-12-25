@@ -1,5 +1,6 @@
 <template>
   <div>
+    
     <router-link v-if='isSuper != "true"' :to="{ name: 'CreateClub' }"
       ><button style="float: right; border-radius: 7px" class="btn btn-outline-secondary my-2 mr-4">
         <svg
@@ -20,7 +21,8 @@
         Create Club
       </button></router-link
     >
-    <table  class="table table-striped">
+    <h1 v-if="AllManagerClub.length == 0 && AllMemberClub.length == 0 && UnaffiliatedClub.length == 0 && pendingRequests.length == 0">There Are No Clubs in The System</h1>
+    <table v-if="AllManagerClub.length != 0 || AllMemberClub.length != 0 || UnaffiliatedClub.length != 0 || pendingRequests.length != 0"  class="table table-striped">
       <thead>
         <tr style="border-radius: 7px" class="bg-info">
           <th>Club Name</th>
@@ -29,9 +31,12 @@
           <th>Options</th>
         </tr>
       </thead>
+      
       <tbody>
+        
         <!-- We loop over the AllManagerClub Array here -->
         <tr  v-for="clubs in AllManagerClub" :key="clubs.id" class="table-info">
+          
           <td>{{ clubs.name }}</td>
           <td>{{ clubs.owner.first_name }} {{ clubs.owner.last_name }}</td>
           <td style="color: white; border-radius: 7px" class="bg-danger">Manager</td>
