@@ -23,15 +23,12 @@ export default {
             if (state.clubName == "" || state.clubDescription == "") {
                 swal("Missing Information", "All Fields Must be Populated", "error")
             } else {
-
                 var userID = sessionStorage.getItem("userID");
-                console.log(userID, ", ", state.clubName, ", ", state.clubDescription)
                 axios.post("http://127.0.0.1:8000/api/request/createclubrequest", {
                     user_id: userID,
                     club_name: state.clubName,
                     club_description: state.clubDescription
                 }).then(res => {
-                    console.log(res)
                     swal("Success", "Your request has been recieved successfully and will be evaluted soon", "success")
                     router.push({ path: '/clubs' })
                 }).catch(err => {

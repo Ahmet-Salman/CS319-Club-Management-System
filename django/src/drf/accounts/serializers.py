@@ -16,3 +16,18 @@ class AccountSerializer(serializers.ModelSerializer):
         account.set_password(validated_data['password'])
         account.save()
         return account
+
+class SimpleAccountSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Account
+        fields = ('id', 'student_id', 'first_name', 'last_name',)
+        read_only_fields = ('id', 'student_id', 'first_name', 'last_name',)
+
+class ChangePasswordSerializer(serializers.Serializer):
+    model = Account
+
+    """
+    Serializer for password change endpoint.
+    """
+    old_password = serializers.CharField(required=True)
+    new_password = serializers.CharField(required=True)

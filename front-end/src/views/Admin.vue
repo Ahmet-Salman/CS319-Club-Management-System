@@ -136,7 +136,7 @@ export default {
           this.user_name = res.data.first_name + " " + res.data.last_name;
         })
         .catch((err) => {
-          console.log(err);
+          swal('Error', 'An error Occured, Please Try Again', 'error');
         });
     },
   },

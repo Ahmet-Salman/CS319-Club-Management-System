@@ -1,66 +1,46 @@
 <template>
-  <div>
     <div
-      class="container rounded bg-white mt-5 mb-5"
+      class="container rounded bg-white mt-3 mb-3"
       style="outline: solid #000000"
     >
       <div class="row">
-        <div class="col-md-3 border-right">
+        <div class="col-md-12">
           <div
-            class="d-flex flex-column align-items-center text-center p-3 py-5"
+            class="d-flex flex-column align-items-center text-center p-1 py-1"
           >
+          <div class="d-flex justify-content-between align-items-center mb-3">
+              <h4 >Profile Settings</h4>
+            </div>
+            <div>
             <img
               class="rounded-circle mt-5"
-              width="150px"
+              width="170"
               src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"
-            /><span class="font-weight-bold">Edogaru</span
-            ><span class="text-black-50">edogaru@mail.com.my</span>
-            <span class="text-black-50">Member Since: </span>
-            <span class="text-black-50">Student ID: </span><span> </span>
+            />
+            </div>
+            <span class="font-weight-bold">{{name}} {{surname}}</span
+            ><span class="text-black-50">Email: {{email}}</span>
+            <span class="text-black-50">Member Since: {{DOJ}}</span>
+            <span class="text-black-50">Student ID: {{student_id}} </span>
           </div>
-        </div>
-        <div class="col-md-5 border-right">
-          <div class="p-3 py-5">
-            <div class="d-flex justify-content-between align-items-center mb-3">
-              <h4 class="text-right">Profile Settings</h4>
-            </div>
-            <div class="row mt-2">
-              <div class="col-md-6">
-                <label class="labels">Name</label
-                ><input
-                  type="text"
-                  class="form-control"
-                  placeholder="first name"
-                  v-model="Name"
-                />
-              </div>
-              <div class="col-md-6">
-                <label class="labels">Surname</label
-                ><input
-                  type="text"
-                  class="form-control"
-                  placeholder="surname"
-                  v-model="Surname"
-                />
-              </div>
-            </div>
+          <div class="p-2 ">
             <div class="row mt-3">
-              <div class="col-md-12">
-                <label class="labels">Email</label
-                ><input
-                  type="email"
-                  class="form-control"
-                  placeholder="Enter Email"
-                  v-model="Email"
-                />
-              </div>
-              <div class="col-md-12">
-                <label class="labels">New Password</label
-                ><input
+              <div class="col-md-6">
+                <h4><label class="badge badge-pill badge-info">Old Password</label
+                ></h4><input
                   type="password"
                   class="form-control"
                   placeholder="Enter Your Password"
-                  v-model="Password"
+                  v-model="OldPassword"
+                />
+              </div>
+              <div class="col-md-6">
+                <h4><label class="badge badge-pill badge-info">New Password</label
+                ></h4><input
+                  type="password"
+                  class="form-control"
+                  placeholder="Enter Your Password"
+                  v-model="NewPassword"
                 />
               </div>
             </div>
@@ -69,15 +49,16 @@
                 @click="updateProfile()"
                 class="btn btn-primary profile-button"
                 type="button"
+                style="border-radius: 7px"
               >
-                Save Profile
+                Update Password
               </button>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+
 </template>
 
 <script>
@@ -87,98 +68,79 @@ import swal from 'sweetalert';
 export default {
   data() {
     return {
-      first_name: "",
-      last_name: "",
+      name: "",
+      surname: "",
       email: "",
-      password: "",
+      student_id: "",
+      DOJ: "",
+
+      oldPassword: "",
+      newPassword: "",
+      token: {
+        "Authorization": `Token ${store.getters.getToken}`
+      }
     };
   },
   computed: {
-    Name: {
+    OldPassword: {
       get() {
-        return this.first_name;
+        return this.oldPassword;
       },
       set(newVal) {
-        // console.log("name: ", newVal);
-        this.first_name = newVal;
+        this.oldPassword = newVal;
       },
     },
-    Surname: {
+    NewPassword: {
       get() {
-        return this.last_name;
+        return this.newPassword;
       },
       set(newVal) {
-        // console.log("surname: ", newVal);
-        this.last_name = newVal;
-      },
-    },
-    Email: {
-      get() {
-        return this.email;
-      },
-      set(newVal) {
-        // console.log("student_id: ", newVal);
-        this.email = newVal;
-      },
-    },
-    Password: {
-      get() {
-        return this.password;
-      },
-      set(newVal) {
-        // console.log("password: ", newVal);
-        this.password = newVal;
+        this.newPassword = newVal;
       },
     },
   },
   methods: {
     async updateProfile() {
-//       var resData = null
-//       await axios
-//         .get(
-//           `https://api.eva.pingutil.com/email?email=${this.email}`
-//         )
-//         .then((res) => {
-//           console.log(res)
-//           console.log(this.email)
-//           resData = res
-//         })
-//         .catch((err) => {
-//           console.log(err);
-//         });
-
-// console.log(resData)
-// if(isEmailValid == 0){
-//   swal("Input Error", "The Email You Have Entered Is Invalid", "error")
-// }
-
-      // console.log(`Name: ${this.first_name}\nLast Name: ${this.last_name}\nEmail: ${this.email}\nPassword: ${this.password} `)
+      console.log("Old Password is ", this.oldPassword, " New password is ", this.newPassword)
+      console.log(this.token)
+      var objHeaders = {
+      "Authorization": `Token ${store.getters.getToken}`,
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
+    }
+      
+      await axios.put('http://127.0.0.1:8000/api/change-password', {
+        old_password: this.oldPassword,
+        new_password: this.newPassword
+      }, {
+        headers: objHeaders
+      }).then (res => {
+        console.log(res)
+      }).catch (err => {
+        console.log(err)
+      })
     },
   },
-  mounted() {
-    var userID = store.getters.getUserID;
-    var userName = null;
-    var userSurname = null;
-    var userEmail = null;
-    // const objHeaders = {
-    //                 "Authorization": `Token ${store.getters.getToken}`
-    //             }
+  async mounted() {
+    var userID = sessionStorage.getItem('userID')
 
-    // axios.get(`http://127.0.0.1:8000/api/account/${userID}`, {
-    //     headers: objHeaders
-    // }).then (res => {
-    //     console.log(res)
-    // }).catch (err => {
-    //     console.log(err)
-    // })
-
-    // console.log(userID)
-    // this.first_name = "something"
-    // this.last_name = "last name"
-    // this.email = "some email"
+    await axios.get(`http://127.0.0.1:8000/api/account/${userID}`, {
+      headers: this.token
+    }).then(res => {
+      var DOJ = new Date(res.data.date_joined)
+      this.name = res.data.first_name
+      this.surname = res.data.last_name
+      this.email = res.data.email
+      this.DOJ = `${DOJ.getDate()}/${DOJ.getMonth()}/${DOJ.getFullYear()}`
+      this.student_id = res.data.student_id
+    }).catch (err => {
+      console.log(err)
+    })
   },
 };
 </script>
+
 <style>
 .form-control:focus {
   box-shadow: none;

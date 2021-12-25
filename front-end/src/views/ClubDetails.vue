@@ -1,7 +1,7 @@
 <template>
   <div>
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
-    <h1>Hello Manager of club {{ club_id }} called {{ clubName }}</h1>
+    <br/>
+    <br/>
     <div class="container">
       <div class="main-body">
         <div class="row">
@@ -51,7 +51,7 @@
                         <h6 class="badge badge-primary even-larger-badge mb-0">
                           Name: {{ event.title }}
                         </h6>
-                        <h6 class="badge badge-primary even-larger-badge mb-0">
+                        <h6 class="badge badge-info even-larger-badge mb-0">
                           Date: {{new Date(event.date).getDate() }}/{{new Date(event.date).getMonth() }}/{{new Date(event.date).getFullYear() }}
                         </h6>
                         <span>
@@ -91,6 +91,65 @@
                     </h4>
                   </div>
                 </div>
+                <div class="card">
+                  <div class="card-body">
+                    <h5 class="d-flex align-items-center mb-3">
+                      Comments
+                    </h5>
+                    <ul
+                      v-if="comments.length"
+                      class="list-group list-group-flush"
+                    >
+                      <li
+                        v-for="com in comments"
+                        :key="com.id"
+                        class="
+                          list-group-item
+                          d-flex
+                          justify-content-between
+                          align-items-center
+                          flex-wrap
+                        "
+                      >
+                        <h6 class="badge badge-primary even-larger-badge mb-0">
+                          Name: {{com.owner.first_name}} {{com.owner.last_name}}
+                        </h6>
+                        <h6 class="badge badge-info even-larger-badge mb-0">
+                          Date: {{new Date(com.date).getDate() }}/{{new Date(com.date).getMonth() }}/{{new Date(com.date).getFullYear() }}
+                        </h6>
+                        <span>
+                          <div
+                          class="
+                            d-flex
+                            flex-column
+                            align-items-center
+                            text-center
+                          "
+                        >
+                          <div
+                            class="mt-9"
+                            style="word-wrap: break-word; width: 130px"
+                          >
+                            <h4>Comment:</h4>
+                            <h6>{{ com.content }}</h6>
+                          </div>
+                        </div>
+                        </span>
+                        <button v-if="com.owner.id == userID" @click="$store.dispatch('ClubDetails/DeleteComment', com.id)"
+            type="button" class="btn btn-outline-primary mr-1">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+  <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+  <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+</svg>
+              Delete
+            </button>
+                      </li>
+                    </ul>
+                    <h4 v-if="!comments.length">
+                      There Are No Comments on This Club
+                    </h4>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -108,14 +167,8 @@ export default {
     return {
       club_id: this.$route.params.clubID,
       manageID: sessionStorage.getItem("manageID"),
-      JoinRequests: [
-        { id: 1, name: "Member 1" },
-        { id: 2, name: "Member 2" },
-        { id: 5, name: "Member 5" },
-        { id: 7, name: "Member 7" },
-        { id: 9, name: "Member 9" },
-      ],
-      // announcements: [],
+      JoinRequests: [],
+      comments: [],
       pastEvents: [],
       userID: sessionStorage.getItem("userID"),
       clubDescription: "",
@@ -136,38 +189,18 @@ export default {
         button: "Close",
       });
     },
-    // openModal(data) {
-    //   var title = data.title;
-    //   var location = data.loc;
-    //   var time = new Date(data.time);
-
-    //   // var dateAndTime = new Date(time)
-
-    //   var description = data.desc;
-
-    //   swal({
-    //     title: `Event Title: ${title}`,
-    //     text: `Event Location: ${location}\n\n Event Date: ${time.getDate()}/${time.getMonth()}/${time.getFullYear()}\n\n Event Time: ${time.getHours()}:${time.getMinutes()} \n\n Event Description: ${description}`,
-    //     icon: "info",
-    //     button: "Close",
-    //   });
-    // },
   },
   async mounted() {
-    // await this.$store.dispatch("ClubDetails/getAnnouncements", this.club_id);
-    // this.announcements = this.$store.state.ClubDetails.announcements;
-
     await this.$store.dispatch("ClubDetails/getClubDescription", this.club_id);
     this.clubDescription = this.$store.state.ClubDetails.clubDescription;
     this.clubName = this.$store.state.ClubDetails.clubName;
 
     await this.$store.dispatch("ClubDetails/getEvents", this.club_id);
     this.pastEvents = this.$store.state.ClubDetails.pastEvents;
-    // this.events = this.$store.state.ClubDetails.events;
 
-    // this.$store.commit("ClubDetails/setPastEvents");
+    await this.$store.dispatch("ClubDetails/getComments", this.club_id);
+    this.comments = this.$store.state.ClubDetails.comments;
   },
-  computed: {},
 };
 </script>
 

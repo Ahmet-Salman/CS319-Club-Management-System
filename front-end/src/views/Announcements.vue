@@ -1,7 +1,7 @@
 <template>
   <div>
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"> -->
-    <h1>Hello Manager of club {{ club_id }} called {{ clubName }}</h1>
+    <br/>
+    <br/>
     <div class="container">
       <div class="main-body">
         <div class="row">
@@ -162,8 +162,8 @@ export default {
 
     await this.$store.dispatch("ClubDetails/getEvents", this.club_id);
     this.events = this.$store.state.ClubDetails.events;
-    // console.log(this.events);
-    // console.log("Club Desc: ", this.clubDescription, ", club name: ", this.clubName)
+    //  
+    //  
   },
   computed: {},
 };

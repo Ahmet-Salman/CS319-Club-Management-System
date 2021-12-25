@@ -1,9 +1,14 @@
 from rest_framework import serializers
+from accounts.serializers import SimpleAccountSerializer
 from .models import Comment
 
-# Club Serializer
-class CommentSerializer(serializers.ModelSerializer):
+class ReadCommentSerializer(serializers.ModelSerializer):
+    owner = SimpleAccountSerializer(read_only=True)
     class Meta:
         model = Comment
         fields = '__all__'
-        read_only_fields = ('owner',)
+
+class WriteCommentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = '__all__'

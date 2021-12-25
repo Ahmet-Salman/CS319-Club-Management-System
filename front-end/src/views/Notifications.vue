@@ -2,7 +2,7 @@
   <div>
     <br/>
     <br/>
-    <div class="container">
+     <div class="container">
       <div class="main-body">
         <div class="row">
           <div class="col-lg-8">
@@ -10,15 +10,15 @@
               <div class="col-sm-12">
                 <div class="card">
                   <div class="card-body">
-                    <h5 class="d-flex align-items-center mb-3">
-                      Announcements
+                    <h5 class="header d-flex align-items-center mb-3">
+                      <b>Announcements</b>
                     </h5>
                     <ul
-                      v-if="announcements.length"
+                      v-if="filteredAnn.length"
                       class="list-group list-group-flush"
                     >
                       <li
-                        v-for="ann in announcements"
+                        v-for="ann in filteredAnn"
                         :key="ann.id"
                         class="
                           list-group-item
@@ -29,7 +29,7 @@
                         "
                       >
                         <h6 class="badge badge-primary even-larger-badge mb-0">
-                          ID: {{ ann.id }}
+                          Club: {{ ann.club.name }}
                         </h6>
                         <h6 class="badge badge-info even-larger-badge mb-0">
                           Date: {{ new Date(ann.date).getDate() }}/{{
@@ -49,12 +49,12 @@
                             style="word-wrap: break-word; width: 300px"
                           >
                             <h4>Announcement:</h4>
-                            <h6>{{ ann.content }}</h6>
+                            <h6 class="content">{{ ann.content }}</h6>
                           </div>
                         </div>
                       </li>
                     </ul>
-                    <h4 v-if="!announcements.length">
+                    <h4 v-if="!filteredAnn.length">
                       There are No Announcements
                     </h4>
                   </div>
@@ -68,46 +68,52 @@
   </div>
 </template>
 
+
 <script>
 export default {
-  name: "ClubDetails",
   data() {
     return {
-      club_id: this.$route.params.clubID,
-      announcements: [],
+        filteredAnn: [],
     };
   },
-  methods: {},
-  async mounted() {
-    await this.$store.dispatch("ClubDetails/getAnnouncements", this.club_id);
-    this.announcements = this.$store.state.ClubDetails.announcements;
+  
+  methods: {
   },
-};
+
+  async mounted() {
+      await this.$store.dispatch("Notifications/getAnnouncements");
+      await this.$store.dispatch("Notifications/getClubIDs");
+      this.$store.commit("Notifications/setFilteredAnnouncement");
+      this.filteredAnn = this.$store.state.Notifications.filteredAnn;
+  }
+}
 </script>
 
 <style>
-body {
-  background: #f7f7ff;
-  margin-top: 20px;
+.header {
+  font-size: 32px;
 }
-.card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  word-wrap: break-word;
-  background-color: #fff;
-  background-clip: border-box;
-  border: 0 solid transparent;
-  border-radius: 0.25rem;
-  margin-bottom: 1.5rem;
-  box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%),
-    0 2px 6px 0 rgb(206 206 238 / 54%);
+
+.content {
+  padding: 1rem;
+  width: 100%;
+  box-shadow: 0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08);
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  border-left: 0 solid #00ff99;
+  transition: border-left 300ms ease-in-out, padding-left 300ms ease-in-out;
 }
-.me-2 {
-  margin-right: 0.5rem !important;
+
+.mainHeader {
+    text-align: left;
+    position: relative;
+    left: 0.5cm;
+    top: 0.9cm;
 }
-.badge.even-larger-badge {
-  font-size: 0.9em;
+
+.myHr {
+    border: none;
+    height: 2px;
+    background-color: black;
 }
 </style>

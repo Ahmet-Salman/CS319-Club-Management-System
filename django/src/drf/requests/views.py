@@ -9,7 +9,7 @@ from rest_framework import status
 from django.http import Http404
 from accounts.models import Account
 from clubs.models import Club
-from club_enrollment.models import ClubEnrollment
+from clubenrollment.models import ClubEnrollment
 from datetime import datetime, timedelta
 from django.views.generic import ListView
 from clubs.permissions import IsClubOwnerOrReadOnly
@@ -102,7 +102,6 @@ class JoinClubAPIWithParam(generics.ListCreateAPIView):
     serializer_class = JoinClubRequestWithInfoSerializer
     model = JoinClubWithInfoRequest
     def get_queryset(self):
-        print(self.request.query_params.get("sa"))
         user_id = self.request.query_params.get("user_id")
         club_id = self.request.query_params.get("club_id")
         if (user_id and club_id):
@@ -111,7 +110,6 @@ class JoinClubAPIWithParam(generics.ListCreateAPIView):
             return JoinClubWithInfoRequest.objects.filter(user_id=user_id)
         elif club_id:
             return JoinClubWithInfoRequest.objects.filter(club_id=club_id)
-        print("no")
         return JoinClubWithInfoRequest.objects.all()
 
 class ApproveJoinClubRequest(APIView):
@@ -121,7 +119,7 @@ class ApproveJoinClubRequest(APIView):
             #get club request
             join_request = JoinClubWithInfoRequest.objects.get(id=join_id)
             #maybe some additional code can be added
-            data = ClubEnrollment(club_id=join_request.club_id, user_id=join_request.user_id,title="user")
+            data = ClubEnrollment(club_id=join_request.club_id, user_id=Account.objects.get(id=join_request.user_id),title="user")
             data.save()
             join_request.delete()
             return HttpResponse( status = 200)
