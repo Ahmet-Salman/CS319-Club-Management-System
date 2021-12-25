@@ -105,11 +105,7 @@ export default {
       console.log(this.token)
       var objHeaders = {
       "Authorization": `Token ${store.getters.getToken}`,
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "DELETE, POST, GET, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With"
     }
-      
       await axios.put('http://127.0.0.1:8000/api/change-password', {
         old_password: this.oldPassword,
         new_password: this.newPassword
