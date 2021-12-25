@@ -48,7 +48,7 @@ export default createStore({
         },
 
         async logout({ commit, state }) {
-            await axios.get('http://127.0.0.1:8000/api/logout', {
+            await axios.get('https://gestalt-ver-23242.herokuapp.com/api/logout', {
                 headers: { "Authorization": `Token ${state.token}` }
             }).then(res => {
                 state.token = null
