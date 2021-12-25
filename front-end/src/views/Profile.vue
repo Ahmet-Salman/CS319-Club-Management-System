@@ -140,7 +140,7 @@ export default {
       this.DOJ = `${DOJ.getDate()}/${DOJ.getMonth()}/${DOJ.getFullYear()}`
       this.student_id = res.data.student_id
     }).catch (err => {
-      console.log(err)
+       swal("Error", "An Error Occured, Please Try Again", "error")
     })
   },
 };

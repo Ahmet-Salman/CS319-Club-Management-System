@@ -45,7 +45,7 @@ export default {
             await axios.get('http://127.0.0.1:8000/api/clubs').then(res => {
                 commit('setAllClubs', res.data)
             }).catch(err => {
-                console.log(err)
+                swal("Error", "An Error Occured, Please Try Again", "error")
             })
         },
 
@@ -54,7 +54,7 @@ export default {
             await axios.get(`http://127.0.0.1:8000/api/request/clubenrollments?user_id=${userID}`).then(res => {
                 commit('getAllUsersClubs', res.data)
             }).catch(err => {
-                console.log(err)
+                swal("Error", "An Error Occured, Please Try Again", "error")
             })
         },
     },

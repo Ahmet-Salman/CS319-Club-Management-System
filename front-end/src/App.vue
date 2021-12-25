@@ -129,7 +129,6 @@ data() {
   },
 
   mounted(){
-    console.log("navbar mounted")
     this.isSuper = sessionStorage.getItem('isAuth')
   }
 };
