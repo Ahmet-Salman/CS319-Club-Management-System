@@ -65,6 +65,7 @@
 import store from "@/store/index";
 import axios from "axios";
 import swal from 'sweetalert';
+import router from '../router/index'
 export default {
   data() {
     return {
@@ -101,20 +102,33 @@ export default {
   },
   methods: {
     async updateProfile() {
-      console.log("Old Password is ", this.oldPassword, " New password is ", this.newPassword)
-      console.log(this.token)
+      var isSuper = sessionStorage.getItem("isAuth")
       var objHeaders = {
       "Authorization": `Token ${store.getters.getToken}`,
     }
-      await axios.put('http://127.0.0.1:8000/api/change-password', {
+      await axios.put('http://127.0.0.1:8000/api/change-password/', {
         old_password: this.oldPassword,
         new_password: this.newPassword
       }, {
         headers: objHeaders
       }).then (res => {
-        console.log(res)
+        swal("Success", "Your Password Has Been Successfully Updated", "success")
+        if (isSuper == "true")
+        {
+          router.push({ path: '/admin' })
+        }
+        else{
+          router.push({ path: '/home' })
+        }
       }).catch (err => {
-        console.log(err)
+        var status = err.response.status
+        if (status == 400){
+          swal("Error", "Your Old Password is Wrong", "error")
+        }
+        else
+        {
+          swal("Error", "An Error Occured, Your Password Has Not Been Updated", "Error")
+        }
       })
     },
   },

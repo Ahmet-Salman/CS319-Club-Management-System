@@ -1,7 +1,7 @@
 <template>
   <div>
     
-    <router-link v-if="userID != 1" :to="{ name: 'CreateClub' }"
+    <router-link v-if='isSuper != "true"' :to="{ name: 'CreateClub' }"
       ><button style="float: right; border-radius: 7px" class="btn btn-outline-secondary my-2 mr-4">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -22,7 +22,7 @@
       </button></router-link
     >
 
-    <router-link v-if="userID == 1" :to="{ name: 'Admin' }"
+    <router-link v-if='isSuper == "true"' :to="{ name: 'Admin' }"
       ><button style="float: right; border-radius: 7px" class="btn btn-outline-secondary my-2 mr-4">
         Admin Page
       </button></router-link

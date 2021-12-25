@@ -34,7 +34,7 @@
             type="button"
             class="btn btn-outline-info mr-3"
             style="width: 120px; border-radius: 10px"
-            v-if="token"
+            v-if='token'
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -110,6 +110,12 @@
 <script>
 import { mapState, mapActions } from "vuex";
 export default {
+data() {
+  return {
+    isSuper: false
+  }
+},
+
   computed: {
     ...mapState({
       token: (state) => state.token,
@@ -120,6 +126,11 @@ export default {
       this.$router.push("/notifications");
     },
   },
+
+  mounted(){
+    console.log("navbar mounted")
+    this.isSuper = sessionStorage.getItem('isAuth')
+  }
 };
 </script>
 
