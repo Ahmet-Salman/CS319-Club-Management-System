@@ -2,7 +2,8 @@
   <div>
     <nav style="border-radius: 10px" class="navbar navbar-dark bg-primary">
       <div class="container-fluid">
-        <router-link to="/home" class="navbar-brand">Home</router-link>
+        <router-link v-if="isSuper != 'true'" to="/home" class="navbar-brand">Home</router-link>
+        <router-link v-if="isSuper == 'true'" to="/admin" class="navbar-brand">Home</router-link>
         <div
           class="btn-group"
           role="group"
@@ -13,7 +14,7 @@
             type="button"
             class="btn btn-outline-primary mx-3"
             @click="goToNotifications()"
-            v-if="token"
+            v-if="token && isSuper != 'true'"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +35,7 @@
             type="button"
             class="btn btn-outline-info mr-3"
             style="width: 120px; border-radius: 10px"
-            v-if="token"
+            v-if='token && isSuper != "true"'
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -110,6 +111,12 @@
 <script>
 import { mapState, mapActions } from "vuex";
 export default {
+data() {
+  return {
+    isSuper: false
+  }
+},
+
   computed: {
     ...mapState({
       token: (state) => state.token,
@@ -120,6 +127,10 @@ export default {
       this.$router.push("/notifications");
     },
   },
+
+  mounted(){
+    this.isSuper = sessionStorage.getItem('isAuth')
+  }
 };
 </script>
 

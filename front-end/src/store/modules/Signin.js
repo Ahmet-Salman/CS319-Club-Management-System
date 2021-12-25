@@ -74,7 +74,9 @@ export default {
                     sessionStorage.setItem('isAuth', res.data.user.is_superuser);
                     state.isSuperUser = res.data.user.is_superuser
                     dispatch('getClubs') // this.$store.state.Signin.clubs
+                        // location.reload()
                     commit('handleSubmit')
+
                 }).catch(err => {
                     if (err.response.status == 401 || err.response.status == 500) {
                         swal('Input Error', 'Your Credentials Are Invalid, Please Check Your Student ID and Password', "error")

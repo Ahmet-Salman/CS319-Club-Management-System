@@ -1,8 +1,9 @@
 <template>
   <div>
+    <link href='https://fonts.googleapis.com/css?family=Alex Brush' rel='stylesheet'>
     <br/>
     <br/>
-     <div class="container">
+     <div class="container" style="position: relative; left: 4cm;">
       <div class="main-body">
         <div class="row">
           <div class="col-lg-8">
@@ -11,7 +12,7 @@
                 <div class="card">
                   <div class="card-body">
                     <h5 class="header d-flex align-items-center mb-3">
-                      <b>Announcements</b>
+                      <b style="font-family: 'Alex Brush';font-size: 44px;">Announcements</b>
                     </h5>
                     <ul
                       v-if="filteredAnn.length"

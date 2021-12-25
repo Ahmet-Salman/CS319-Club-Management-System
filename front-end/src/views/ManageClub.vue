@@ -49,16 +49,6 @@
                     Go To Members List
                   </button></router-link
                 >
-                <router-link
-                  :to="{
-                    name: 'Messages',
-                    params: { clubID: $route.params.clubID },
-                  }"
-                  ><button class="btn btn btn-outline-success my-3 mx-1">
-                    View Messages
-                  </button></router-link
-                >
-
                 <hr class="my-2" />
                 <ul class="list-group list-group-flush">
                   <li

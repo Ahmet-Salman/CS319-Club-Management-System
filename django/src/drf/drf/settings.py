@@ -60,9 +60,9 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
-# CORS_ALLOWED_ORIGINS = [
-#     'http://localhost:8080'
-# ]
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8080'
+]
 
 ROOT_URLCONF = 'drf.urls'
 
