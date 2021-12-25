@@ -8,6 +8,7 @@
             <h2 class="className" v-for="item in Clubs" :key="item.name">
                 {{item.name}}
                 <button class="classButton" @click="this.$router.push(`/clubDetails/${item.id}`)">Go to Club</button>
+                <button class="classLeaveButton" @click="leaveTheClub(item.id)">Leave the Club</button>
                 <hr class="classSeperator">
             </h2>
         </div>
@@ -72,6 +73,10 @@ export default {
                 }
             }
             return false
+        },
+
+        leaveTheClub(clubID) {
+            this.$store.dispatch("AllClubs/leaveClub", clubID)
         },
     },
 
@@ -149,7 +154,6 @@ export default {
     position: relative;
     top: 0.1cm;
     right: 0.5cm;
-    
     display: inline-block;
     outline: none;
     cursor: pointer;
@@ -168,6 +172,28 @@ export default {
     box-shadow: 0 5px 15px rgba(33, 172, 236, 0.4);
 }
 
+.classLeaveButton {
+    float: right;
+    position: relative;
+    top: 0.1cm;
+    right: 0.65cm;
+    display: inline-block;
+    outline: none;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 600;
+    border-radius: 8px;
+    padding: 14px 24px;
+    border: none;
+    transition: box-shadow 0.2s ease 0s, -ms-transform 0.1s ease 0s, -webkit-transform 0.1s ease 0s, transform 0.1s ease 0s;
+    background: rgba(212, 32, 32, 0.938);
+    color: #fff; 
+}
+.classLeaveButton:hover {
+    color: rgba(255, 255, 255, 1);
+    box-shadow: 0 5px 15px rgba(226, 50, 50, 0.705);
+}
 
 .classSeperator {
     border: 0;
