@@ -1,19 +1,20 @@
 <template>
     <div class="homeContainer">
-        <div class="clubsContainer">
-            <h1 style="text-align: left; color: black;">Your Clubs<hr class="myHr"></h1>
+        <div class="clubsContainer card">
+            <h1 style="text-align: left; color: black;"><b>Your Clubs</b></h1>
+            <br>
             <h2 v-if="this.Clubs.length == 0">
                <b>You have no enrolled Club</b> &#129300;
             </h2>
             <h2 class="className" v-for="item in Clubs" :key="item.name">
                 {{item.name}}
-                <button class="classButton" @click="this.$router.push(`/clubDetails/${item.id}`)">Go to Club</button>
-                <button class="classLeaveButton" @click="leaveTheClub(item.id)">Leave the Club</button>
-                <hr class="classSeperator">
+                <button class="classButton btn btn-outline-dark mr-0" @click="this.$router.push(`/clubDetails/${item.id}`)">Go to Club</button>
+                <button class="classLeaveButton btn btn-outline-danger mr-1" @click="leaveTheClub(item.id)">Leave the Club</button>
+                <hr>
             </h2>
         </div>
-        <div class="eventsContainer">
-            <h1 style="text-align: right; color: black;">Club Events<hr class="myHr"></h1>
+        <div class="eventsContainer card">
+            <h1 style="text-align: left; color: black;"><b>Club Events</b></h1>
             <div>
                 <h1 v-if="this.CurrentEvents.length == 0">
                     <b>There are no event to show</b> &#128557;
@@ -28,13 +29,14 @@
                     <hr style="position: relative; bottom: 1cm;">
                     <p class="eventDesc" style="position: relative; bottom: 1cm;">
                         <div style="float: left;"><b>Event Description:&nbsp;</b></div>
-                        {{item.description}}</p>
+                        {{item.description}}
+                    </p>
                     <div style="position: relative; bottom: 1cm;">
-                        <div class="eventDate">
+                        <div class="eventDate" style="color: white;">
                             <div style="float: left;"><b>Date:&nbsp;</b></div>
                             {{new Date(item.date).getDate()}}/{{new Date(item.date).getMonth()}}/{{new Date(item.date).getFullYear()}} at {{new Date(item.date).getHours()}}:{{new Date(item.date).getMinutes()}}
                         </div>
-                        <div class="eventLocation">
+                        <div class="eventLocation" style="color:white;">
                             <div style="float: left;"><b>Location:&nbsp;</b></div>
                             {{item.location}}
                         </div>
@@ -140,7 +142,7 @@ export default {
 }
 
 .className {
-    font-family: Georgia, sans-serif;
+    color: black;
     font-size: 40px;
     letter-spacing: -2px;
     text-align: left;
@@ -151,47 +153,31 @@ export default {
 .classButton {
     float: right;
     position: relative;
-    top: 0.1cm;
+    top: 0.2cm;
     right: 0.5cm;
-    display: inline-block;
-    outline: none;
-    cursor: pointer;
-    font-size: 16px;
-    line-height: 20px;
-    font-weight: 600;
     border-radius: 8px;
-    padding: 14px 24px;
-    border: none;
-    transition: box-shadow 0.2s ease 0s, -ms-transform 0.1s ease 0s, -webkit-transform 0.1s ease 0s, transform 0.1s ease 0s;
-    background: rgb(0, 162, 255);
-    color: #fff; 
+    cursor: pointer;
+    font-size: 16px; 
 }
 .classButton:hover {
     color: rgba(255, 255, 255, 1);
-    box-shadow: 0 5px 15px rgba(33, 172, 236, 0.4);
+    box-shadow: 0 5px 15px rgba(128, 15, 180, 0.705);
 }
 
 .classLeaveButton {
     float: right;
     position: relative;
-    top: 0.1cm;
+    top: 0.2cm;
     right: 0.65cm;
-    display: inline-block;
-    outline: none;
+    border-radius: 8px;
     cursor: pointer;
     font-size: 16px;
-    line-height: 20px;
-    font-weight: 600;
-    border-radius: 8px;
-    padding: 14px 24px;
-    border: none;
-    transition: box-shadow 0.2s ease 0s, -ms-transform 0.1s ease 0s, -webkit-transform 0.1s ease 0s, transform 0.1s ease 0s;
-    background: rgba(212, 32, 32, 0.938);
-    color: #fff; 
+    color: black;
+    border-color: black;
 }
 .classLeaveButton:hover {
     color: rgba(255, 255, 255, 1);
-    box-shadow: 0 5px 15px rgba(226, 50, 50, 0.705);
+    box-shadow: 0 5px 15px rgba(255, 28, 28, 0.747);
 }
 
 .classSeperator {
@@ -224,7 +210,7 @@ export default {
     padding: 1rem;
     width: auto;
     box-shadow: 0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08);
-    background-color: #4b4b4b4d;
+    background-color: #3c70ff;
     border-radius: 0.5rem;
     border-left: 0 solid #00ff99;
     transition: border-left 300ms ease-in-out, padding-left 300ms ease-in-out;
@@ -235,7 +221,7 @@ export default {
     padding: 1rem;
     width: auto;
     box-shadow: 0 15px 30px 0 rgba(0,0,0,0.11), 0 5px 15px 0 rgba(0,0,0,0.08);
-    background-color: #4b4b4b4d;
+    background-color: #1755ff;
     border-radius: 0.5rem;
     border-left: 0 solid #00ff99;
     transition: border-left 300ms ease-in-out, padding-left 300ms ease-in-out;
