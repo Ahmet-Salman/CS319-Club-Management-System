@@ -1,7 +1,8 @@
 <template>
     <div class="homeContainer">
+        <link href='https://fonts.googleapis.com/css?family=Alex Brush' rel='stylesheet'>
         <div class="clubsContainer card">
-            <h1 style="text-align: left; color: black;"><b>Your Clubs</b></h1>
+            <h1 style="text-align: left; color: black;"><b style="font-family: 'Alex Brush'; font-size: 50px;">Your Clubs</b></h1>
             <br>
             <h2 v-if="this.Clubs.length == 0">
                <b>You have no enrolled Club</b> &#129300;
@@ -14,7 +15,7 @@
             </h2>
         </div>
         <div class="eventsContainer card">
-            <h1 style="text-align: left; color: black;"><b>Club Events</b></h1>
+            <h1 style="text-align: left; color: black;"><b style="font-family: 'Alex Brush'; font-size: 50px;">Club Events</b></h1>
             <div>
                 <h1 v-if="this.CurrentEvents.length == 0">
                     <b>There are no event to show</b> &#128557;
