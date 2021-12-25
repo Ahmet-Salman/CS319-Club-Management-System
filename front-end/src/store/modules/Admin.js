@@ -45,7 +45,6 @@ export default {
         },
         async getRequests({ commit }) {
             await axios.get("http://127.0.0.1:8000/api/request/createclubrequest").then(res => {
-                console.log(res.data)
                 commit('getRequests', res.data)
             }).catch(err => {
                 swal('Error', 'An error Occured, Please Try Again', 'error')
