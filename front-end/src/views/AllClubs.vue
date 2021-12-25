@@ -121,7 +121,7 @@
         <tr v-for="clubs in AllMemberClub" :key="clubs.id" class="table-info">
           <td>{{ clubs.name }}</td>
           <!-- <td>{{clubs.catagory}}</td> -->
-          <td>{{ clubs.manager }}</td>
+          <td>{{ clubs.owner.first_name }} {{ clubs.owner.last_name }}</td>
           <td style="color: white; border-radius: 10px" class="bg-success">Member</td>
           <td>
             <button
@@ -409,7 +409,6 @@ export default {
       userID: sessionStorage.getItem("userID"),
       isSuper: sessionStorage.getItem("isAuth"),
       UnaffiliatedClub: [],
-      // AllClubs: [],
       AllMemberClub: [],
       AllManagerClub: [],
       pendingRequests: [],

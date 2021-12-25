@@ -24,6 +24,7 @@ SECRET_KEY = 'django-insecure-ghma%g9#tgr0hpfv(m5$xa=lw4m84_-=4jy#ri*kh!nqry$$df
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+CORS_ORIGIN_ALLOW_ALL = DEBUG
 
 ALLOWED_HOSTS = []
 
@@ -59,9 +60,9 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:8080'
-]
+# CORS_ALLOWED_ORIGINS = [
+#     'http://localhost:8080'
+# ]
 
 ROOT_URLCONF = 'drf.urls'
 

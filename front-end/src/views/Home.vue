@@ -3,7 +3,7 @@
         <div class="clubsContainer">
             <h1 style="text-align: left; color: black;">Your Clubs<hr class="myHr"></h1>
             <h2 v-if="this.Clubs.length == 0">
-               <b>You have no enrolled Club</b> &#129300
+               <b>You have no enrolled Club</b> &#129300;
             </h2>
             <h2 class="className" v-for="item in Clubs" :key="item.name">
                 {{item.name}}
@@ -15,27 +15,26 @@
             <h1 style="text-align: right; color: black;">Club Events<hr class="myHr"></h1>
             <div>
                 <h1 v-if="this.CurrentEvents.length == 0">
-                    <b>There are no event to show</b> &#128557
+                    <b>There are no event to show</b> &#128557;
                 </h1>
                 <div v-for="item in CurrentEvents" :key="item.title">
                     <h1 style="color: black;" class="eventClubName" v-if="this.getTheClub(`${item.club}`)">
                         {{this.ClubWithID}}
                     </h1>
                     <h1 class="eventTitle" style="color: black;">
-                        <b style="font-size: 24px;">Event Name:&nbsp</b>{{item.title}}
+                        <b style="font-size: 24px;">Event Name:&nbsp;</b>{{item.title}}
                     </h1>
                     <hr style="position: relative; bottom: 1cm;">
                     <p class="eventDesc" style="position: relative; bottom: 1cm;">
-                        <div style="float: left;"><b>Event Description:&nbsp</b></div>
-                        {{item.description}}
-                    </p>
+                        <div style="float: left;"><b>Event Description:&nbsp;</b></div>
+                        {{item.description}}</p>
                     <div style="position: relative; bottom: 1cm;">
                         <div class="eventDate">
-                            <div style="float: left;"><b>Date:&nbsp</b></div>
-                            {{item.date}}
+                            <div style="float: left;"><b>Date:&nbsp;</b></div>
+                            {{new Date(item.date).getDate()}}/{{new Date(item.date).getMonth()}}/{{new Date(item.date).getFullYear()}} at {{new Date(item.date).getHours()}}:{{new Date(item.date).getMinutes()}}
                         </div>
                         <div class="eventLocation">
-                            <div style="float: left;"><b>Location:&nbsp</b></div>
+                            <div style="float: left;"><b>Location:&nbsp;</b></div>
                             {{item.location}}
                         </div>
                         <br><br><br>
