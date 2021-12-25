@@ -86,6 +86,9 @@ class ChangePasswordView(generics.UpdateAPIView):
     def get_object(self, id):
         obj = Account.objects.get(id=id)
         return obj
+        
+    def get_object(self, queryset=None):
+        return self.request.user
 
     def update(self, request, *args, **kwargs):
         self.object = self.get_object()
