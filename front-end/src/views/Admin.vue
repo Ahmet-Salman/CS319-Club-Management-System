@@ -105,12 +105,15 @@ export default {
       clubName: "",
       clubDescription: "",
       createReqs: [],
+      student_id: -1
     };
   },
   methods: {
     async openModal(data) {
+      
       var id = data.user_id;
       await this.get_user_name(id);
+      var student_id = this.student_id
       var name = data.name;
       var description = data.desc;
       var time = new Date(data.time);
@@ -118,7 +121,7 @@ export default {
 
       swal({
         title: `Club Name: ${name}`,
-        text: `Club Description: ${description} \n\nTime of Creation: ${time.getDate()}/${time.getMonth()}/${time.getFullYear()} at ${time.getHours()}:${time.getMinutes()}\n\n By Student: ${userName} with ID ${id}`,
+        text: `Club Description: ${description} \n\nTime of Creation: ${time.getDate()}/${time.getMonth()}/${time.getFullYear()} at ${time.getHours()}:${time.getMinutes()}\n\n By Student: ${userName} with Student ID ${student_id}`,
         icon: "info",
         button: "Close",
       });
@@ -134,6 +137,7 @@ export default {
         })
         .then((res) => {
           this.user_name = res.data.first_name + " " + res.data.last_name;
+          this.student_id = res.data.student_id
         })
         .catch((err) => {
           swal('Error', 'An error Occured, Please Try Again', 'error');

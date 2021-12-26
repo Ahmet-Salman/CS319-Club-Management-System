@@ -62,7 +62,7 @@ export default {
             if (state.student_id === "" || state.password === "") {
                 swal("Input Error", "Please Fill All Fields", "error");
             } else {
-                await axios.post('https://gestalt-ver-23242.herokuapp.com/api/login', {
+                await axios.post('http://127.0.0.1:8000/api/login', {
                     student_id: state.student_id,
                     password: state.password
                 }).then(res => {
