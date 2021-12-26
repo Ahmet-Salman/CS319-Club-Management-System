@@ -129,7 +129,6 @@ export default {
   },
   async mounted() {
     var userID = sessionStorage.getItem('userID')
-
     await axios.get(`http://127.0.0.1:8000/api/account/${userID}`, {
       headers: this.token
     }).then(res => {
